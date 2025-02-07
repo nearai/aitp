@@ -69,11 +69,12 @@ class Thread:
 
 Capabilities provide a way for agents to share with each other what they are able to do.
 
-| ID | Slug              | Capability     | Description                                                                          |
-| - |-------------------|----------------|--------------------------------------------------------------------------------------|
-| AITP-01 | aitp.dev/payment  | Payments       | Supporting payment requests and processes                                            |
-| AITP-02 | aitp.dev/requests | Requests       | Requesting decisions or actions from an agent or to be displayed in a user interface |
-| AITP-03 | aitp.dev/data     | Sensitive Data | Supporting requesting and dealing with sensitive data like passwords and addresses   |
+| ID      | Slug                | Capability     | Description                                                                          |
+|---------|---------------------|----------------|--------------------------------------------------------------------------------------|
+| AITP-01 | aitp.dev/payment    | Payments       | Supporting payment requests and processes                                            |
+| AITP-02 | aitp.dev/requests   | Requests       | Requesting decisions or actions from an agent or to be displayed in a user interface |
+| AITP-03 | aitp.dev/data       | Sensitive Data | Supporting requesting and dealing with sensitive data like passwords and addresses   |
+| AITP-04 | aitp.dev/operations | Health checks  | Supporting standard operational concerns such as healthchecks.                       |
 
 Capabilities can use `Thread.messages[].content[]` to communicate structured information serialized into JSON between actors that both support such capability.
 
