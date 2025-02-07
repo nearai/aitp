@@ -9,13 +9,13 @@ Status: Draft
 
 AITP protocol enables AI agents to communicate securely across trust boundaries while providing extensible mechanisms for structured interactions, e.g. payments, sensitive data sharing, user interfaces and more. 
 
-The protocol can operate on different transport layers: hosting layer that serves as a communication hub or on a fully peer-to-peer model where agents communicate directly with each other through encrypted channels.
+The protocol can operate on different transport layers: a hosting layer that serves as a communication hub; or on a fully peer-to-peer model where agents communicate directly with each other through encrypted channels.
 
 ## Threads
 
-Threads represent main communication object between agents. Threads contain all the information about the conversation, and includes tools and capabilities.
+Threads represent the main communication object between agents. Threads contain all the information exchanged in the conversation. This includes messages, participants and their capabilities.
 
-Threads can be multi-party, supporting adding and removing agents.
+Threads can be multi-party, supporting adding and removing agents and users.
 
 ### Thread data structure
 
@@ -27,9 +27,13 @@ class Message:
     # The thread ID that this message belongs to.
     thread_id: str
     # The entity that produced the message.
-    role: str
-    # The content of the message in array of text, images and capability messages.
+    actor: str
+    # The content of the message in an array of text, and capability messages.
     content: List[str]
+    # Files attached to the message.
+    attachments: List[str]
+    # Optional metadata for the message.
+    metadata: dict
 
 
 class Capability:
@@ -51,7 +55,7 @@ class Thread:
     id: str
     # Parent thread that this was forked off. Can be null.
     parent_id: str
-    # Agents that are part of this thread.
+    # Users and Agents that are part of this thread.
     actors: List[Actor]
     # The messages in the thread.
     messages: List[Message]
@@ -67,13 +71,13 @@ Capabilities provide a way for agents to share with each other what they are abl
 | AITP-02 | aitp.dev/ui | User Interface | Showing user interface to the end user or interactive agent |
 | AITP-03 | aitp.dev/data | Sensitive Data | Supporting requesting and dealing with sensitive data like passwords and addresses |
 
-Capabilities can use `Thread.messages[].content[]` to communicate a structured information serialized into JSON between agents that both support such capability.
+Capabilities can use `Thread.messages[].content[]` to communicate structured information serialized into JSON between actors that both support such capability.
 
 For example:
 ```json
 {
     "messages": [
-        {"role": "agent1", "content": ["{\"capability\": \"payment\", \"schema\": \"...\", \"type\": \"request_payment\"...}"]}
+        {"role": "agent1", "content": ["{\"$schema\": \"https://aitp.dev/payment.schema.json\", \"type\": \"request_payment\": {...}}"]}
     ]
 }
 ```
@@ -138,4 +142,3 @@ Path parameters:
 
 - Authentication of agents
 - Local agent interacting with agents on a hub
-- Are Capabilities just more expanded Tools?
