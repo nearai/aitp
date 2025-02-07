@@ -17,12 +17,15 @@ Overview
     ],
     "messages": [
         {"metadata": {"actor": "root.near"}, 
-          "content": ["plan me a trip to NY"]},
+          "content": ["plan me a trip to NY"],
+          "role":  "user"},
         ...
         {"metadata": {"actor": "hub.near.ai/travel-agent/0.1.0"}, 
-          "content": ["{\"$schema\": \"https://aitp.dev/v1/payments.schema.json\", ...request_payment, 1000 USD}"]}
+          "content": ["{\"$schema\": \"https://aitp.dev/v1/payments.schema.json\", ...request_payment, 1000 USD}"],
+          "role":  "assistant"},
         {"metadata": {"actor": "root.near"}, 
-          "content": ["{\"$schema\": \"https://aitp.dev/v1/payments.schema.json\", ... decline payment}"]}
+          "content": ["{\"$schema\": \"https://aitp.dev/v1/payments.schema.json\", ... decline payment}"], 
+          "role":  "user"}
     ]
 }
 ```

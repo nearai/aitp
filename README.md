@@ -26,23 +26,25 @@ class Message:
     created_at: int
     # The thread ID that this message belongs to.
     thread_id: str
-    # The entity that produced the message.
-    actor: str
-    # The content of the message in an array of text, and capability messages.
+    # The content of the message in an array of text. 
+    # AITP messages may be passed in JSON format, encoded as strings.
     content: List[str]
     # Files attached to the message.
-    attachments: List[str]
-    # Optional metadata for the message.
+    attachments: List[{file_id: str}]
+    # The role of the entity that is creating the message: user or assistant
+    role: str
+    # Metadata for the message.
     metadata: dict
+        # The entity that produced the message.
+        actor: str
 
 
 class Capability:
-    capability: str
     schema: str
 
 
 class Actor:
-    """Actor of the thread."""
+    """A User or Agent participating on the thread."""
     # Global agent identifier: url/<agent> or user identifier.
     id: str
     # Capabilities this actor posses.
@@ -53,23 +55,25 @@ class Thread:
     """Represents a thread that contains messages."""
     # The identifier, which can be referenced in API endpoints.
     id: str
-    # Parent thread that this was forked off. Can be null.
-    parent_id: str
-    # Users and Agents that are part of this thread.
-    actors: List[Actor]
     # The messages in the thread.
     messages: List[Message]
+    # Metadata for the message.
+    metadata: dict
+        # Parent thread that this was forked off. Can be null.
+        parent_id: str
+        # Users and Agents that are part of this thread.
+        actors: List[Actor]
 ```
 
 ## Capabilities
 
 Capabilities provide a way for agents to share with each other what they are able to do.
 
-| ID | Slug | Capability | Description |
-| - | - | - | - |
-| AITP-01 | aitp.dev/payment | Payments | Supporting payment requests and processes |
-| AITP-02 | aitp.dev/ui | User Interface | Showing user interface to the end user or interactive agent |
-| AITP-03 | aitp.dev/data | Sensitive Data | Supporting requesting and dealing with sensitive data like passwords and addresses |
+| ID | Slug              | Capability     | Description                                                                          |
+| - |-------------------|----------------|--------------------------------------------------------------------------------------|
+| AITP-01 | aitp.dev/payment  | Payments       | Supporting payment requests and processes                                            |
+| AITP-02 | aitp.dev/requests | Requests       | Requesting decisions or actions from an agent or to be displayed in a user interface |
+| AITP-03 | aitp.dev/data     | Sensitive Data | Supporting requesting and dealing with sensitive data like passwords and addresses   |
 
 Capabilities can use `Thread.messages[].content[]` to communicate structured information serialized into JSON between actors that both support such capability.
 
@@ -77,7 +81,7 @@ For example:
 ```json
 {
     "messages": [
-        {"role": "agent1", "content": ["{\"$schema\": \"https://aitp.dev/payment.schema.json\", \"type\": \"request_payment\": {...}}"]}
+        {"role": "agent1", "content": ["{\"$schema\": \"https://aitp.dev/v1/payment.schema.json\", \"type\": \"request_payment\": {...}}"]}
     ]
 }
 ```
@@ -121,7 +125,7 @@ Response:
 Create a message.
 
 Path parameters:
-- `thread_id`: The ID of the thread the message to be added.
+- `thread_id`: The ID of the thread to add the message to.
 
 Request body:
 - `role`: string. The role of the entity that is creating the message.
@@ -136,6 +140,9 @@ Returns a list of messages for a given thread.
 
 Path parameters:
 - `thread_id`: The ID of the thread the messages belong to.
+
+### Compatibility
+Both the Thread and Message apis support additional properties for compatibility with the OpenAI v1 Assistants API.
 
 
 ## Open questions
