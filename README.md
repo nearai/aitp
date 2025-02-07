@@ -1,73 +1,141 @@
-# AITP: AI Transport Protocol
+# AITP: Agent Interaction & Transaction Protocol
 
 Version: 0.1.0
+
+
 Status: Draft
 
 ## Introduction
 
-### Purpose
+AITP protocol enables AI agents to communicate securely across trust boundaries while providing extensible mechanisms for structured interactions, e.g. payments, sensitive data sharing, user interfaces and more. 
 
-AITP protocol enables AI agents to communicate securely across trust boundaries while providing mechanisms for capability sharing, payment settlement, and dispute resolution. 
+The protocol can operate on different transport layers: hosting layer that serves as a communication hub or on a fully peer-to-peer model where agents communicate directly with each other through encrypted channels.
 
-### Terminology
+## Threads
 
-- Agent: an AI system capable of autonomous communication, decision making and task execution
-- Thread: an encrypted conversation between multiple agents
-- Tool: a capability exposed to agents
-- Intent Request (or just Intent): a request to execute a task or deliver specific services
-- Intent Quote: an option from an agent that can execute a given request
-- Intent Commitment: a cryptographically signed message from multiple parties to execute task or deliver specific services and get paid for it. Analogous to a legal contract signed by multiple parties.
+Threads represent main communication object between agents. Threads contain all the information about the conversation, and includes tools and capabilities.
 
-## Protocol overview
-
-The protocol operates on a peer-to-peer model where agents communicate directly with each other through encrypted channels. 
-
-TBD
-
-## Thread system
-
-Threads represent main communication object between agents. Threads contain all the information about the exchange, tools exposed and intents/commitments made.
+Threads can be multi-party, supporting adding and removing agents.
 
 ### Thread data structure
 
 ```python
+class Message:
+    """Represents a message within a thread."""
+    # The Unix timestamp (in seconds) for when the message was created.
+    created_at: int
+    # The thread ID that this message belongs to.
+    thread_id: str
+    # The entity that produced the message.
+    role: str
+    # The content of the message in array of text, images and capability messages.
+    content: List[str]
+
+
+class Capability:
+    capability: str
+    schema: str
+
+
+class Actor:
+    """Actor of the thread."""
+    # Global agent identifier: url/<agent> or user identifier.
+    id: str
+    # Capabilities this actor posses.
+    capabilities: List[Capability]
+
+
 class Thread:
-    ...
+    """Represents a thread that contains messages."""
+    # The identifier, which can be referenced in API endpoints.
+    id: str
+    # Parent thread that this was forked off. Can be null.
+    parent_id: str
+    # Agents that are part of this thread.
+    actors: List[Actor]
+    # The messages in the thread.
+    messages: List[Message]
 ```
 
-## Intent protocol
+## Capabilities
 
-Intent protocol describes how a party can express it's interest in a task execution or service rendered, receive options and commit to execution of it.
+Capabilities provide a way for agents to share with each other what they are able to do.
 
-Protocol has 3 steps:
-- Intent Request: a request from originator
-- Intent Quotes: options from agents who can execute the task
-- Intent Commitment: signed by all parties agreement for specific set of tasks to be executed
+| ID | Slug | Capability | Description |
+| - | - | - | - |
+| AITP-01 | aitp.dev/payment | Payments | Supporting payment requests and processes |
+| AITP-02 | aitp.dev/ui | User Interface | Showing user interface to the end user or interactive agent |
+| AITP-03 | aitp.dev/data | Sensitive Data | Supporting requesting and dealing with sensitive data like passwords and addresses |
 
-### Data structures
+Capabilities can use `Thread.messages[].content[]` to communicate a structured information serialized into JSON between agents that both support such capability.
 
-```python
-class Quote:
-    message: String
-    cost: TokenDiff
-    signature: Signature
-    identity: Identity
-
-
-class Commitment:
-    quote: Quote
-    payment: TokenDiff
-    signature: Signature
-    identity: Identity
+For example:
+```json
+{
+    "messages": [
+        {"role": "agent1", "content": ["{\"capability\": \"payment\", \"schema\": \"...\", \"type\": \"request_payment\"...}"]}
+    ]
+}
 ```
 
-### Examples
+## Transport
 
-Examples of intents:
- - borrow money and buy an apartment, use apartment as a collateral for the loan - find options for apartments and query another agent for mortgage options given apartment as collateral
- - generate 100k impressions for the website - an agent creates marketing capaign on X / Instagram to drive traffic to the website
- - optimize conversion rate for the website - share access to your website via tools, allow another agent to create SEO and change UX and monitor changes in conversions
- - book a trip for 2 for 2 days to NYC - create a plan and execute buying flights, hotels, restaurant booking and more
- - swap 1 BTC to USDC - direct swap offer
- - subscribe to Netflix => 10 USD a month
- - get API key for OpenAI API => pay per use
+Various transport layers can be used for inter-agent communication with Threads.
+
+For example, one of the agents can be using HTTPS server that other agents are using to retrieve and modify `Thread`.
+
+Another approach would be to have a fully peer-to-peer protocol where `Thread` is synchronized between peers. This is currently outside of scope for the v1.
+
+### Threads API
+
+**Create thread**
+
+`POST <agent id>/v1/thread`
+
+Request body:
+- `messages`: array of strings
+
+Response:
+- `thread`: A Thread object.
+
+**Retrieve thread**
+
+`POST <agent url>/v1/threads/{thread_id}`
+
+Path parameters:
+- `thread_id`: array of strings
+
+Response:
+- `thread`: A Thread object matching the specified ID.
+
+### Messages API
+
+**Create message**
+
+`POST <agent url>/v1/threads/{thread_id}/messages`
+
+Create a message.
+
+Path parameters:
+- `thread_id`: The ID of the thread the message to be added.
+
+Request body:
+- `role`: string. The role of the entity that is creating the message.
+- `content`: string or array. 
+- `attachments`: array or null. A list of files attached to the message, and the tools they should be added to.
+
+**List messages**
+
+`GET <agent url>/v1/threads/{thread_id}/messages`
+
+Returns a list of messages for a given thread.
+
+Path parameters:
+- `thread_id`: The ID of the thread the messages belong to.
+
+
+## Open questions
+
+- Authentication of agents
+- Local agent interacting with agents on a hub
+- Are Capabilities just more expanded Tools?
