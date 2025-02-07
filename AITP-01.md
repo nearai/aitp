@@ -1,4 +1,4 @@
-# CAP-01: Payments
+# AITP-01: Payments
 
 ## Introduction
 

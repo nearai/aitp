@@ -32,12 +32,27 @@ class Message:
     content: List[str]
 
 
+class Capability:
+    capability: str
+    schema: str
+
+
+class Actor:
+    """Actor of the thread."""
+    # Global agent identifier: url/<agent> or user identifier.
+    id: str
+    # Capabilities this actor posses.
+    capabilities: List[Capability]
+
+
 class Thread:
     """Represents a thread that contains messages."""
     # The identifier, which can be referenced in API endpoints.
     id: str
-    # Capabilities that are available to parties in this thread.
-    capabilities: List[Capability]
+    # Parent thread that this was forked off. Can be null.
+    parent_id: str
+    # Agents that are part of this thread.
+    actors: List[Actor]
     # The messages in the thread.
     messages: List[Message]
 ```
@@ -47,10 +62,10 @@ class Thread:
 Capabilities provide a way for agents to share with each other what they are able to do.
 
 | ID | Slug | Capability | Description |
-| - | - | - |
-| CAP-01 | payment | Payments | Supporting payment requests and processes |
-| CAP-02 | ui | User Interface | Showing user interface to the end user or interactive agent |
-| CAP-03 | data | Sensitive Data | Supporting requesting and dealing with sensitive data like passwords and addresses |
+| - | - | - | - |
+| AITP-01 | aitp.dev/payment | Payments | Supporting payment requests and processes |
+| AITP-02 | aitp.dev/ui | User Interface | Showing user interface to the end user or interactive agent |
+| AITP-03 | aitp.dev/data | Sensitive Data | Supporting requesting and dealing with sensitive data like passwords and addresses |
 
 Capabilities can use `Thread.messages[].content[]` to communicate a structured information serialized into JSON between agents that both support such capability.
 
@@ -58,7 +73,7 @@ For example:
 ```json
 {
     "messages": [
-        {"role": "agent1", "content": ["{\"capability\": \"payment\"}, ..."]}
+        {"role": "agent1", "content": ["{\"capability\": \"payment\", \"schema\": \"...\", \"type\": \"request_payment\"...}"]}
     ]
 }
 ```
@@ -75,7 +90,7 @@ Another approach would be to have a fully peer-to-peer protocol where `Thread` i
 
 **Create thread**
 
-`POST <agent url>/v1/thread`
+`POST <agent id>/v1/thread`
 
 Request body:
 - `messages`: array of strings
@@ -97,7 +112,7 @@ Response:
 
 **Create message**
 
-`POST v1/threads/{thread_id}/messages`
+`POST <agent url>/v1/threads/{thread_id}/messages`
 
 Create a message.
 
@@ -111,9 +126,16 @@ Request body:
 
 **List messages**
 
-`GET v1/threads/{thread_id}/messages`
+`GET <agent url>/v1/threads/{thread_id}/messages`
 
 Returns a list of messages for a given thread.
 
 Path parameters:
 - `thread_id`: The ID of the thread the messages belong to.
+
+
+## Open questions
+
+- Authentication of agents
+- Local agent interacting with agents on a hub
+- Are Capabilities just more expanded Tools?
