@@ -1,0 +1,74 @@
+[
+  {
+    "$schema": "https://aitp.dev/v1/payments.schema.json",
+    "quote": {
+      "quote_id": "string",
+      "payee_id": "string",
+      "product": {
+        "id": "string",
+        "name": "string",
+        "description": "string",
+        "metadata": {}
+      },
+      "payment_plans": [
+        {
+          "plan_id": "...",
+          "plan_type": "one-time",
+          "amount": 123.45,
+          "currency": "USD"
+        },
+        {
+          "plan_id": "...",
+          "plan_type": "subscription",
+          "recurring_details": {
+            "interval": "monthly",
+            "amount": 9.99,
+            "currency": "USD"
+          }
+        },
+        {
+          "plan_id": "...",
+          "plan_type": "pay-per-use",
+          "cost_per_unit": 0.01,
+          "currency": "USD"
+        }
+      ],
+      "valid_until": "ISO8601 timestamp"
+    }
+  },
+  {
+    "$schema": "https://aitp.dev/v1/payments.schema.json",
+    "payment_authorization": {
+      "quote_id": "string",
+      "payer_id": "string",
+      "product_id": "...",
+      "plan_id": "...",
+      "details": [
+        {
+          "card_number": "**** **** **** 1234",
+          "expiry_date": "MM/YY",
+          "cardholder_name": "string",
+          "cvv": "string"
+        },
+        {
+          "network": "e.g., Near, Ethereum, Bitcoin",
+          "token_type": "e.g., USDC, NEAR, ETH BTC",
+          "amount": 0.1,
+          "wallet_address": "...",
+          "signature": "string (if applicable)"
+        }
+      ],
+      "authorization_timestamp": "ISO8601 timestamp"
+    }
+  },
+  {
+    "$schema": "https://aitp.dev/v1/payments.schema.json",
+    "payment_confirmation": {
+      "transaction_id": "string",
+      "quote_id": "string",
+      "result": "success | failure",
+      "message": "...",
+      "timestamp": "ISO8601 timestamp"
+    }
+  }
+]

@@ -1,0 +1,27 @@
+[{
+  "$schema": "https://aitp.dev/v1/requests.schema.json",
+  "request_decision": {
+    "type": "product",
+    "options": [
+      {
+        "id": 1,
+        "image_url": "https://...",
+        "name": "Red Socks",
+        "price": {
+          "usd": 10.5
+        },
+        "url": "https://amazon.com/..."
+      },
+      {
+        "id": 2,
+        "image_url": "https://...",
+        "name": "Blue Socks",
+        "price": {
+          "usd": 9
+        },
+        "url": "https://amazon.com/..."
+      }
+    ]
+  }
+}]
+
