@@ -6,7 +6,7 @@
     }
   },
   {
-    "schema": "https://docs.near.ai/protocols/v1/agent_protocol.schema.json",
+    "schema": "https://aitp.dev/v1/data.schema.json",
     "request_data": {
       "fields": [
         {
