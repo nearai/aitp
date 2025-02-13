@@ -1,0 +1,13 @@
+{
+  "$schema": "https://aitp.dev/v1/decision/schema.json",
+  "decision": {
+    "request_decision_id": "f71e151f-1d24-4659-99d1-66fe5ccffc8d",
+    "options": [
+      {
+        "id": "product-123",
+        "name": "Cool Headphones",
+        "quantity": 2
+      }
+    ]
+  }
+}

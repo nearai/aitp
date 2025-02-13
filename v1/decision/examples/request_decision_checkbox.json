@@ -1,0 +1,29 @@
+{
+  "$schema": "https://aitp.dev/v1/decision/schema.json",
+  "request_decision": {
+    "id": "50a53841-09ee-4b57-b5ec-561fe505f532",
+    "title": "Your Favorite Colors",
+    "description": "Which colors are your favorite? This will help refine your product search.",
+    "type": "checkbox",
+    "options": [
+      {
+        "id": "blue",
+        "name": "Blue",
+        "description": "A calming color",
+        "image_url": "https://media.istockphoto.com/id/959093486/vector/blue-abstract-gradient-mesh-background.jpg?s=612x612&w=0&k=20&c=c6lozNEcfMBlPlZazHJiy4NnviEGkAPPgubKC-9GowI="
+      },
+      {
+        "id": "red",
+        "name": "Red",
+        "description": "An exciting color",
+        "image_url": "https://img.freepik.com/free-vector/dark-deep-red-gradient-background_78370-3496.jpg?semt=ais_hybrid"
+      },
+      {
+        "id": "green",
+        "name": "Green",
+        "description": "An earthy color",
+        "image_url": "https://img.freepik.com/free-vector/gradient-background-green-tones_23-2148373477.jpg"
+      }
+    ]
+  }
+}

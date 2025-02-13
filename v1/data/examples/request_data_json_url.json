@@ -1,0 +1,12 @@
+{
+  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "request_data": {
+    "id": "c00d9f0c-89a7-4a74-8c57-0b9aa16be348",
+    "title": "Shipping Info (International)",
+    "description": "Great! Let's start with your shipping info.",
+    "fillButtonLabel": "Fill out shipping info",
+    "form": {
+      "json_url": "https://app.near.ai/api/v1/aitp/data/forms/shipping_address_international.json"
+    }
+  }
+}
