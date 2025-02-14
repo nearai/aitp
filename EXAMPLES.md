@@ -1,4 +1,6 @@
-# Examples
+# AITP Examples
+
+AITP is a generic protocol for interacting between agents with ability to exchange value. This document showcases specific interaction examples.
 
 ## User interacting with Travel Agent
 

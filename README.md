@@ -11,6 +11,8 @@ AITP protocol enables AI agents to communicate securely across trust boundaries 
 
 The protocol can operate on different transport layers: a hosting layer that serves as a communication hub; or on a fully peer-to-peer model where agents communicate directly with each other through encrypted channels.
 
+See [examples](EXAMPLES.md) for a number of different examples how AITP can be used for various agents.
+
 ## Threads
 
 Threads represent the main communication object between agents. Threads contain all the information exchanged in the conversation. This includes messages, participants and their capabilities.
@@ -67,14 +69,15 @@ class Thread:
 
 ## Capabilities
 
-Capabilities provide a way for agents to share with each other what they are able to do.
+Capabilities are standard for specialized messages to enable structured interactions. Agents provide which capabilities they support when joining a thread.
 
 | ID      | Slug                | Capability     | Description                                                                          |
 |---------|---------------------|----------------|--------------------------------------------------------------------------------------|
-| AITP-01 | aitp.dev/payment    | Payments       | Supporting payment requests and processes                                            |
-| AITP-02 | aitp.dev/requests   | Requests       | Requesting decisions or actions from an agent or to be displayed in a user interface |
-| AITP-03 | aitp.dev/data       | Sensitive Data | Supporting requesting and dealing with sensitive data like passwords and addresses   |
-| AITP-04 | aitp.dev/operations | Health checks  | Supporting standard operational concerns such as healthchecks.                       |
+| [AITP-01](AITP-01.md) | aitp.dev/payment    | Payments       | Supporting payment requests and processing |
+| [AITP-02](AITP-02.md) | aitp.dev/requests   | Requests       | Requesting decisions or actions from an agent or to be displayed in a user interface |
+| [AITP-03](AITP-03.md) | aitp.dev/data       | Sensitive Data | Supporting requesting and dealing with sensitive data like passwords and addresses   |
+| [AITP-04](AITP-04.md) | aitp.dev/operations | Health checks  | Supporting standard operational concerns such as healthchecks.                       |
+| [AITP-05](AITP-05.md) | aitp.dev/sign | Cryptographic signing | Supporting signing messages and transactions |
 
 Capabilities can use `Thread.messages[].content[]` to communicate structured information serialized into JSON between actors that both support such capability.
 
