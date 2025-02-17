@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "request_data_id": {
+              "type": "string"
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": ["id"],
+                "additionalProperties": true
+              },
+              "minItems": 1
+            }
+          },
+          "required": ["fields"],
+          "additionalProperties": true
+        }
+      },
+      "required": ["$schema", "data"],
+      "additionalProperties": true
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "$ref": "#/anyOf/0/properties/$schema"
+        },
+        "request_data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "fillButtonLabel": {
+              "type": "string",
+              "default": "Fill out form"
+            },
+            "form": {
+              "type": "object",
+              "properties": {
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "label": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "default_value": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "text",
+                          "number",
+                          "email",
+                          "textarea",
+                          "select",
+                          "combobox",
+                          "tel"
+                        ],
+                        "default": "text"
+                      },
+                      "options": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "required": {
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "autocomplete": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["id"],
+                    "additionalProperties": true
+                  },
+                  "minItems": 1
+                },
+                "json_url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "required": ["id", "description", "form"],
+          "additionalProperties": true
+        }
+      },
+      "required": ["$schema", "request_data"],
+      "additionalProperties": true
+    }
+  ]
+}

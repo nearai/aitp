@@ -1,0 +1,18 @@
+{
+  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "data": {
+    "request_data_id": "1ecdf8cd-5187-4460-ae79-ca1191cf68c9",
+    "fields": [
+      {
+        "id": "favorite_color",
+        "label": "Favorite Color",
+        "value": "Blue"
+      },
+      {
+        "id": "favorite_number",
+        "label": "Favorite Number",
+        "value": "7"
+      }
+    ]
+  }
+}

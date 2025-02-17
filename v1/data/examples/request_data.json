@@ -1,0 +1,33 @@
+{
+  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "request_data": {
+    "id": "5aabab1d-c053-49fc-bdd1-f432c89a1664",
+    "title": "Your Favorites",
+    "description": "This info will help us recommend better products.",
+    "fillButtonLabel": "Fill out favorites",
+    "form": {
+      "fields": [
+        {
+          "id": "favorite_color",
+          "default_value": "Red",
+          "label": "Favorite Color",
+          "options": ["Red", "Green", "Blue"],
+          "required": true,
+          "type": "select"
+        },
+        {
+          "id": "favorite_number",
+          "label": "Favorite Number",
+          "required": false,
+          "type": "number"
+        },
+        {
+          "id": "favorite_email",
+          "label": "Favorite Email",
+          "required": true,
+          "type": "email"
+        }
+      ]
+    }
+  }
+}

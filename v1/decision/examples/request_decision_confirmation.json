@@ -1,0 +1,23 @@
+{
+  "$schema": "https://aitp.dev/v1/decision/schema.json",
+  "request_decision": {
+    "id": "27ed3deb-39cb-4968-90dc-9cb456a470f2",
+    "title": "Please confirm",
+    "description": "Would you like to eat all cookies?",
+    "type": "confirmation",
+    "options": [
+      {
+        "id": "1",
+        "name": "Yes, eat the cookies"
+      },
+      {
+        "id": "2",
+        "name": "No, that's not healthy"
+      },
+      {
+        "id": "3",
+        "name": "Something else"
+      }
+    ]
+  }
+}

@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "decision": {
+          "type": "object",
+          "properties": {
+            "request_decision_id": {
+              "type": "string"
+            },
+            "options": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "type": "number"
+                  }
+                },
+                "required": ["id"],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "required": ["options"],
+          "additionalProperties": true
+        }
+      },
+      "required": ["$schema", "decision"],
+      "additionalProperties": true
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "$ref": "#/anyOf/0/properties/$schema"
+        },
+        "request_decision": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string",
+              "enum": ["products", "checkbox", "radio", "confirmation"],
+              "default": "radio"
+            },
+            "options": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "short_variant_name": {
+                    "type": "string"
+                  },
+                  "image_url": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "quote": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "const": "Quote"
+                      },
+                      "quote_id": {
+                        "type": "string"
+                      },
+                      "payee_id": {
+                        "type": "string"
+                      },
+                      "payment_plans": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "plan_id": {
+                              "type": "string"
+                            },
+                            "plan_type": {
+                              "type": "string",
+                              "const": "one-time"
+                            },
+                            "amount": {
+                              "type": "number"
+                            },
+                            "currency": {
+                              "type": "string",
+                              "const": "USD"
+                            }
+                          },
+                          "required": [
+                            "plan_id",
+                            "plan_type",
+                            "amount",
+                            "currency"
+                          ],
+                          "additionalProperties": true
+                        }
+                      },
+                      "valid_until": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "quote_id",
+                      "payee_id",
+                      "payment_plans",
+                      "valid_until"
+                    ],
+                    "additionalProperties": true
+                  },
+                  "reviews_count": {
+                    "type": "integer"
+                  },
+                  "five_star_rating": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 5
+                  },
+                  "url": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "variants": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "$ref": "#/anyOf/1/properties/request_decision/properties/options/items/properties/id"
+                        },
+                        "name": {
+                          "$ref": "#/anyOf/1/properties/request_decision/properties/options/items/properties/name"
+                        },
+                        "short_variant_name": {
+                          "$ref": "#/anyOf/1/properties/request_decision/properties/options/items/properties/short_variant_name"
+                        },
+                        "image_url": {
+                          "$ref": "#/anyOf/1/properties/request_decision/properties/options/items/properties/image_url"
+                        },
+                        "description": {
+                          "$ref": "#/anyOf/1/properties/request_decision/properties/options/items/properties/description"
+                        },
+                        "quote": {
+                          "$ref": "#/anyOf/1/properties/request_decision/properties/options/items/properties/quote"
+                        },
+                        "reviews_count": {
+                          "$ref": "#/anyOf/1/properties/request_decision/properties/options/items/properties/reviews_count"
+                        },
+                        "five_star_rating": {
+                          "$ref": "#/anyOf/1/properties/request_decision/properties/options/items/properties/five_star_rating"
+                        },
+                        "url": {
+                          "$ref": "#/anyOf/1/properties/request_decision/properties/options/items/properties/url"
+                        }
+                      },
+                      "required": ["id"],
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "required": ["id"],
+                "additionalProperties": true
+              },
+              "minItems": 1
+            }
+          },
+          "required": ["id", "options"],
+          "additionalProperties": true
+        }
+      },
+      "required": ["$schema", "request_decision"],
+      "additionalProperties": true
+    }
+  ]
+}
