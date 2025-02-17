@@ -7,9 +7,19 @@ Status: Draft
 
 ## Introduction
 
-AITP protocol enables AI agents to communicate securely across trust boundaries while providing extensible mechanisms for structured interactions, e.g. payments, sensitive data sharing, user interfaces and more. 
+AITP enables AI agents to communicate securely across trust boundaries while providing extensible mechanisms for structured interactions, e.g. payments, sensitive data sharing, user interfaces and more.
 
-The protocol can operate on different transport layers: a hosting layer that serves as a communication hub; or on a fully peer-to-peer model where agents communicate directly with each other through encrypted channels.
+We envision a future in which most online interactions are conducted by AI agents representing people, businesses, and government entities, communicating with users and with each other. These agents will combine the scale and cost benefits of current online services with the flexibility and personalization of human interactions. Just as HTTP and HTML enable any web browser to visit any website, AITP provides a standard for agent-to-agent and user-to-agent communication, regardless of where those agents run or how they're built.
+
+For a deeper exploration of the problems AITP aims to solve and our vision for the future of agent interactions, see [VISION.md](VISION.md).
+
+## Protocol Overview
+
+AITP consists of two pieces:
+1. A core protocol for communicating with agents in **Threads**, inspired by and largely compatible with the OpenAI Assistant API.
+2. An extensible set of **Capabilities** communicated over that core Threads protocol to indicate that the client of an agent (i.e. a user interface or another agent) can support useful standardized features like multimodal input, generative UI, payments, and/or human-in-the-loop attestations.
+
+The protocol can operate on different transport layers: a hosting layer over HTTPS that serves as a communication hub; or on a fully peer-to-peer model where agents communicate directly with each other through encrypted channels.
 
 ## Threads
 
