@@ -1,5 +1,5 @@
 {
-  "$schema": "https://aitp.dev/v1/decision/schema.json",
+  "$schema": "https://aitp.dev/v1/decisions/schema.json",
   "request_decision": {
     "id": "50a53841-09ee-4b57-b5ec-561fe505f532",
     "title": "Your Favorite Colors",

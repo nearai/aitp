@@ -1,5 +1,5 @@
 {
-  "$schema": "https://aitp.dev/v1/decision/schema.json",
+  "$schema": "https://aitp.dev/v1/decisions/schema.json",
   "request_decision": {
     "id": "bd9b613c-6fa5-4797-ba91-547f0903da9f",
     "title": "Recommended Products",

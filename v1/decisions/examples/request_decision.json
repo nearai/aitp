@@ -1,5 +1,5 @@
 {
-  "$schema": "https://aitp.dev/v1/decision/schema.json",
+  "$schema": "https://aitp.dev/v1/decisions/schema.json",
   "request_decision": {
     "id": "7c42b9d6-107d-4f5f-8f23-f9014c6efdae",
     "description": "Select your favorite number:",

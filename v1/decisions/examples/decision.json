@@ -1,5 +1,5 @@
 {
-  "$schema": "https://aitp.dev/v1/decision/schema.json",
+  "$schema": "https://aitp.dev/v1/decisions/schema.json",
   "decision": {
     "request_decision_id": "0f30909d-8d14-4294-9074-8686fee3018c",
     "options": [
