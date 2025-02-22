@@ -1,5 +1,7 @@
 # AITP-01: Payments
 
+Schema: https://aitp.dev/v1/payments.schema.json
+
 ## Introduction
 
 Payments is one of the core capabilities needed for inter-agent communication.
