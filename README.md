@@ -9,19 +9,21 @@ AITP enables AI agents to communicate securely across trust boundaries while pro
 
 We envision a future in which most online interactions are conducted by AI agents representing people, businesses, and government entities, communicating with users and with each other. These agents will combine the scale and cost benefits of current online services with the flexibility and personalization of human interactions. Just as HTTP and HTML enable any web browser to visit any website, AITP provides a standard for agent-to-agent and user-to-agent communication, regardless of where those agents run or how they're built.
 
-For a deeper exploration of the problems AITP aims to solve and our vision for the future of agent interactions, see [VISION.md](VISION.md).
+For a deeper exploration of the problems AITP aims to solve and our vision for the future of agent interactions, see the [Vision](VISION.md) page.
 
 ## Protocol Overview
 
 AITP consists of two pieces:
-1. A core protocol for communicating with agents in [**Chat Threads**](#threads), inspired by and largely compatible with the OpenAI Assistant/Threads API.  Read more about:
+1. A core protocol for communicating with agents in [**Chat Threads**](#threads), inspired by and largely compatible with the OpenAI Assistant/Threads API.  Read more below about:
 	1. [Why Threads?](#why-chat-threads)
 	2. [Thread Transports](#thread-transports)
 	3. [Thread Specification](#thread-specification)
-2. An extensible set of **Capabilities** communicated over those chat threads to indicate that the client of an agent (i.e. a user interface or another agent) can support useful standardized features like multimodal input, generative UI, payments, and/or human-in-the-loop attestations.  Read more about:
+2. An extensible set of **Capabilities** communicated over those chat threads to indicate that the client of an agent (i.e. a user interface or another agent) can support useful standardized features like multimodal input, generative UI, payments, and/or human-in-the-loop attestations.  Read more below about:
 	1. [What is a Capability?](#what-is-a-capability)
 	3. [Capability Exchange](#capability-exchange)
 	4. [Capability List](#capability-list)
+
+See [examples](EXAMPLES.md) for a number of different examples how AITP can be used for various agents.
 
 ## AITP vs...
 
@@ -42,26 +44,32 @@ Like the category above, browser use agents help 'bridge the gap' between AI age
 Threads represent the main communication object between agents. A thread contains all the information exchanged in the conversation. This includes messages, participants and their capabilities.
 
 Threads can be multi-party, supporting adding and removing agents and users.
-### Why Chat Threads?
-  Conversations (in-person, email, phone, chat, etc.) are a fundamental building block of human communication.  And an AI agent is simply software intended to act like a human in a specific role.  So conversations (like chat threads) are a natural interaction pattern for AI agents too.
 
-Natural-language chat threads are universal.  You don't need to read and understand a bunch of API docs or run some special software to learn how to interact with another service - you just talk to their agent.
+### Why Chat Threads?
+Conversations (in-person, email, phone, chat, etc.) are a fundamental building block of human communication.  And an AI agent is simply software intended to act like a human in a specific role.  So conversations (like chat threads) are a natural interaction pattern for AI agents too.
+
+Natural-language chat threads are universal.  You don't need to read and understand a bunch of API docs or run some special software to learn how to interact with another service – you just talk to their agent.
 
 ### Thread Transports
+
 #### A Little Bit of History
 With AITP, we're seeking to make interactions with AI agents as seamless and universal as browsing a website, sending an email, or making a phone call.
 
 One reason the Web took off in the 1990s was that the HTTP interface was easy for website creators and browser developers to understand and implement.  Using the already well-established TCP/IP and DNS protocols, you could send `GET [url]` and receive back an HTML document.  This led to a proliferation of websites and browsers with rapidly expanding capabilities.
 
 The chat thread is a similarly powerful concept built on top of existing technology.  For better or worse, OpenAI's APIs have become a de facto standard for other AI APIs, so we adopt the relevant portions of it here to help with adoption.
-#### Supported Transports
-(todo: table)
-* Threads API (JSON over HTTPS)
-* Emails
-* Chat (Slack, WhatsApp, Telegram, Matrix is especially interesting)
-* Peer-to-peer
 
-See [examples](EXAMPLES.md) for a number of different examples how AITP can be used for various agents.
+#### Supported Transports
+
+| Transport ID                                                | Description                 | Status |
+|-------------------------------------------------------------|-----------------------------|--------|
+| [AITP-T01: Threads Api](transports/aitp-t01-threads-api.md) | OpenAI-compatible HTTPS API | Draft  |
+
+Future transports could include:
+* Email
+* Chat (Slack, WhatsApp, Telegram)
+* [Matrix](https://matrix.org/)
+* Peer-to-peer / decentralized networks
 
 ### Thread Specification
 
@@ -74,9 +82,9 @@ class Message:
     thread_id: str
     # The content of the message in an array of text. 
     # AITP messages may be passed in JSON format, encoded as strings.
-    content: List[str]
+    content: list[str]
     # Files attached to the message.
-    attachments: List[{file_id: str}]
+    attachments: list[{file_id: str}]
     # The role of the entity that is creating the message: user or assistant
     role: str
     # Metadata for the message.
@@ -94,7 +102,7 @@ class Actor:
     # Global agent identifier: url/<agent> or user identifier.
     id: str
     # Capabilities this actor posses.
-    capabilities: List[Capability]
+    capabilities: list[Capability]
 
 
 class Thread:
@@ -102,13 +110,13 @@ class Thread:
     # The identifier, which can be referenced in API endpoints.
     id: str
     # The messages in the thread.
-    messages: List[Message]
+    messages: list[Message]
     # Metadata for the message.
     metadata: dict
         # Parent thread that this was forked off. Can be null.
         parent_id: str
         # Users and Agents that are part of this thread.
-        actors: List[Actor]
+        actors: list[Actor]
 ```
 
 ## Capabilities
@@ -133,65 +141,6 @@ For example:
     ]
 }
 ```
-
-## Transport
-
-Various transport layers can be used for inter-agent communication with Threads.
-
-For example, one of the agents can be using HTTPS server that other agents are using to retrieve and modify `Thread`.
-
-Another approach would be to have a fully peer-to-peer protocol where `Thread` is synchronized between peers. This is currently outside of scope for the v1.
-
-### Threads API
-
-**Create thread**
-
-`POST <agent id>/v1/thread`
-
-Request body:
-- `messages`: array of strings
-
-Response:
-- `thread`: A Thread object.
-
-**Retrieve thread**
-
-`POST <agent url>/v1/threads/{thread_id}`
-
-Path parameters:
-- `thread_id`: array of strings
-
-Response:
-- `thread`: A Thread object matching the specified ID.
-
-### Messages API
-
-**Create message**
-
-`POST <agent url>/v1/threads/{thread_id}/messages`
-
-Create a message.
-
-Path parameters:
-- `thread_id`: The ID of the thread to add the message to.
-
-Request body:
-- `role`: string. The role of the entity that is creating the message.
-- `content`: string or array. 
-- `attachments`: array or null. A list of files attached to the message, and the tools they should be added to.
-
-**List messages**
-
-`GET <agent url>/v1/threads/{thread_id}/messages`
-
-Returns a list of messages for a given thread.
-
-Path parameters:
-- `thread_id`: The ID of the thread the messages belong to.
-
-### Compatibility
-Both the Thread and Message apis support additional properties for compatibility with the OpenAI v1 Assistants API.
-
 
 ## Open questions
 
