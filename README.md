@@ -5,6 +5,16 @@ Version: 0.1.0
 
 Status: Draft
 
+{: .note }
+> [!NOTE]
+> 
+> AITP is a spec in progress and we are eager for your comments, feedback, and contributions!  
+> 
+> We are simultaneously writing this spec, integrating AITP support into the [NEAR AI Hub](https://app.near.ai/), and building
+> AITP-compatible [agents](https://app.near.ai/agents) to inform how the protocol should change before v1.0.
+
+<hr>
+
 <details markdown="block">
   <summary>
     Table of contents
@@ -29,7 +39,7 @@ AITP consists of two pieces:
 	1. [Why Threads?](#why-chat-threads)
 	2. [Thread Transports](#thread-transports)
 	3. [Thread Specification](#thread-specification)
-2. An extensible set of **Capabilities** communicated over those chat threads to indicate that the client of an agent (i.e. a user interface or another agent) can support useful standardized features like multimodal input, generative UI, payments, and/or human-in-the-loop attestations.  Read more below about:
+2. An extensible set of [**Capabilities**](#capabilities) communicated over those chat threads to indicate that the client of an agent (i.e. a user interface or another agent) can support useful standardized features like multimodal input, generative UI, payments, and/or human-in-the-loop attestations.  Read more below about:
 	1. [What is a Capability?](#what-is-a-capability)
 	3. [Capability Exchange](#capability-exchange)
 	4. [Capability List](#capability-list)
@@ -74,7 +84,7 @@ The chat thread is a similarly powerful concept built on top of existing technol
 
 | Transport ID                                                | Description                 | Status |
 |-------------------------------------------------------------|-----------------------------|--------|
-| [AITP-T01: Threads Api](transports/aitp-t01-threads-api.md) | OpenAI-compatible HTTPS API | Draft  |
+| [AITP-T01: Threads API](transports/aitp-t01-threads-api.md) | OpenAI-compatible HTTPS API | Draft  |
 
 Future transports could include:
 * Email
@@ -134,6 +144,16 @@ class Thread:
 
 Capabilities are standard for specialized messages to enable structured interactions. Agents provide which capabilities they support when joining a thread.
 
+### What is a Capability?
+
+(todo)
+
+### Capability Exchange
+
+(todo)
+
+### Capability List
+
 | ID                    | Slug                | Capability            | Description                                                                          |
 | --------------------- | ------------------- | --------------------- | ------------------------------------------------------------------------------------ |
 | [AITP-01](AITP-01.md) | aitp.dev/payment    | Payments              | Supporting payment requests and processing                                           |
@@ -156,4 +176,5 @@ For example:
 ## Open questions
 
 - Authentication of agents
+- Agent identifiers
 - Local agent interacting with agents on a hub

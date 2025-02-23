@@ -1,4 +1,4 @@
-# AITP-T01: Threads Api
+# AITP-T01: Threads API
 
 AITP-T01 is an AITP transport using a JSON API over HTTPS. It is inspired by, and intended to be compatible with, the
 OpenAI Assistants 'v2' API.
@@ -24,9 +24,9 @@ And the drawbacks are:
 2. Storing thread state and history might incur storage and bandwidth fees,
 
 
-### Threads API
+## Threads API
 
-#### Create thread
+### Create thread
 
 `POST <agent id>/v1/thread`
 
@@ -36,7 +36,7 @@ Request body:
 Response:
 - `thread`: A Thread object.
 
-#### Retrieve thread
+### Retrieve thread
 
 `POST <agent url>/v1/threads/{thread_id}`
 
@@ -46,9 +46,9 @@ Path parameters:
 Response:
 - `thread`: A Thread object matching the specified ID.
 
-### Messages API
+## Messages API
 
-**Create message**
+### Create message
 
 `POST <agent url>/v1/threads/{thread_id}/messages`
 
@@ -62,7 +62,7 @@ Request body:
 - `content`: string or array.
 - `attachments`: array or null. A list of files attached to the message, and the tools they should be added to.
 
-**List messages**
+### List messages
 
 `GET <agent url>/v1/threads/{thread_id}/messages`
 
@@ -71,6 +71,6 @@ Returns a list of messages for a given thread.
 Path parameters:
 - `thread_id`: The ID of the thread the messages belong to.
 
-### Compatibility
-Both the Thread and Message apis support additional properties for compatibility with the OpenAI v1 Assistants API.
+## Compatibility
+Both the Thread and Message APIs support additional properties for compatibility with the OpenAI v2 Assistants API.
 
