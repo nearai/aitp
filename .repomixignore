@@ -1,0 +1,6 @@
+# Add patterns to ignore here, one per line
+_config.yml
+Gemfile
+Gemfile.lock
+.github/
+LICENSE
