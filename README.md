@@ -61,6 +61,15 @@ There's lots more on this subject on the [Vision](VISION.md) page.
 **...browser use agents like [ChatGPT Operator](https://openai.com/index/introducing-operator/), [Proxy](https://convergence.ai/), and [Rabbit LAM](https://www.rabbit.tech/lam-playground):**
 Like the category above, browser use agents help 'bridge the gap' between AI agents and existing websites and services.  Browser use offers much more functionality than MCP at the expense of speed and accuracy.  We consider browser use agents to be a useful stopgap tool while we migrate to purpose-built agents communicating with AITP.
 
+## How do I get involved?
+
+* **Join our Telegram community**: https://t.me/nearaialpha 
+* **Build more agents**: The more AITP-compatible agents there are, the more useful each agent will be.  Agents built on the [NEAR AI Hub](https://app.near.ai) support all AITP features.
+* **Build AITP support into more AI agent frameworks**: We want every AI agent framework and hosting provider to support AITP.
+* **Contribute to the protocol**: open an issue, pull request, or discussion on the [AITP repo](https://github.com/nearai/aitp).
+
+If you're using AI development aids, the latest specification has been packaged up into [aitp-repomix.txt](https://nightly.link/nearai/aitp/workflows/repomix/main/aitp-repomix), perfect for adding to your AI's context so it knows how to use AITP.
+
 ## Threads
 Threads represent the main communication object between agents. A thread contains all the information exchanged in the conversation. This includes messages, participants and their capabilities.
 
