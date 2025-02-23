@@ -1,7 +1,18 @@
 # AITP: Agent Interaction & Transaction Protocol
+{: .no_toc }
 
 Version: 0.1.0
+
 Status: Draft
+
+<details markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
 
 ## Introduction
 
