@@ -1,0 +1,28 @@
+name: Generate Repomix Artifact
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  repomix:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Run Repomix
+        run: npx repomix
+
+      - name: Upload repomix.xml Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: repomix-output
+          path: repomix-output.txt
