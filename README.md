@@ -1,8 +1,6 @@
 # AITP: Agent Interaction & Transaction Protocol
 
 Version: 0.1.0
-
-
 Status: Draft
 
 ## Introduction
@@ -16,20 +14,56 @@ For a deeper exploration of the problems AITP aims to solve and our vision for t
 ## Protocol Overview
 
 AITP consists of two pieces:
-1. A core protocol for communicating with agents in **Threads**, inspired by and largely compatible with the OpenAI Assistant API.
-2. An extensible set of **Capabilities** communicated over that core Threads protocol to indicate that the client of an agent (i.e. a user interface or another agent) can support useful standardized features like multimodal input, generative UI, payments, and/or human-in-the-loop attestations.
+1. A core protocol for communicating with agents in [**Chat Threads**](#threads), inspired by and largely compatible with the OpenAI Assistant/Threads API.  Read more about:
+	1. [Why Threads?](#why-chat-threads)
+	2. [Thread Transports](#thread-transports)
+	3. [Thread Specification](#thread-specification)
+2. An extensible set of **Capabilities** communicated over those chat threads to indicate that the client of an agent (i.e. a user interface or another agent) can support useful standardized features like multimodal input, generative UI, payments, and/or human-in-the-loop attestations.  Read more about:
+	1. [What is a Capability?](#what-is-a-capability)
+	3. [Capability Exchange](#capability-exchange)
+	4. [Capability List](#capability-list)
 
-The protocol can operate on different transport layers: a hosting layer over HTTPS that serves as a communication hub; or on a fully peer-to-peer model where agents communicate directly with each other through encrypted channels.
+## AITP vs...
+
+**...multi-agent orchestration frameworks like CrewAI, Autogen, and LangGraph:**
+While these frameworks and AITP both deal with agent-to-agent communication, the other frameworks are meant for agents with the same owner, working towards a shared goal.  AITP facilitates agent-to-agent interactions that cross a 'trust boundary', like a user's agent talking to a business's agent.
+
+It is totally fine to use these other frameworks for internal agent-to-agent communication and use AITP for external communication, though you could do it all with AITP too.
+
+**...service metadata / API proxy / tool use   protocols like Anthropic's [Model Context Protocol](https://modelcontextprotocol.io/) (MCP), [Bitte Open Agents](https://docs.bitte.ai/agents), or [llms.txt](https://llmstxt.org/):**
+These solutions are about making it easier for AI agents to use existing non-agentic APIs and services.  This is worthwhile since AI agents are still relatively uncommon in the wild.  But as these services start deploying their own AI agents, AITP defines how you or your agent should communicate with them.
+
+There's lots more on this subject on the [Vision](VISION.md) page.
+
+**...browser use agents like [ChatGPT Operator](https://openai.com/index/introducing-operator/), [Proxy](https://convergence.ai/), and [Rabbit LAM](https://www.rabbit.tech/lam-playground):**
+Like the category above, browser use agents help 'bridge the gap' between AI agents and existing websites and services.  Browser use offers much more functionality than MCP at the expense of speed and accuracy.  We consider browser use agents to be a useful stopgap tool while we migrate to purpose-built agents communicating with AITP.
+
+## Threads
+Threads represent the main communication object between agents. A thread contains all the information exchanged in the conversation. This includes messages, participants and their capabilities.
+
+Threads can be multi-party, supporting adding and removing agents and users.
+### Why Chat Threads?
+  Conversations (in-person, email, phone, chat, etc.) are a fundamental building block of human communication.  And an AI agent is simply software intended to act like a human in a specific role.  So conversations (like chat threads) are a natural interaction pattern for AI agents too.
+
+Natural-language chat threads are universal.  You don't need to read and understand a bunch of API docs or run some special software to learn how to interact with another service - you just talk to their agent.
+
+### Thread Transports
+#### A Little Bit of History
+With AITP, we're seeking to make interactions with AI agents as seamless and universal as browsing a website, sending an email, or making a phone call.
+
+One reason the Web took off in the 1990s was that the HTTP interface was easy for website creators and browser developers to understand and implement.  Using the already well-established TCP/IP and DNS protocols, you could send `GET [url]` and receive back an HTML document.  This led to a proliferation of websites and browsers with rapidly expanding capabilities.
+
+The chat thread is a similarly powerful concept built on top of existing technology.  For better or worse, OpenAI's APIs have become a de facto standard for other AI APIs, so we adopt the relevant portions of it here to help with adoption.
+#### Supported Transports
+(todo: table)
+* Threads API (JSON over HTTPS)
+* Emails
+* Chat (Slack, WhatsApp, Telegram, Matrix is especially interesting)
+* Peer-to-peer
 
 See [examples](EXAMPLES.md) for a number of different examples how AITP can be used for various agents.
 
-## Threads
-
-Threads represent the main communication object between agents. Threads contain all the information exchanged in the conversation. This includes messages, participants and their capabilities.
-
-Threads can be multi-party, supporting adding and removing agents and users.
-
-### Thread data structure
+### Thread Specification
 
 ```python
 class Message:
@@ -81,13 +115,13 @@ class Thread:
 
 Capabilities are standard for specialized messages to enable structured interactions. Agents provide which capabilities they support when joining a thread.
 
-| ID      | Slug                | Capability     | Description                                                                          |
-|---------|---------------------|----------------|--------------------------------------------------------------------------------------|
-| [AITP-01](AITP-01.md) | aitp.dev/payment    | Payments       | Supporting payment requests and processing |
-| [AITP-02](AITP-02.md) | aitp.dev/requests   | Requests       | Requesting decisions or actions from an agent or to be displayed in a user interface |
-| [AITP-03](AITP-03.md) | aitp.dev/data       | Sensitive Data | Supporting requesting and dealing with sensitive data like passwords and addresses   |
-| [AITP-04](AITP-04.md) | aitp.dev/operations | Health checks  | Supporting standard operational concerns such as healthchecks.                       |
-| [AITP-05](AITP-05.md) | aitp.dev/sign | Cryptographic signing | Supporting signing messages and transactions |
+| ID                    | Slug                | Capability            | Description                                                                          |
+| --------------------- | ------------------- | --------------------- | ------------------------------------------------------------------------------------ |
+| [AITP-01](AITP-01.md) | aitp.dev/payment    | Payments              | Supporting payment requests and processing                                           |
+| [AITP-02](AITP-02.md) | aitp.dev/requests   | Requests              | Requesting decisions or actions from an agent or to be displayed in a user interface |
+| [AITP-03](AITP-03.md) | aitp.dev/data       | Sensitive Data        | Supporting requesting and dealing with sensitive data like passwords and addresses   |
+| [AITP-04](AITP-04.md) | aitp.dev/operations | Health checks         | Supporting standard operational concerns such as healthchecks.                       |
+| [AITP-05](AITP-05.md) | aitp.dev/sign       | Cryptographic signing | Supporting signing messages and transactions                                         |
 
 Capabilities can use `Thread.messages[].content[]` to communicate structured information serialized into JSON between actors that both support such capability.
 
