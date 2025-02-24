@@ -5,7 +5,27 @@ _site
 vendor
 Gemfile.lock
 
+# Obsidian editing
 .obsidian/
 .trash/
+
+# IDE stuff
 .idea/
-repomix-output.txt
+
+node_modules/
+
+# Generated files
+aitp-repomix.txt
+/website/build
+/website/.docusaurus
+/website/.cache-loader
+
+# Misc
+.DS_Store
+.env.local
+.env.development.lo
+.env.test.local
+.env.production.loc
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

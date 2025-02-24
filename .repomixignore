@@ -1,6 +1,8 @@
 # Add patterns to ignore here, one per line
-_config.yml
-Gemfile
-Gemfile.lock
 .github/
+repomix.config.json
 LICENSE
+website/*.ts
+website/src
+website/static
+website/package.json
