@@ -1,0 +1,11 @@
+{
+  "position": 4,
+  "label": "Transports",
+  "collapsible": true,
+  "collapsed": false,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "AITP Transports"
+  }
+}

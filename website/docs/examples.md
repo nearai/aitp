@@ -1,8 +1,29 @@
+---
+sidebar_position: 3
+sidebar_label: Examples
+---
+
 # AITP Examples
 
 AITP is a generic protocol for interacting between agents with ability to exchange value. This document showcases specific interaction examples.
 
 ## User interacting with Travel Agent
+
+```mermaid
+sequenceDiagram
+    participant U as User Agent
+    participant S as Shopping Agent
+    
+    U->>S: "I'd like to buy some socks"
+    S->>U: request_decision JSON (product options)
+    Note right of S: Shows options for red socks and blue socks<br>with prices, images, etc.
+    U->>S: decision JSON (selects product)
+    S->>U: payment quote JSON
+    Note right of S: Quote for the selected product
+    U->>S: approval/payment JSON
+    S->>U: "Thank you for your purchase!"
+    Note right of S: Order confirmation and next steps
+```
 
 Overview
 
@@ -92,3 +113,25 @@ GET Thread that has several messages
   ]
 }
 ```
+
+## Complete Purchase Flow
+
+```mermaid
+flowchart TB
+    Start[User starts conversation] --> Intent[User expresses purchase intent]
+    Intent --> Options[Agent presents product options]
+    Options --> Selection[User makes selection]
+    Selection --> Quote[Agent provides payment quote]
+    Quote --> Decision{User decides}
+    Decision -->|Accept| Payment[User approves payment]
+    Decision -->|Decline| End[End of conversation]
+    Payment --> Processing[Agent processes payment]
+    Processing --> Confirmation[Agent confirms purchase]
+    Confirmation --> Shipping[Agent provides shipping info]
+    Shipping --> End
+    
+    style Start fill:#f9f9f9,stroke:#333
+    style End fill:#f9f9f9,stroke:#333
+    style Decision fill:#ffe0b2,stroke:#fb8c00
+    style Payment fill:#bbdefb,stroke:#1976d2
+    style Confirmation fill:#c8e6c9,stroke:#388e3c

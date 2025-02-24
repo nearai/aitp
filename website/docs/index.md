@@ -1,15 +1,20 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
 # AITP: Agent Interaction & Transaction Protocol
 
 Version: 0.1.0
 
 Status: Draft
 
-> [!NOTE]
-> 
-> AITP is a spec in progress and we are open to comments, feedback, and contributions!  
-> 
-> We are simultaneously writing this spec, integrating AITP support into the [NEAR AI Hub](https://app.near.ai/), and building
-> AITP-compatible [agents](https://app.near.ai/agents) to inform how the protocol should change before v1.0.
+:::note
+AITP is a spec in progress and we are open to comments, feedback, and contributions!
+
+We are simultaneously writing this spec, integrating AITP support into the [NEAR AI Hub](https://app.near.ai/), and building
+AITP-compatible [agents](https://app.near.ai/agents) to inform how the protocol should change before v1.0.
+:::
 
 ## Introduction
 
@@ -20,6 +25,46 @@ We envision a future in which most online interactions are conducted by AI agent
 For a deeper exploration of the problems AITP aims to solve and our vision for the future of agent interactions, see the [Vision](vision) page.
 
 ## Protocol Overview
+
+```mermaid
+flowchart TB
+    subgraph "AITP Protocol"
+        subgraph "1. Core Protocol: Chat Threads"
+            Threads[Chat Threads]
+            Threads --> Transports[Thread Transports]
+            Transports --> HTTPAPI[AITP-T01: Threads API]
+            Transports --> FutureTransports[Future Transports]
+        end
+        
+        subgraph "2. Capabilities"
+            Capabilities[Extensible Capabilities]
+            Capabilities --> Cap01[AITP-01: Payments]
+            Capabilities --> Cap02[AITP-02: Decisions]
+            Capabilities --> Cap03[AITP-03: Data Request]
+            Capabilities --> Cap04[AITP-04: Transactions]
+            Capabilities --> Cap05[AITP-05: Signatures]
+            Capabilities --> MoreCaps[Future Capabilities]
+        end
+        
+        Threads --- Messages
+        Messages --- Capabilities
+        
+        subgraph "Thread Components"
+            Messages[Messages]
+            Actors[Actors & Capabilities]
+            Metadata[Metadata]
+        end
+    end
+    
+    style Threads fill:#f9f9f9,stroke:#666
+    style Capabilities fill:#f9f9f9,stroke:#666
+    style HTTPAPI fill:#bbdefb,stroke:#1976d2
+    style Cap01 fill:#ffecb3,stroke:#ffa000
+    style Cap02 fill:#c8e6c9,stroke:#388e3c
+    style Cap03 fill:#e1bee7,stroke:#8e24aa
+    style Cap04 fill:#ffccbc,stroke:#e64a19
+    style Cap05 fill:#b3e5fc,stroke:#0288d1
+```
 
 AITP consists of two pieces:
 1. A core protocol for communicating with agents in [**Chat Threads**](#threads), inspired by and largely compatible with the OpenAI Assistant/Threads API.  Read more below about:
@@ -50,7 +95,7 @@ Like the category above, browser use agents help 'bridge the gap' between AI age
 
 ## How do I get involved?
 
-* **Join our Telegram community**: https://t.me/nearaialpha 
+* **Join our Telegram community**: https://t.me/nearaialpha
 * **Build more agents**: The more AITP-compatible agents there are, the more useful each agent will be.  Agents built on the [NEAR AI Hub](https://app.near.ai) support all AITP features.
 * **Build AITP support into more AI agent frameworks**: We want every AI agent framework and hosting provider to support AITP.
 * **Contribute to the protocol**: open an issue, pull request, or discussion on the [AITP repo](https://github.com/nearai/aitp).
@@ -97,6 +142,45 @@ Future transports could include anything that allows passing both unstructured a
 
 ### Thread Specification
 
+```mermaid
+classDiagram
+    class Thread {
+        +string id
+        +List~Message~ messages
+        +Dictionary metadata
+        +string parent_id
+        +List~Actor~ actors
+    }
+    
+    class Message {
+        +int created_at
+        +string thread_id
+        +List~string~ content
+        +List~Attachment~ attachments
+        +string role
+        +Dictionary metadata
+        +string actor
+    }
+    
+    class Actor {
+        +string id
+        +List~Capability~ capabilities
+    }
+    
+    class Capability {
+        +string schema
+    }
+    
+    class Attachment {
+        +string file_id
+    }
+    
+    Thread "1" *-- "*" Message: contains
+    Thread "1" *-- "*" Actor: has participants
+    Message "1" *-- "*" Attachment: may have
+    Actor "1" *-- "*" Capability: supports
+```
+
 ```python
 class Message:
     """Represents a message within a thread."""
@@ -110,9 +194,9 @@ class Message:
     # Files attached to the message.
     attachments: list[{file_id: str}]
     # The role of the entity that is creating the message: 'user' or 'assistant'.
-	# 'user' is always the creator/initiator of the thread, even if it's actually
-	# an AI agent. 'assistant' is used for any other respondent.  Check the 'actor'
-	# metadata field for more detailss.
+    # 'user' is always the creator/initiator of the thread, even if it's actually
+    # an AI agent. 'assistant' is used for any other respondent.  Check the 'actor'
+    # metadata field for more detailss.
     role: str
     # Metadata for the message.
     metadata: dict
@@ -127,7 +211,7 @@ class Capability:
 class Actor:
     """A User or Agent participating on the thread."""
     # A unique identifier, e.g. URL or username; this must be unique within the thread 
-	# but does not need to be consistent between threads, e.g. to maintain anonymity.
+    # but does not need to be consistent between threads, e.g. to maintain anonymity.
     id: str
     # Capabilities this actor posses.
     capabilities: list[Capability]
@@ -186,6 +270,27 @@ To support the maximal amount of functionality, the parties in a thread need to 
 * Agents receiving an AITP message should ignore unknown fields, to handle newer minor versions gracefully.
 
 ### Capability Exchange
+
+```mermaid
+sequenceDiagram
+    participant U as User Agent
+    participant A as Service Agent
+    
+    Note over U,A: Thread Creation
+    U->>A: Create Thread
+    Note right of U: Declares capabilities:<br>["https://aitp.dev/v1/payments.schema.json",<br>"https://aitp.dev/v1/decisions.schema.json"]
+    A->>U: Thread Created
+    Note left of A: Declares capabilities:<br>["https://aitp.dev/v1/payments.schema.json",<br>"https://aitp.dev/v1/transactions.schema.json"]
+    
+    Note over U,A: Both agents now know their mutually supported<br>capabilities (payments in this case)
+    
+    U->>A: Natural language message
+    A->>U: {$schema: "https://aitp.dev/v1/payments.schema.json", "request_payment": {...}}
+    Note right of U: Agent understands and can<br>process payment request
+    U->>A: {$schema: "https://aitp.dev/v1/payments.schema.json", "payment": {...}}
+    
+    Note over U,A: Using a capability the other doesn't support would be an error
+```
 
 When starting or joining a thread, each agent or client needs to declare which capabilities and capability versions it supports.  Capability exchange is the responsibility of the Transport; it is not contained in the messages.  For instance, for the the AITP-T01 Thread API transport, capabilities are defined as an array of schema URLs passed into the `POST /v1/thread` endpoint.
 

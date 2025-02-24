@@ -59,18 +59,17 @@ const config: Config = {
     'vercel-analytics'
   ],
 
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
+
   themeConfig: {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
       title: 'AITP: Agent Interaction & Transaction Protocol',
       items: [
-        {
-          type: 'docSidebar',
-          sidebarId: 'docs',
-          position: 'left',
-          label: 'Docs',
-        },
         {
           href: 'https://github.com/nearai/aitp',
           label: 'GitHub',
