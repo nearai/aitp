@@ -1,9 +1,0 @@
-{
-  "name": "docusaurus-plugin-schema-copy",
-  "version": "1.0.0",
-  "description": "Copies schema.json files from capabilities directory to static directory during build",
-  "main": "index.js",
-  "dependencies": {
-    "glob": "^10.3.10"
-  }
-}

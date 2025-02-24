@@ -7,11 +7,11 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'AITP',
   tagline: 'Agent Interaction & Transaction Protocol',
-  favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
   url: 'https://aitp.dev',
   baseUrl: '/',
+  trailingSlash: false,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -20,6 +20,8 @@ const config: Config = {
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
+
+  staticDirectories: ['static', '../schemas'],
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -44,15 +46,24 @@ const config: Config = {
         theme: {
           customCss: './src/css/custom.css',
         },
+        gtag: {
+          trackingID: 'G-SQ70S0ST9B',
+          anonymizeIP: true,
+        }
       } satisfies Preset.Options,
     ],
+  ],
+
+  plugins: [
+    require.resolve('docusaurus-lunr-search'),
+    'vercel-analytics'
   ],
 
   themeConfig: {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'AITP Documentation',
+      title: 'AITP: Agent Interaction & Transaction Protocol',
       items: [
         {
           type: 'docSidebar',
@@ -70,23 +81,23 @@ const config: Config = {
     footer: {
       style: 'light',
       links: [
-          {
-              label: 'Telegram Community',
-              href: 'https://t.me/nearaialpha',
-          },
-          {
-              label: 'X',
-              href: 'https://x.com/near_ai',
-          },
-          {
-              label: 'NEAR AI',
-              href: 'https://near.ai',
-          },
+        {
+          label: 'Telegram Community',
+          href: 'https://t.me/nearaialpha',
+        },
+        {
+          label: 'X',
+          href: 'https://x.com/near_ai',
+        },
+        {
+          label: 'NEAR AI',
+          href: 'https://near.ai',
+        },
 
-            {
-              label: 'GitHub',
-              href: 'https://github.com/nearai/aitp',
-            },
+        {
+          label: 'GitHub',
+          href: 'https://github.com/nearai/aitp',
+        },
       ],
       copyright: `Copyright © ${new Date().getFullYear()} NEAR AI. Built with Docusaurus.`,
     },

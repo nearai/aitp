@@ -8,7 +8,7 @@
     "removeComments": false,
     "removeEmptyLines": false,
     "compress": false,
-    "topFilesLength": 5,
+    "topFilesLength": 15,
     "showLineNumbers": false,
     "copyToClipboard": false
   },
