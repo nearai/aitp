@@ -1,11 +1,9 @@
 # AITP: Agent Interaction & Transaction Protocol
-{: .no_toc }
 
 Version: 0.1.0
 
 Status: Draft
 
-{: .note }
 > [!NOTE]
 > 
 > AITP is a spec in progress and we are open to comments, feedback, and contributions!  
@@ -13,24 +11,13 @@ Status: Draft
 > We are simultaneously writing this spec, integrating AITP support into the [NEAR AI Hub](https://app.near.ai/), and building
 > AITP-compatible [agents](https://app.near.ai/agents) to inform how the protocol should change before v1.0.
 
-<hr>
-
-<details markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
 ## Introduction
 
 AITP enables AI agents to communicate securely across trust boundaries while providing extensible mechanisms for structured interactions, e.g. payments, sensitive data sharing, user interfaces and more.
 
 We envision a future in which most online interactions are conducted by AI agents representing people, businesses, and government entities, communicating with users and with each other. These agents will combine the scale and cost benefits of current online services with the flexibility and personalization of human interactions. Just as HTTP and HTML enable any web browser to visit any website, AITP provides a standard for agent-to-agent and user-to-agent communication, regardless of where those agents run or how they're built.
 
-For a deeper exploration of the problems AITP aims to solve and our vision for the future of agent interactions, see the [Vision](VISION.md) page.
+For a deeper exploration of the problems AITP aims to solve and our vision for the future of agent interactions, see the [Vision](vision) page.
 
 ## Protocol Overview
 
@@ -44,7 +31,7 @@ AITP consists of two pieces:
 	3. [Capability Exchange](#capability-exchange)
 	4. [Capability List](#capability-list)
 
-See [examples](EXAMPLES.md) for a number of different examples how AITP can be used for various agents.
+See [examples](examples) for a number of different examples how AITP can be used for various agents.
 
 ## AITP vs...
 
@@ -56,7 +43,7 @@ It is totally fine to use these other frameworks for internal agent-to-agent com
 **...service metadata / API proxy / tool use   protocols like Anthropic's [Model Context Protocol](https://modelcontextprotocol.io/) (MCP), [Bitte Open Agents](https://docs.bitte.ai/agents), or [llms.txt](https://llmstxt.org/):**
 These solutions are about making it easier for AI agents to use existing non-agentic APIs and services.  This is worthwhile since AI agents are still relatively uncommon in the wild.  But as these services start deploying their own AI agents, AITP defines how you or your agent should communicate with them.
 
-There's lots more on this subject on the [Vision](VISION.md) page.
+There's lots more on this subject on the [Vision](vision) page.
 
 **...browser use agents like [ChatGPT Operator](https://openai.com/index/introducing-operator/), [Proxy](https://convergence.ai/), and [Rabbit LAM](https://www.rabbit.tech/lam-playground):**
 Like the category above, browser use agents help 'bridge the gap' between AI agents and existing websites and services.  Browser use offers much more functionality than MCP at the expense of speed and accuracy.  We consider browser use agents to be a useful stopgap tool while we migrate to purpose-built agents communicating with AITP.
@@ -98,9 +85,9 @@ The chat thread is a similarly powerful concept built on top of existing technol
 
 #### Supported Transports
 
-| Transport ID                                                | Description                 | Spec Status | Implementation Status |
-|-------------------------------------------------------------|-----------------------------|-------------|-----------------------|
-| [AITP-T01: Threads API](transports/aitp-t01-threads-api.md) | OpenAI-compatible HTTPS API | Draft       | Live on NEAR AI       |
+| Transport ID                                             | Description                 | Spec Status | Implementation Status |
+|----------------------------------------------------------|-----------------------------|-------------|-----------------------|
+| [AITP-T01: Threads API](transports/aitp-t01-threads-api) | OpenAI-compatible HTTPS API | Draft       | Live on NEAR AI       |
 
 Future transports could include anything that allows passing both unstructured and structured data between two or more parties:
 * Email
@@ -204,13 +191,13 @@ When starting or joining a thread, each agent or client needs to declare which c
 
 ### Capability List
 
-| Capability ID                                                        | Schema                                                                                                                                        | Description                                                                          | Spec Status | Implementation Status |
-|----------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|-------------|-----------------------|
-| [AITP-01: Payments](capabilities/aitp-01-payments/README.md)        |                                                                                                                                               | Agent-native payment requests, authorizations, and post-processing                   | Ideation    | None                  |
-| [AITP-02: Decisions](capabilities/aitp-02-decisions/README.md)       | v1.0.0 [JSON Schema](capabilities/aitp-02-decisions/v1.0.0/schema.json) / [TypeScript](capabilities/aitp-02-decisions/v1.0.0/schema.ts)       | Requesting decisions or actions from an agent or to be displayed in a user interface | Draft       | Live on NEAR AI       |
-| [AITP-03: Data Request](capabilities/aitp-03-data-request/README.md) | v1.0.0 [JSON Schema](capabilities/aitp-03-data-request/v1.0.0/schema.json) / [TypeScript](capabilities/aitp-03-data-request/v1.0.0/schema.ts) | Supporting requesting and dealing with structured data like passwords and addresses  | Draft       | Live on NEAR AI       |
-| [AITP-04: Transactions](capabilities/aitp-04-transactions/README.md) | v1.0.0 [JSON Schema](capabilities/aitp-04-transactions/v1.0.0/schema.json) / [TypeScript](capabilities/aitp-04-transactions/v1.0.0/schema.ts) | P2P crypto transactions, using coins or tokens; less functionality than Payments     | Draft       | Live on NEAR AI       |
-| [AITP-05: Signatures](capabilities/aitp-05-signatures/README.md)     |    | Digital signatures for messages, authentication, and blockchain transactions         | Ideation    | None                  |
+| Capability ID                                              | Schema                                                                                                                                          | Description                                                                          | Spec Status | Implementation Status |
+|------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|-------------|-----------------------|
+| [AITP-01: Payments](capabilities/aitp-01-payments)         |                                                                                                                                                 | Agent-native payment requests, authorizations, and post-processing                   | Ideation    | None                  |
+| [AITP-02: Decisions](capabilities/aitp-02-decisions)       | v1.0.0 [JSON Schema](/capabilities/aitp-02-decisions/v1.0.0/schema.json) / [TypeScript](/capabilities/aitp-02-decisions/v1.0.0/schema.ts)       | Requesting decisions or actions from an agent or to be displayed in a user interface | Draft       | Live on NEAR AI       |
+| [AITP-03: Data Request](capabilities/aitp-03-data-request) | v1.0.0 [JSON Schema](/capabilities/aitp-03-data-request/v1.0.0/schema.json) / [TypeScript](/capabilities/aitp-03-data-request/v1.0.0/schema.ts) | Supporting requesting and dealing with structured data like passwords and addresses  | Draft       | Live on NEAR AI       |
+| [AITP-04: Transactions](capabilities/aitp-04-transactions) | v1.0.0 [JSON Schema](/capabilities/aitp-04-transactions/v1.0.0/schema.json) / [TypeScript](/capabilities/aitp-04-transactions/v1.0.0/schema.ts) | P2P crypto transactions, using coins or tokens; less functionality than Payments     | Draft       | Live on NEAR AI       |
+| [AITP-05: Signatures](capabilities/aitp-05-signatures)     |                                                                                                                                                 | Digital signatures for messages, authentication, and blockchain transactions         | Ideation    | None                  |
 
 Future capabilities could include:
 * Operational concerns like healthchecks
