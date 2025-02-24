@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 5
 sidebar_label: Vision
 ---
 
@@ -10,43 +10,6 @@ We envision a future in which most online interactions are conducted not by user
 ## Why Agents?
 
 To understand how AI agents will be used in the future, we find it useful to compare the benefits and drawbacks of browsing the internet vs talking to other humans.
-
-```mermaid
-flowchart LR
-    subgraph "Current Internet Experience"
-        Web[Web Browsing]
-        Apps[Mobile Apps]
-        API[API Integration]
-    end
-    
-    subgraph "Human Interaction"
-        Sales[Sales Person]
-        CS[Customer Service]
-        Expert[Domain Expert]
-    end
-    
-    subgraph "AI Agent Future"
-        PA[Personal Assistant]
-        SA[Service Agents]
-        DA[Discovery Agents]
-    end
-    
-    Web -->|Scale & Cost| PA
-    Apps -->|Convenience| PA
-    API -->|Structured Data| PA
-    
-    Sales -->|Personalization| SA
-    CS -->|Problem Solving| SA
-    Expert -->|Knowledge| SA
-    
-    PA <-->|AITP Protocol| SA
-    PA <-->|AITP Protocol| DA
-    DA <-->|AITP Protocol| SA
-    
-    style PA fill:#bbdefb,stroke:#1976d2
-    style SA fill:#c8e6c9,stroke:#388e3c
-    style DA fill:#fff9c4,stroke:#fbc02d
-```
 
 As of early 2025, almost all internet use involves using a web browser or smartphone to access services (websites or apps) run by a third party. Behind the scenes, those services communicate with other services through structured APIs. Almost all of these services can do only what they've been coded to do, with no reasoning capability or decision-making authority. This forces a sense of structure and regularity to the online world. For instance, when shopping online, the level of personalized service you can receive is limited to discount codes and recommendation algorithms that the operators of the service have anticipated and programmed in advance. However, since online services are easier to scale, you can access a wide product catalog at a low price.
 
@@ -80,51 +43,13 @@ sequenceDiagram
     H->>PA: Approves payment
     PA->>SA: AITP Payment Confirmation
     SA->>PA: AITP Data Request (passenger details)
-    PA->>H: Asks for missing information
-    H->>PA: Provides information
+    PA->>PA: Retrieves information from memory
     PA->>SA: AITP Data Response
     SA->>PA: Booking confirmation
     PA->>H: "Your tickets are booked!"
 ```
 
 ## The Agent Ecosystem
-
-```mermaid
-flowchart TB
-    User([Human User]) <--> PA[Personal Assistant]
-    
-    subgraph "Agent Ecosystem"
-        PA <--> ServiceAgent1[E-commerce Agent]
-        PA <--> ServiceAgent2[Travel Agent]
-        PA <--> ServiceAgent3[Healthcare Agent]
-        PA <--> Discovery[Discovery Agent]
-        
-        Discovery <--> ServiceAgent1
-        Discovery <--> ServiceAgent2
-        Discovery <--> ServiceAgent3
-        Discovery <--> ServiceAgent4[Other Service Agents]
-        
-        subgraph "Business Backend"
-            ServiceAgent1 <--> Backend1[Inventory System]
-            ServiceAgent1 <--> Backend2[Payment Processor]
-            ServiceAgent1 <--> Backend3[Shipping System]
-        end
-    end
-    
-    %% Define styles
-    classDef user fill:#f5f5f5,stroke:#333,stroke-width:2px
-    classDef personal fill:#bbdefb,stroke:#1976d2,stroke-width:2px
-    classDef service fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
-    classDef discovery fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
-    classDef backend fill:#e1bee7,stroke:#8e24aa,stroke-width:1px
-    
-    %% Apply styles
-    class User user
-    class PA personal
-    class ServiceAgent1,ServiceAgent2,ServiceAgent3,ServiceAgent4 service
-    class Discovery discovery
-    class Backend1,Backend2,Backend3 backend
-```
 
 Your AI assistant shouldn’t need to learn how to use every online service directly.  Instead, it can talk to other AI agents that already know how to use those services effectively.  This creates a network of specialized agents, each bringing unique capabilities and domain knowledge.
 

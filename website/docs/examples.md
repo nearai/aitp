@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 6
 sidebar_label: Examples
 ---
 
@@ -113,25 +113,3 @@ GET Thread that has several messages
   ]
 }
 ```
-
-## Complete Purchase Flow
-
-```mermaid
-flowchart TB
-    Start[User starts conversation] --> Intent[User expresses purchase intent]
-    Intent --> Options[Agent presents product options]
-    Options --> Selection[User makes selection]
-    Selection --> Quote[Agent provides payment quote]
-    Quote --> Decision{User decides}
-    Decision -->|Accept| Payment[User approves payment]
-    Decision -->|Decline| End[End of conversation]
-    Payment --> Processing[Agent processes payment]
-    Processing --> Confirmation[Agent confirms purchase]
-    Confirmation --> Shipping[Agent provides shipping info]
-    Shipping --> End
-    
-    style Start fill:#f9f9f9,stroke:#333
-    style End fill:#f9f9f9,stroke:#333
-    style Decision fill:#ffe0b2,stroke:#fb8c00
-    style Payment fill:#bbdefb,stroke:#1976d2
-    style Confirmation fill:#c8e6c9,stroke:#388e3c

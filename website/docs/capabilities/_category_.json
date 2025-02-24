@@ -1,11 +1,6 @@
 {
-  "position": 5,
+  "position": 4,
   "label": "Capabilities",
   "collapsible": true,
-  "collapsed": false,
-  "className": "red",
-  "link": {
-    "type": "generated-index",
-    "title": "AITP Capabilities"
-  }
+  "collapsed": false
 }
