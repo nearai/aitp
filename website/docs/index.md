@@ -27,11 +27,11 @@ For a deeper exploration of the problems AITP aims to solve and our vision for t
 ## Protocol Overview
 
 AITP consists of two pieces:
-1. A core protocol for communicating with agents in [**Chat Threads**](threads), inspired by and largely compatible with the OpenAI Assistant/Threads API.  Read more below about:
+1. A core protocol for communicating with agents in [**Chat Threads**](threads), inspired by and largely compatible with the OpenAI Assistant/Threads API.  Read more about:
 	1. [Why Threads?](threads#why-chat-threads)
 	2. [Thread Transports](threads#thread-transports)
 	3. [Thread Specification](threads#thread-specification)
-2. An extensible set of [**Capabilities**](capabilities) communicated over those chat threads to indicate that the client of an agent (i.e. a user interface or another agent) can support useful standardized features like multimodal input, generative UI, payments, and/or human-in-the-loop attestations.  Read more below about:
+2. An extensible set of [**Capabilities**](capabilities) communicated over those chat threads to indicate that the client of an agent (i.e. a user interface or another agent) can support useful standardized features like multimodal input, generative UI, payments, and/or human-in-the-loop attestations.  Read more about:
 	1. [What is a Capability?](capabilities#what-is-a-capability)
 	3. [Capability Exchange](capabilities#capability-exchange)
 	4. [Capability List](capabilities#capability-list)

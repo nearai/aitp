@@ -1,22 +1,25 @@
-# AITP-04: Payments
+# AITP-04: Transactions
 
-* Spec Status: Draft
-* Implementation Status: Live on NEAR AI
+* **Version**: 1.0.0
+* **Spec Status**: Draft
+* **Implementation Status**: Live on [NEAR AI](https://app.near.ai/)
 
 :::note Auto-generated Documentation
-This documentation was auto-generated from the schema and examples by an AI model.
+Parts of this documentation were auto-generated from the schema and example messages by an AI model.
 :::
 
 ## Overview
 
 ```mermaid
 flowchart LR
-    A[Agent A] -->|1. Sends quote| B[Agent B or User]
-    B -->|2. Reviews quote| C{Payment Decision}
-    C -->|3a. Authorizes payment| D[Payment Authorization]
-    C -->|3b. Declines payment| E[End Transaction]
-    D -->|4. Processes payment| F[Payment Result]
-    F -->|5. Completes transaction| A
+    A[Agent A] -->|1: Sends quote| B[Agent B or User]
+    B -->|2: Reviews quote| C{Payment Decision}
+    C -->|3a: Authorizes transaction| D[Payment Authorization]
+    C -->|3b: Declines transaction| E[End Transaction]
+    D -->|4: Processes transaction| F[Payment Result]
+    F -->|5: Sends transaction confirmation| A
+    A -->|6: Verifies transaction| G[Blockchain]
+    G -->|7: Transaction verified| A 
     
     style A fill:#f9d77e,stroke:#8b6914
     style B fill:#a2d2ff,stroke:#0072b2
@@ -25,70 +28,18 @@ flowchart LR
     style F fill:#c8e6c9,stroke:#388e3c
 ```
 
-The Payments capability enables agents to request and process payments securely. This capability facilitates financial transactions between users and services, or between different agents, using standardized message formats to ensure consistency and security.
+The Transactions capability enables agents to request and process crypto transactions securely. This capability facilitates financial transactions between users and services, or between different agents, using standardized message formats to ensure consistency and security.
 
 ## Schema
 
 Schema URL: `https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json`
 
-The Payments capability defines three primary message types:
+The Transactions capability defines three primary message types:
 1. `quote` - Sent by an agent to request payment
 2. `payment_authorization` - Sent by the payer to authorize a payment
 3. `payment_result` - Sent by the payee to confirm payment processing
 
 ## Message Types
-
-```mermaid
-classDiagram
-    class Quote {
-        +string type = "Quote"
-        +string quote_id
-        +string payee_id
-        +PaymentPlan[] payment_plans
-        +datetime valid_until
-    }
-    
-    class PaymentPlan {
-        +string plan_id
-        +string plan_type = "one-time"
-        +number amount
-        +string currency = "USD"
-    }
-    
-    class PaymentAuthorization {
-        +string quote_id
-        +string result
-        +string message
-        +datetime timestamp
-        +PaymentDetail[] details
-    }
-    
-    class PaymentDetail {
-        +string network = "NEAR"
-        +string token_type = "USDC"
-        +number amount
-        +string account_id
-        +string transaction_id
-    }
-    
-    class PaymentResult {
-        +string quote_id
-        +string result
-        +datetime timestamp
-        +string message
-        +ResultDetail[] details
-    }
-    
-    class ResultDetail {
-        +string label
-        +string|number value
-        +string url
-    }
-    
-    Quote "1" --> "*" PaymentPlan: contains
-    PaymentAuthorization "1" --> "*" PaymentDetail: contains
-    PaymentResult "1" --> "*" ResultDetail: contains
-```
 
 ### Quote
 
@@ -277,64 +228,13 @@ The following example demonstrates a complete payment flow:
 }
 ```
 
-## Implementation Considerations
-
-### For UIs and Client Applications
-
-When implementing the Payments capability in a UI:
-
-1. **Quote Display**:
-   - Show clear pricing information
-   - Display payment plan options clearly
-   - Include expiration time for the quote
-   - Show payee identification
-
-2. **Payment Authorization**:
-   - Request user confirmation before proceeding
-   - Show transaction details before submission
-   - Provide clear error handling for failed payments
-   - Handle timeout and network issues gracefully
-
-3. **Payment Result**:
-   - Display confirmation messages clearly
-   - Show relevant details (order number, tracking information, etc.)
-   - Provide links to additional information when available
-
-### For Agents
-
-When implementing the Payments capability in an agent:
-
-1. **Sending Quotes**:
-   - Generate unique quote IDs
-   - Set appropriate expiration times
-   - Include all necessary payment details
-   - Provide clear product or service descriptions
-
-2. **Processing Authorizations**:
-   - Verify the quote ID matches an active quote
-   - Check that the authorization has not expired
-   - Verify the payment details (amount, currency)
-   - Handle both successful and failed authorizations
-
-3. **Sending Results**:
-   - Include all relevant order/transaction details
-   - Provide meaningful confirmation messages
-   - Include URLs for further tracking when possible
-
 ## Integration with Other Capabilities
-
-The Payments capability works well with:
-
-- **AITP-02: Decisions** - Use Decisions to offer product or service options before requesting payment
-- **AITP-03: Data Request** - Collect shipping or billing information before processing payment
-- **AITP-05: Signatures** - Add verification for high-value transactions
 
 :::caution Security Considerations
 - Always verify payment amounts match the original quote
 - Implement idempotency to prevent double-charging
 - Store transaction IDs securely for auditing
 - Handle payment failures gracefully
-- Ensure secure transmission of payment details
 :::
 
 ## Limitations of Current Version
@@ -345,5 +245,3 @@ The Payments capability works well with:
 - Only supports NEAR blockchain with USDC tokens
 - No support for traditional payment methods (credit cards, bank transfers)
 :::
-
-Future versions of the Payments capability may expand to include additional payment types, currencies, and networks.

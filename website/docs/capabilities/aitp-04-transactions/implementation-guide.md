@@ -1,13 +1,10 @@
-# AITP-04: Payments Implementation Guide
-
-* Spec Status: Draft
-* Implementation Status: Live on NEAR AI
+# AITP-04: Transactions Implementation Guide
 
 :::note Auto-generated Documentation
-This documentation was auto-generated from the schema and examples by an AI model.
+Parts of this documentation were auto-generated from the schema and example messages by an AI model.
 :::
 
-This guide provides practical implementation details for developers integrating the AITP-04 Payments capability into agents and user interfaces.
+This guide provides practical implementation details for developers integrating the AITP-04 Transactions capability into agents and user interfaces.
 
 ```mermaid
 sequenceDiagram
@@ -37,9 +34,9 @@ sequenceDiagram
 
 ## Implementation for Agent Developers
 
-### When to Use the Payments Capability
+### When to Use the Transactions Capability
 
-Use the Payments capability when your agent needs to:
+Use the Transactions capability when your agent needs to:
 
 1. Request payment for goods or services
 2. Process payments from users
@@ -53,27 +50,6 @@ Common scenarios include:
 - Donations or tips
 
 ### Quote Generation
-
-```mermaid
-graph TD
-    Q[Quote] --> QID[quote_id: "order-123"]
-    Q --> Type["type: Quote (const)"]
-    Q --> PayeeID[payee_id: "merchant.near"]
-    Q --> Plans[payment_plans: Array]
-    Q --> Expiry[valid_until: "2023-01-01T12:00:00Z"]
-    
-    Plans --> Plan1[Payment Plan 1]
-    
-    Plan1 --> PlanID[plan_id: "plan-123"]
-    Plan1 --> PlanType["plan_type: one-time (const)"]
-    Plan1 --> Amount[amount: 84.99]
-    Plan1 --> Currency["currency: USD (const)"]
-    
-    style Q fill:#bbdefb,stroke:#1976d2,stroke-width:2px
-    style Type,PlanType,Currency fill:#ffecb3,stroke:#ffa000
-    style QID,PayeeID,PlanID fill:#e8f5e9,stroke:#388e3c
-    style Amount,Expiry fill:#f3e5f5,stroke:#8e24aa
-```
 
 ```javascript
 // Example JavaScript for generating a quote message
@@ -203,25 +179,6 @@ function createPaymentResult(quoteId, result, orderDetails, errorMessage = null)
 
 ### Best Practices for Agent Developers
 
-```mermaid
-graph TD
-    A[Identify Payment Need] --> B[Generate Unique Quote]
-    B --> C[Present Quote to User]
-    C --> D[Wait for Authorization]
-    D --> E{Verify Payment}
-    E -->|Valid| F[Process Order/Service]
-    E -->|Invalid| G[Return Error]
-    F --> H[Generate Success Result]
-    G --> I[Generate Failure Result]
-    H --> J[Send Payment Result]
-    I --> J
-    
-    style A fill:#f9f9f9,stroke:#333
-    style E fill:#ffe0b2,stroke:#fb8c00
-    style F fill:#c8e6c9,stroke:#388e3c
-    style G fill:#ffcdd2,stroke:#c62828
-```
-
 1. **Security First**:
    - Always verify transactions on the blockchain
    - Implement idempotency keys to prevent double processing
@@ -236,13 +193,13 @@ graph TD
 
 3. **Error Handling**:
    - Handle network failures gracefully
-   - Provide clear error messages for failed payments
+   - Provide clear error messages for failed transactions
    - Implement retry mechanisms where appropriate
    - Log payment attempts for troubleshooting
 
 4. **Payment Verification**:
    - Verify payment amounts match the quote exactly
-   - Check that payments are made to the correct account
+   - Check that transactions are made to the correct account
    - Verify the transaction has enough confirmations
    - Validate the token type is correct
 
@@ -460,7 +417,7 @@ async function initiatePayment(receiverId, amount, quoteId) {
    - Explain what the payment is for
 
 2. **User Confirmation**:
-   - Always require explicit user confirmation for payments
+   - Always require explicit user confirmation for transactions
    - Show a summary before proceeding
    - Provide cancel/decline options
    - Display terms and conditions when appropriate
@@ -469,7 +426,7 @@ async function initiatePayment(receiverId, amount, quoteId) {
    - Show clear loading indicators during processing
    - Handle timeouts gracefully
    - Display specific error messages
-   - Offer retry options for failed payments
+   - Offer retry options for failed transactions
 
 4. **Receipt/Confirmation**:
    - Show a clear success message
@@ -480,7 +437,7 @@ async function initiatePayment(receiverId, amount, quoteId) {
 5. **Security Indicators**:
    - Show blockchain transaction details
    - Display secure payment indicators
-   - Explain the security benefits of blockchain payments
+   - Explain the security benefits of blockchain transactions
    - Show transaction status and confirmations
 
 :::tip Wallet Integration
@@ -491,21 +448,8 @@ For optimal user experience, provide a smooth wallet connection flow:
 4. Handle wallet switching if the user has multiple wallets
 :::
 
-## Testing
-
-When testing AITP-04 Payments implementation:
-
-1. Test with various amount values
-2. Test quote expiration behavior
-3. Test successful and failed payment scenarios
-4. Verify transaction details are displayed correctly
-5. Test network failures and error handling
-6. Ensure idempotency (no double-charging)
-
-## Security Considerations
-
 :::danger Critical Security Precautions
-1. Always verify transactions on the blockchain before confirming payments
+1. Always verify transactions on the blockchain before confirming transactions
 2. Never store sensitive payment or wallet information
 3. Implement proper authentication for payment-related operations
 4. Log all payment activities for audit purposes
@@ -513,11 +457,3 @@ When testing AITP-04 Payments implementation:
 6. Check that quotes haven't expired before processing
 7. Implement rate limiting to prevent abuse
 :::
-
-## Performance Considerations
-
-1. Optimize blockchain interactions to reduce latency
-2. Cache quote information where appropriate
-3. Implement optimistic UI updates for better user experience
-4. Handle payment processing in background tasks when possible
-5. Consider implementing retry mechanisms for failed payments

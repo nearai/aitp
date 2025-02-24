@@ -1,10 +1,10 @@
 # AITP-03: Data Request Schema Reference
 
-* Spec Status: Draft
-* Implementation Status: Live on NEAR AI
+* **Version**: 1.0.0
+* **Spec Status**: Draft
 
 :::note Auto-generated Documentation
-This documentation was auto-generated from the schema and examples by an AI model.
+Parts of this documentation were auto-generated from the schema and example messages by an AI model.
 :::
 
 ## Schema URL
@@ -14,63 +14,6 @@ https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json
 ```
 
 ## Schema Overview
-
-```mermaid
-flowchart TD
-    subgraph "Schema Structure"
-        Root["anyOf"] --> RequestMessage["request_data message"]
-        Root --> ResponseMessage["data message"]
-        
-        RequestMessage --> RequestSchema["$schema (URI)"]
-        RequestMessage --> RequestData["request_data object"]
-        
-        RequestData --> RD_ID["id (string)"]
-        RequestData --> RD_Title["title (string)"]
-        RequestData --> RD_Description["description (string)"]
-        RequestData --> RD_FillButton["fillButtonLabel (string)"]
-        RequestData --> RD_Form["form object"]
-        
-        RD_Form --> F_Fields["fields array"]
-        RD_Form --> F_JsonUrl["json_url (string)"]
-        
-        F_Fields --> FieldObj["Field Object"]
-        
-        FieldObj --> F_ID["id (string)"]
-        FieldObj --> F_Label["label (string)"]
-        FieldObj --> F_Description["description (string)"]
-        FieldObj --> F_DefaultValue["default_value (string)"]
-        FieldObj --> F_Type["type (enum)"]
-        FieldObj --> F_Options["options array"]
-        FieldObj --> F_Required["required (boolean)"]
-        FieldObj --> F_Autocomplete["autocomplete (string)"]
-        
-        F_Type --> Type1["text"]
-        F_Type --> Type2["number"]
-        F_Type --> Type3["email"]
-        F_Type --> Type4["textarea"]
-        F_Type --> Type5["select"]
-        F_Type --> Type6["combobox"]
-        F_Type --> Type7["tel"]
-        
-        ResponseMessage --> ResponseSchema["$schema (URI)"]
-        ResponseMessage --> ResponseData["data object"]
-        
-        ResponseData --> RespD_ID["request_data_id (string)"]
-        ResponseData --> RespD_Fields["fields array"]
-        
-        RespD_Fields --> RespFieldObj["Field Value Object"]
-        
-        RespFieldObj --> RF_ID["id (string)"]
-        RespFieldObj --> RF_Label["label (string)"]
-        RespFieldObj --> RF_Value["value (string)"]
-    end
-    
-    classDef required fill:#ffcdd2,stroke:#c62828
-    classDef optional fill:#e8f5e9,stroke:#388e3c
-    
-    class RD_ID,RD_Description,RD_Form,F_Fields,F_ID,RespD_Fields,RespD_ID,RF_ID required
-    class RD_Title,RD_FillButton,F_JsonUrl,F_Label,F_Description,F_DefaultValue,F_Type,F_Options,F_Required,F_Autocomplete,RF_Label,RF_Value optional
-```
 
 The AITP-03 Data Request capability defines a JSON schema that supports two main message types:
 

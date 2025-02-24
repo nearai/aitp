@@ -1,10 +1,10 @@
 # AITP-02: Decisions Schema Reference
 
-* Spec Status: Draft
-* Implementation Status: Live on NEAR AI
+* **Version**: 1.0.0
+* **Spec Status**: Draft
 
 :::note Auto-generated Documentation
-This documentation was auto-generated from the schema and examples by an AI model.
+Parts of this documentation were auto-generated from the schema and example messages by an AI model.
 :::
 
 ## Schema URL

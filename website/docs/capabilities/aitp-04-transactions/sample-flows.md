@@ -1,46 +1,10 @@
 # AITP-04: Sample Payment Flows
 
-* Spec Status: Draft
-* Implementation Status: Live on NEAR AI
-
 :::note Auto-generated Documentation
-This documentation was auto-generated from the schema and examples by an AI model.
+Parts of this documentation were auto-generated from the schema and example messages by an AI model.
 :::
 
-This document provides examples of common payment flows using the AITP-04 Payments capability.
-
-```mermaid
-flowchart TD
-    Start[Start Conversation] --> Intent[User expresses purchase intent]
-    Intent --> QuoteCreation[Agent generates quote]
-    QuoteCreation --> PresentQuote[Agent presents quote]
-    PresentQuote --> UserDecision{User decides}
-    
-    UserDecision -->|Approve| InitiatePayment[User initiates payment]
-    UserDecision -->|Decline| EndDeclined[End - Payment declined]
-    
-    InitiatePayment --> PaymentSuccess{Payment successful?}
-    
-    PaymentSuccess -->|Yes| SendAuth[Send payment authorization]
-    PaymentSuccess -->|No| SendFailure[Send failed authorization]
-    
-    SendAuth --> ProcessPayment[Agent processes payment]
-    SendFailure --> HandleFailure[Agent handles failure]
-    
-    ProcessPayment --> SendResult[Agent sends payment result]
-    HandleFailure --> EndFailed[End - Payment failed]
-    
-    SendResult --> FulfillOrder[Agent fulfills order]
-    FulfillOrder --> End[End - Transaction complete]
-    
-    style Start fill:#f9f9f9,stroke:#333
-    style End,EndDeclined,EndFailed fill:#f9f9f9,stroke:#333
-    style UserDecision,PaymentSuccess fill:#ffe0b2,stroke:#fb8c00
-    style QuoteCreation,PresentQuote fill:#bbdefb,stroke:#1976d2
-    style InitiatePayment,SendAuth fill:#c8e6c9,stroke:#388e3c
-    style SendFailure,HandleFailure fill:#ffcdd2,stroke:#c62828
-    style ProcessPayment,SendResult,FulfillOrder fill:#e1bee7,stroke:#8e24aa
-```
+This document provides examples of common payment flows using the AITP-04 Transactions capability.
 
 ## Basic E-commerce Flow
 

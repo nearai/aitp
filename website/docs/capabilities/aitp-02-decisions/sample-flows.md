@@ -1,42 +1,6 @@
 # AITP-02: Sample Decision Flows
 
-* Spec Status: Draft
-* Implementation Status: Live on NEAR AI
-
-:::note Auto-generated Documentation
-This documentation was auto-generated from the schema and examples by an AI model.
-:::
-
 This document provides examples of common decision flows using the AITP-02 Decisions capability.
-
-```mermaid
-flowchart TD
-    Start[Start Conversation] --> InitialRequest[User Initial Request]
-    InitialRequest --> Step1[Step 1: First Decision Request]
-    Step1 --> Step1Response[User Response]
-    Step1Response --> ProcessStep1[Process First Response]
-    
-    ProcessStep1 --> Step2[Step 2: Second Decision Request]
-    Step2 --> Step2Response[User Response]
-    Step2Response --> ProcessStep2[Process Second Response]
-    
-    ProcessStep2 --> Step3[Step 3: Third Decision Request]
-    Step3 --> Step3Response[User Response]
-    Step3Response --> ProcessStep3[Process Third Response]
-    
-    ProcessStep3 --> FinalConfirmation[Final Confirmation Request]
-    FinalConfirmation --> FinalResponse[User Confirmation]
-    FinalResponse --> CompleteAction[Complete Action]
-    
-    CompleteAction --> End[End Conversation]
-    
-    style Start fill:#c8e6c9,stroke:#388e3c
-    style End fill:#ffccbc,stroke:#e64a19
-    style Step1 fill:#bbdefb,stroke:#1976d2
-    style Step2 fill:#bbdefb,stroke:#1976d2
-    style Step3 fill:#bbdefb,stroke:#1976d2
-    style FinalConfirmation fill:#ffe0b2,stroke:#f57c00
-```
 
 ## E-commerce Product Selection Flow
 

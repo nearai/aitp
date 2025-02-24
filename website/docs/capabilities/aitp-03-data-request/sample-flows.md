@@ -1,10 +1,7 @@
 # AITP-03: Sample Data Request Flows
 
-* Spec Status: Draft
-* Implementation Status: Live on NEAR AI
-
 :::note Auto-generated Documentation
-This documentation was auto-generated from the schema and examples by an AI model.
+Parts of this documentation were auto-generated from the schema and example messages by an AI model.
 :::
 
 This document provides examples of common data request flows using the AITP-03 Data Request capability.
@@ -12,7 +9,7 @@ This document provides examples of common data request flows using the AITP-03 D
 ```mermaid
 flowchart TD
     Start[Start Conversation] --> Intent[User expresses intent]
-    Intent --> DataNeeded{Data needed?}
+    Intent --> DataNeeded{Structured data needed?}
     DataNeeded -->|Yes| RequestData[Agent sends request_data]
     DataNeeded -->|No| Continue[Continue conversation]
     

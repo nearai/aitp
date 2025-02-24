@@ -1,10 +1,10 @@
-# AITP-04: Payments Schema Reference
+# AITP-04: Transactions Schema Reference
 
-* Spec Status: Draft
-* Implementation Status: Live on NEAR AI
+* **Version**: 1.0.0
+* **Spec Status**: Draft
 
 :::note Auto-generated Documentation
-This documentation was auto-generated from the schema and examples by an AI model.
+Parts of this documentation were auto-generated from the schema and example messages by an AI model.
 :::
 
 ## Schema URL
@@ -15,69 +15,7 @@ https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json
 
 ## Schema Overview
 
-```mermaid
-flowchart TD
-    subgraph "Schema Structure"
-        Root["anyOf"] --> QuoteMessage["Quote message"]
-        Root --> AuthMessage["Payment Authorization message"]
-        Root --> ResultMessage["Payment Result message"]
-        
-        QuoteMessage --> QS["$schema (URI)"]
-        QuoteMessage --> Quote["quote object"]
-        
-        Quote --> Q_Type["type: Quote (const)"]
-        Quote --> Q_ID["quote_id (string)"]
-        Quote --> Q_Payee["payee_id (string)"]
-        Quote --> Q_Plans["payment_plans (array)"]
-        Quote --> Q_Valid["valid_until (date-time)"]
-        
-        Q_Plans --> Plan["Payment Plan"]
-        Plan --> P_ID["plan_id (string)"]
-        Plan --> P_Type["plan_type: one-time (const)"]
-        Plan --> P_Amount["amount (number)"]
-        Plan --> P_Currency["currency: USD (const)"]
-        
-        AuthMessage --> AS["$schema (URI)"]
-        AuthMessage --> Auth["payment_authorization object"]
-        
-        Auth --> A_QID["quote_id (string)"]
-        Auth --> A_Result["result: success|failure (enum)"]
-        Auth --> A_Message["message (string)"]
-        Auth --> A_Time["timestamp (date-time)"]
-        Auth --> A_Details["details (array)"]
-        
-        A_Details --> AuthDetail["Payment Detail"]
-        AuthDetail --> AD_Network["network: NEAR (const)"]
-        AuthDetail --> AD_Token["token_type: USDC (const)"]
-        AuthDetail --> AD_Amount["amount (number)"]
-        AuthDetail --> AD_Account["account_id (string)"]
-        AuthDetail --> AD_TxID["transaction_id (string)"]
-        
-        ResultMessage --> RS["$schema (URI)"]
-        ResultMessage --> Result["payment_result object"]
-        
-        Result --> R_QID["quote_id (string)"]
-        Result --> R_Result["result: success|failure (enum)"]
-        Result --> R_Time["timestamp (date-time)"]
-        Result --> R_Message["message (string)"]
-        Result --> R_Details["details (array)"]
-        
-        R_Details --> ResultDetail["Result Detail"]
-        ResultDetail --> RD_Label["label (string)"]
-        ResultDetail --> RD_Value["value (string|number)"]
-        ResultDetail --> RD_URL["url (URI)"]
-    end
-    
-    classDef required fill:#ffcdd2,stroke:#c62828
-    classDef optional fill:#e8f5e9,stroke:#388e3c
-    
-    class QS,Quote,Q_Type,Q_ID,Q_Payee,Q_Plans,Q_Valid,P_ID,P_Type,P_Amount,P_Currency required
-    class AS,Auth,A_QID,A_Result,A_Time,A_Details,AD_Network,AD_Token,AD_Amount,AD_Account,AD_TxID required
-    class RS,Result,R_QID,R_Result,R_Time,R_Details,RD_Label,RD_Value required
-    class A_Message,RD_URL,R_Message optional
-```
-
-The AITP-04 Payments capability defines a JSON schema that supports three main message types:
+The AITP-04 Transactions capability defines a JSON schema that supports three main message types:
 
 1. **Quote** - A request for payment
 2. **Payment Authorization** - Authorization of a payment
@@ -339,7 +277,7 @@ The schema is structured as an "anyOf" with three possible object types.
 1. **Payment Networks**: Currently only supports the NEAR blockchain
 2. **Tokens**: Currently only supports USDC tokens
 3. **Currency**: Currently only supports USD
-4. **Plan Types**: Currently only supports one-time payments
+4. **Plan Types**: Currently only supports one-time transactions
 :::
 
 The schema enforces these constraints with constant values. For example:

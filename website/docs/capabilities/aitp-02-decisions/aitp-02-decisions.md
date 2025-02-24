@@ -1,19 +1,20 @@
 # AITP-02: Decisions
 
-* Spec Status: Draft
-* Implementation Status: Live on NEAR AI
+* **Version**: 1.0.0
+* **Spec Status**: Draft
+* **Implementation Status**: Live on [NEAR AI](https://app.near.ai/)
 
 :::note Auto-generated Documentation
-This documentation was auto-generated from the schema and examples by an AI model.
+Parts of this documentation were auto-generated from the schema and example messages by an AI model.
 :::
 
 ```mermaid
 flowchart TB
     subgraph "Decision Request/Response Flow"
-    A[Agent A] -->|1. Sends request_decision| B[Agent B or User]
-    B -->|2. Makes selection| C{Decision Logic}
-    C -->|3. Processes selection| D[Create decision response]
-    D -->|4. Sends decision| A
+    A[Agent A] -->|1: Sends request_decision| B[Agent B or User]
+    B -->|2: Makes selection| C{Decision Logic}
+    C -->|3: Processes selection| D[Create decision response]
+    D -->|4: Sends decision| A
     end
     
     style A fill:#f9d77e,stroke:#8b6914
@@ -35,87 +36,6 @@ The Decisions capability defines two primary message types:
 2. `decision` - Sent in response to a request_decision message
 
 ## Message Types
-
-```mermaid
-classDiagram
-    class RequestDecision {
-        +string id
-        +string title
-        +string description
-        +string type
-        +Option[] options
-    }
-    
-    class Option {
-        +string id
-        +string name
-        +string description
-        +string image_url
-    }
-    
-    class Decision {
-        +string request_decision_id
-        +SelectedOption[] options
-    }
-    
-    class SelectedOption {
-        +string id
-        +string name
-        +number quantity
-    }
-    
-    RequestDecision "1" --> "*" Option: contains
-    Decision "1" --> "1..*" SelectedOption: contains
-    Decision --> RequestDecision: references
-    
-    class RadioDecision {
-        type = "radio"
-    }
-    
-    class CheckboxDecision {
-        type = "checkbox"
-    }
-    
-    class ConfirmationDecision {
-        type = "confirmation"
-    }
-    
-    class ProductsDecision {
-        type = "products"
-    }
-    
-    class ProductOption {
-        +number five_star_rating
-        +number reviews_count
-        +string url
-        +Quote quote
-        +ProductOption[] variants
-    }
-    
-    class Quote {
-        +string type
-        +string quote_id
-        +string payee_id
-        +PaymentPlan[] payment_plans
-        +string valid_until
-    }
-    
-    class PaymentPlan {
-        +string plan_id
-        +string plan_type
-        +number amount
-        +string currency
-    }
-    
-    RadioDecision --|> RequestDecision
-    CheckboxDecision --|> RequestDecision
-    ConfirmationDecision --|> RequestDecision
-    ProductsDecision --|> RequestDecision
-    ProductOption --|> Option
-    ProductOption "1" --> "*" ProductOption: variants
-    ProductOption "1" --> "0..1" Quote: may include
-    Quote "1" --> "1..*" PaymentPlan: contains
-```
 
 ### Request Decision
 
@@ -367,47 +287,3 @@ Response for product selection:
   }
 }
 ```
-
-## Implementation Considerations
-
-### For UIs and Client Applications
-
-When implementing the Decisions capability in a UI:
-
-1. Render different UI controls based on the `type` field:
-   - `radio`: Radio buttons or a single-select dropdown
-   - `checkbox`: Checkboxes for multiple selection
-   - `confirmation`: Styled as a confirmation dialog
-   - `products`: Rich product cards with images and details
-
-2. For product displays, consider showing:
-   - Product images
-   - Ratings and reviews
-   - Price information from quotes
-   - Variant selection options
-
-3. Enable quantity selection for product types
-
-### For Agents
-
-When implementing the Decisions capability in an agent:
-
-1. Be specific with decision requests - provide clear titles and descriptions
-2. Use the appropriate type for the decision context
-3. Provide rich metadata for options when available
-4. Include image URLs when visual representation would be helpful
-5. Handle partial or unexpected responses gracefully
-
-## Integration with Other Capabilities
-
-The Decisions capability works well with:
-
-- **AITP-01: Payments** - Product selections can include payment quotes
-- **AITP-03: Data Request** - Use Data Request for collecting form data and Decisions for choice selection
-- **AITP-04: Transactions** - Use Decisions to confirm transactions before executing them
-
-## Security and Privacy Considerations
-
-- Option IDs should not contain sensitive information
-- Product URLs and images should use HTTPS
-- Personally identifiable information should not be included in decision requests

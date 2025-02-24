@@ -1,20 +1,21 @@
 # AITP-03: Data Request
 
-* Spec Status: Draft
-* Implementation Status: Live on NEAR AI
+* **Version**: 1.0.0
+* **Spec Status**: Draft
+* **Implementation Status**: Live on [NEAR AI](https://app.near.ai/)
 
 :::note Auto-generated Documentation
-This documentation was auto-generated from the schema and examples by an AI model.
+Parts of this documentation were auto-generated from the schema and example messages by an AI model.
 :::
 
 ## Overview
 
 ```mermaid
 flowchart LR
-    A[Agent A] -->|1. Sends request_data| B[Agent B or User]
-    B -->|2. Fills form| C{Form Processing}
-    C -->|3. Validates data| D[Create data response]
-    D -->|4. Sends data| A
+    A[Agent A] -->|1: Sends request_data| B[Agent B or User]
+    B -->|2: Fills form| C{Form Processing}
+    C -->|3: Validates data| D[Create data response]
+    D -->|4: Sends data| A
     
     style A fill:#f9d77e,stroke:#8b6914
     style B fill:#a2d2ff,stroke:#0072b2
@@ -244,54 +245,3 @@ Request:
   }
 }
 ```
-
-## Implementation Considerations
-
-### For UIs and Client Applications
-
-When implementing the Data Request capability in a UI:
-
-1. Render appropriate input controls based on the `type` field for each form field:
-   - `text`: Text input
-   - `number`: Number input with appropriate validation
-   - `email`: Email input with validation
-   - `textarea`: Multi-line text area
-   - `select`: Dropdown selection
-   - `combobox`: Dropdown with custom entry option
-   - `tel`: Telephone input with appropriate formatting
-
-2. Handle validation based on field requirements:
-   - Respect the `required` property
-   - Validate input based on type (e.g., email format)
-   - Show appropriate error messages
-
-3. Support external form definitions:
-   - Fetch form definitions from `json_url` when provided
-   - Handle loading states and errors
-
-### For Agents
-
-When implementing the Data Request capability in an agent:
-
-1. Be specific with data requests - provide clear titles and descriptions
-2. Use appropriate field types for the expected data
-3. Provide helpful default values and options when applicable
-4. Set appropriate required fields to ensure complete data collection
-5. Handle partial or missing responses gracefully
-
-## Integration with Other Capabilities
-
-The Data Request capability works well with:
-
-- **AITP-02: Decisions** - Use Data Request for collecting detailed form information after users make high-level decisions
-- **AITP-01: Payments** - Collect billing and shipping information before payment processing
-- **AITP-04: Transactions** - Gather necessary details before executing transactions
-
-## Security and Privacy Considerations
-
-- Field IDs should not contain sensitive information
-- Consider what data is truly necessary to request
-- Use appropriate autocomplete attributes to help users securely fill forms
-- Consider providing privacy information in the form description
-- Be explicit about how collected data will be used
-- Do not request sensitive data unnecessarily

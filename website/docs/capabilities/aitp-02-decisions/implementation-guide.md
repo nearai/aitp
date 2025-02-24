@@ -1,10 +1,7 @@
 # AITP-02: Decisions Implementation Guide
 
-* Spec Status: Draft
-* Implementation Status: Live on NEAR AI
-
 :::note Auto-generated Documentation
-This documentation was auto-generated from the schema and examples by an AI model.
+Parts of this documentation were auto-generated from the schema and example messages by an AI model.
 :::
 
 This guide provides practical implementation details for developers integrating the AITP-02 Decisions capability into agents and user interfaces.
@@ -442,56 +439,3 @@ function ProductVariantSelector({ product, onSelect }) {
   );
 }
 ```
-
-## Best Practices for UI Developers
-
-1. **Responsive Design**:
-   - Ensure decisions render well on mobile and desktop
-   - Use grid layouts for products that adjust to screen size
-   - Make tap/click targets large enough for easy interaction
-
-2. **Visual Hierarchy**:
-   - Make selected state clearly visible
-   - Use color, size and positioning to indicate importance
-   - Show related options (like variants) with clear relationship
-
-3. **Accessibility**:
-   - Ensure all controls are keyboard navigable
-   - Use proper form semantics (fieldset/legend for option groups)
-   - Include alt text for all images
-   - Ensure sufficient color contrast
-
-4. **User Feedback**:
-   - Show clear confirmation when selections are made
-   - Indicate when a decision has been submitted
-   - Consider animations for state changes
-
-5. **Error Handling**:
-   - Validate selections before submission
-   - Show friendly error messages for invalid selections
-   - Provide a way to reset or cancel decisions
-
-## Testing
-
-When testing AITP-02 Decisions implementation:
-
-1. Test all decision types with various option counts
-2. Verify single vs. multiple selection behavior
-3. Test with long text and image loading failures
-4. Verify response format matches the schema exactly
-5. Test with minimum required fields and with all optional fields
-
-## Security Considerations
-
-1. Sanitize all content from request_decision before rendering
-2. Validate decision responses against the schema
-3. Verify request_decision_id matches an expected request
-4. Only load images from trusted sources
-5. Implement CSRF protection for decision submissions
-
-## Performance Considerations
-
-1. Lazy-load images for product listings
-2. Consider pagination for large option sets
-3. Minimize state updates when handling user interactions
-4. Cache product metadata when appropriate
