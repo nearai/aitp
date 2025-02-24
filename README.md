@@ -8,7 +8,7 @@ Status: Draft
 {: .note }
 > [!NOTE]
 > 
-> AITP is a spec in progress and we are eager for your comments, feedback, and contributions!  
+> AITP is a spec in progress and we are open to comments, feedback, and contributions!  
 > 
 > We are simultaneously writing this spec, integrating AITP support into the [NEAR AI Hub](https://app.near.ai/), and building
 > AITP-compatible [agents](https://app.near.ai/agents) to inform how the protocol should change before v1.0.
@@ -68,7 +68,7 @@ Like the category above, browser use agents help 'bridge the gap' between AI age
 * **Build AITP support into more AI agent frameworks**: We want every AI agent framework and hosting provider to support AITP.
 * **Contribute to the protocol**: open an issue, pull request, or discussion on the [AITP repo](https://github.com/nearai/aitp).
 
-If you're using AI development aids, the latest specification has been packaged up into [aitp-repomix.txt](https://nightly.link/nearai/aitp/workflows/repomix/main/aitp-repomix), perfect for adding to your AI's context so it knows how to use AITP.
+If you're using AI development aids, the latest specification has been packaged up into [aitp-repomix.txt](https://nightly.link/nearai/aitp/workflows/repomix/main/aitp-repomix.zip), perfect for adding to your AI's context so it knows how to use AITP.
 
 ## Threads
 Threads represent the main communication object between agents. A thread contains all the information exchanged in the conversation. This includes messages, participants and their capabilities.
@@ -82,20 +82,27 @@ Natural-language chat threads are universal.  You don't need to read and underst
 
 ### Thread Transports
 
+The transport is responsible for defining how a client communicates with an AI agent.  That client could be a UI or it could be another AI agent.  Each transport must handle:
+* Service identification: how do you tell one agent apart from another?
+* Service location: how do you connect to the agent?
+* Message and metadata encryption
+* Operations for creating a thread, adding messages, and viewing history.
+* Defining responsibility for managing the state of a thread
+
 #### A Little Bit of History
 With AITP, we're seeking to make interactions with AI agents as seamless and universal as browsing a website, sending an email, or making a phone call.
 
 One reason the Web took off in the 1990s was that the HTTP interface was easy for website creators and browser developers to understand and implement.  Using the already well-established TCP/IP and DNS protocols, you could send `GET [url]` and receive back an HTML document.  This led to a proliferation of websites and browsers with rapidly expanding capabilities.
 
-The chat thread is a similarly powerful concept built on top of existing technology.  For better or worse, OpenAI's APIs have become a de facto standard for other AI APIs, so we adopt the relevant portions of it here to help with adoption.
+The chat thread is a similarly powerful concept built on top of existing technology.  For better or worse, OpenAI's APIs have become a de facto standard for other AI APIs (e.g. [LangChain Agent Protocol](https://github.com/langchain-ai/agent-protocol), so we adopt the relevant portions of it here as AITP's first supported transport to help with adoption.
 
 #### Supported Transports
 
-| Transport ID                                                | Description                 | Status |
-|-------------------------------------------------------------|-----------------------------|--------|
-| [AITP-T01: Threads API](transports/aitp-t01-threads-api.md) | OpenAI-compatible HTTPS API | Draft  |
+| Transport ID                                                | Description                 | Spec Status | Implementation Status |
+|-------------------------------------------------------------|-----------------------------|-------------|-----------------------|
+| [AITP-T01: Threads API](transports/aitp-t01-threads-api.md) | OpenAI-compatible HTTPS API | Draft       | Live on NEAR AI       |
 
-Future transports could include:
+Future transports could include anything that allows passing both unstructured and structured data between two or more parties:
 * Email
 * Chat (Slack, WhatsApp, Telegram)
 * [Matrix](https://matrix.org/)
@@ -115,7 +122,10 @@ class Message:
     content: list[str]
     # Files attached to the message.
     attachments: list[{file_id: str}]
-    # The role of the entity that is creating the message: user or assistant
+    # The role of the entity that is creating the message: 'user' or 'assistant'.
+	# 'user' is always the creator/initiator of the thread, even if it's actually
+	# an AI agent. 'assistant' is used for any other respondent.  Check the 'actor'
+	# metadata field for more detailss.
     role: str
     # Metadata for the message.
     metadata: dict
@@ -129,7 +139,8 @@ class Capability:
 
 class Actor:
     """A User or Agent participating on the thread."""
-    # Global agent identifier: url/<agent> or user identifier.
+    # A unique identifier, e.g. URL or username; this must be unique within the thread 
+	# but does not need to be consistent between threads, e.g. to maintain anonymity.
     id: str
     # Capabilities this actor posses.
     capabilities: list[Capability]
@@ -151,36 +162,59 @@ class Thread:
 
 ## Capabilities
 
-Capabilities are standard for specialized messages to enable structured interactions. Agents provide which capabilities they support when joining a thread.
+Capabilities are standards for specialized messages to enable structured interactions, e.g. for processing payments or sharing sensitive data. Agents or clients announce which capabilities they support when starting or joining a thread.  The other agents in the thread can then tailor their responses to make use of those capabilities.
 
-### What is a Capability?
+The core communication mechanism of AITP is a natural-language chat thread, and even without any Capabilities, agents could express everything in natural language.  But  
+a structured communication protocol allows systems of people and agents to “snap together”, following the maxim that easy things should be easy and hard things should be possible.
 
-(todo)
+AITP Capabilities have several benefits over unstructured communication. For example, Clients, Tools and Agent code can operate directly on the structure, validating and correcting protocol outputs produced by an LLM. Additionally, API call outputs can be directly transformed into AITP messages, and expected messages can be routed programmatically, eliminating the need for LLM interpretation. All of these processes reduce variability, latency, and cost.
 
-### Capability Exchange
-
-(todo)
-
-### Capability List
-
-| ID                    | Slug                | Capability            | Description                                                                          |
-| --------------------- | ------------------- | --------------------- | ------------------------------------------------------------------------------------ |
-| [AITP-01](AITP-01.md) | aitp.dev/payment    | Payments              | Supporting payment requests and processing                                           |
-| [AITP-02](AITP-02.md) | aitp.dev/requests   | Requests              | Requesting decisions or actions from an agent or to be displayed in a user interface |
-| [AITP-03](AITP-03.md) | aitp.dev/data       | Sensitive Data        | Supporting requesting and dealing with sensitive data like passwords and addresses   |
-| [AITP-04](AITP-04.md) | aitp.dev/operations | Health checks         | Supporting standard operational concerns such as healthchecks.                       |
-| [AITP-05](AITP-05.md) | aitp.dev/sign       | Cryptographic signing | Supporting signing messages and transactions                                         |
-
-Capabilities can use `Thread.messages[].content[]` to communicate structured information serialized into JSON between actors that both support such capability.
+Capabilities can use `Thread.messages[].content[]` to communicate structured information serialized into JSON between actors that both support that capability.
 
 For example:
 ```json
 {
     "messages": [
-        {"role": "agent1", "content": ["{\"$schema\": \"https://aitp.dev/v1/payment.schema.json\", \"type\": \"request_payment\": {...}}"]}
+        {"role": "assistant", "content": ["{\"$schema\": \"https://aitp.dev/v1/payment.schema.json\", \"type\": \"request_payment\": {...}}"]}
     ]
 }
 ```
+
+### What is a Capability?
+
+A capability consists of a set of JSON schemas (also called message types), which define how to create structured JSON chat messages.  Any client or agent that declares support for a capability must be able to interpret and act on any message of any message type defined by the capability.
+
+### Capability Versioning
+
+Each capability is versioned within the URL of its JSON schema.  The schema should use semver (`vMAJOR.MINOR.PATCH`) style versioning, where:
+* MAJOR version is incremented for breaking changes (e.g. removing/renaming fields).
+* MINOR version is incremented for backward-compatible additions (e.g. new optional fields that can be safely ignored by older clients).
+* PATCH version is incremented for non-functional changes (e.g. documentation fixes; no client impact).
+
+Version numbers should start at v1.0.0, even for early drafts, since semver behavior is less well-defined when using v0.x.
+
+To support the maximal amount of functionality, the parties in a thread need to determine the maximum version of each capability supported by all parties.  Therefore:
+* Agents should declare a range of supported major versions that's as wide as possible.
+* Agents sending an AITP message should use the highest major version known to all parties, and any minor version within that major version.
+* Agents receiving an AITP message should ignore unknown fields, to handle newer minor versions gracefully.
+
+### Capability Exchange
+
+When starting or joining a thread, each agent or client needs to declare which capabilities and capability versions it supports.  Capability exchange is the responsibility of the Transport; it is not contained in the messages.  For instance, for the the AITP-T01 Thread API transport, capabilities are defined as an array of schema URLs passed into the `POST /v1/thread` endpoint.
+
+### Capability List
+
+| Capability ID                                                        | Schema                                                                                                                                        | Description                                                                          | Spec Status | Implementation Status |
+|----------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|-------------|-----------------------|
+| [AITP-01: Payments](capabilities/aitp-01-payments/README.md)        |                                                                                                                                               | Agent-native payment requests, authorizations, and post-processing                   | Ideation    | None                  |
+| [AITP-02: Decisions](capabilities/aitp-02-decisions/README.md)       | v1.0.0 [JSON Schema](capabilities/aitp-02-decisions/v1.0.0/schema.json) / [TypeScript](capabilities/aitp-02-decisions/v1.0.0/schema.ts)       | Requesting decisions or actions from an agent or to be displayed in a user interface | Draft       | Live on NEAR AI       |
+| [AITP-03: Data Request](capabilities/aitp-03-data-request/README.md) | v1.0.0 [JSON Schema](capabilities/aitp-03-data-request/v1.0.0/schema.json) / [TypeScript](capabilities/aitp-03-data-request/v1.0.0/schema.ts) | Supporting requesting and dealing with structured data like passwords and addresses  | Draft       | Live on NEAR AI       |
+| [AITP-04: Transactions](capabilities/aitp-04-transactions/README.md) | v1.0.0 [JSON Schema](capabilities/aitp-04-transactions/v1.0.0/schema.json) / [TypeScript](capabilities/aitp-04-transactions/v1.0.0/schema.ts) | P2P crypto transactions, using coins or tokens; less functionality than Payments     | Draft       | Live on NEAR AI       |
+| [AITP-05: Signatures](capabilities/aitp-05-signatures/README.md)     |    | Digital signatures for messages, authentication, and blockchain transactions         | Ideation    | None                  |
+
+Future capabilities could include:
+* Operational concerns like healthchecks
+* Legacy forms of payment, like credit/debit cards or invoices
 
 ## Open questions
 

@@ -1,18 +1,23 @@
 # AITP-T01: Threads API
 
+* Spec Status: Draft
+* Implementation Status: Live on NEAR AI
+
 AITP-T01 is an AITP transport using a JSON API over HTTPS. It is inspired by, and intended to be compatible with, the
 OpenAI Assistants 'v2' API.
 
-Most features of the AITP-T01 transport are simply the properties of all HTTPS APIs:
+Most features of the AITP-T01 transport are simply using the standard properties of any HTTPS API:
 
-| Requirement             | Implementation         |
-|-------------------------|------------------------|
-| Service identification  | Endpoint URL           |
-| Service location        | DNS+HTTP               |
-| Message encryption      | TLS (HTTPS)            |
-| Thread state management | Service responsibility |
+| Transport Requirement   | AITP-T01 Solution         |
+|-------------------------|---------------------------|
+| Service identification  | Endpoint URLs             |
+| Service location        | DNS+HTTP                  |
+| Message encryption      | TLS (HTTPS)               |
+| Thread state management | Service responsibility    |
+| Capability exchange     | Part of `POST /v1/thread` |
 
-Since the Threads API is stateful, in AITP-01 the HTTP server is responsible for tracking the state of all active
+
+Since the Threads API is stateful, in AITP-T01 the HTTP server is responsible for tracking the state of all active
 threads with clients. The benefits of this approach are:
 
 1. The client is never trusted to provide an accurate thread history; this makes the thread 'tamper-proof' by a malicious client.
@@ -23,7 +28,6 @@ And the drawbacks are:
 1. Thread management can be complicated to implement, especially at large scale.
 2. Storing thread state and history might incur storage and bandwidth fees,
 
-
 ## Threads API
 
 ### Create thread
@@ -32,6 +36,11 @@ And the drawbacks are:
 
 Request body:
 - `messages`: array of strings
+- `metadata`: object
+    - `actors`: array of objects
+      - `id`: string identifier for this thread participant, e.g. a username or agent ID
+      - `client_id`: string identifier for the UI or framework making this call
+      - `capabilities`: an array of strings, each a URL to the JSON schema file for a capability
 
 Response:
 - `thread`: A Thread object.
