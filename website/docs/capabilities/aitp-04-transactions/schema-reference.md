@@ -10,7 +10,7 @@ This documentation was auto-generated from the schema and examples by an AI mode
 ## Schema URL
 
 ```
-https://aitp.dev/v1/payments/schema.json
+https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json
 ```
 
 ## Schema Overview
@@ -287,7 +287,7 @@ The schema is structured as an "anyOf" with three possible object types.
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `$schema` | string | Yes | URI reference to the schema: `https://aitp.dev/v1/payments/schema.json` |
+| `$schema` | string | Yes | URI reference to the schema: `https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json` |
 | `quote` | object | Yes | Container for the quote |
 | `quote.type` | string | Yes | Must be "Quote" |
 | `quote.quote_id` | string | Yes | Unique identifier for this quote |
@@ -303,7 +303,7 @@ The schema is structured as an "anyOf" with three possible object types.
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `$schema` | string | Yes | URI reference to the schema: `https://aitp.dev/v1/payments/schema.json` |
+| `$schema` | string | Yes | URI reference to the schema: `https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json` |
 | `payment_authorization` | object | Yes | Container for the authorization |
 | `payment_authorization.quote_id` | string | Yes | Reference to the quote being paid |
 | `payment_authorization.result` | string | Yes | Result of the authorization: "success" or "failure" |
@@ -320,7 +320,7 @@ The schema is structured as an "anyOf" with three possible object types.
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `$schema` | string | Yes | URI reference to the schema: `https://aitp.dev/v1/payments/schema.json` |
+| `$schema` | string | Yes | URI reference to the schema: `https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json` |
 | `payment_result` | object | Yes | Container for the result |
 | `payment_result.quote_id` | string | Yes | Reference to the quote that was paid |
 | `payment_result.result` | string | Yes | Result of processing: "success" or "failure" |
@@ -369,7 +369,7 @@ The schema enforces these constraints with constant values. For example:
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "quote": {
     "type": "Quote",
     "quote_id": "quote_123",
@@ -391,7 +391,7 @@ The schema enforces these constraints with constant values. For example:
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "payment_authorization": {
     "quote_id": "quote_123",
     "result": "success",
@@ -413,7 +413,7 @@ The schema enforces these constraints with constant values. For example:
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "payment_result": {
     "quote_id": "quote_123",
     "result": "success",
@@ -449,7 +449,7 @@ The schema enforces these constraints with constant values. For example:
 The schema URL includes a version number that follows semver:
 
 ```
-https://aitp.dev/v1/payments/schema.json
+https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json
 ```
 
 Future versions will maintain backward compatibility within the same major version.

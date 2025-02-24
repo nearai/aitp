@@ -52,7 +52,7 @@ Common scenarios include:
 // Example JavaScript for generating a request_data message
 function createDataRequest(options) {
   return {
-    "$schema": "https://aitp.dev/v1/data/schema.json",
+    "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
     "request_data": {
       "id": generateUniqueId(), // Use UUID or similar
       "title": options.title || "",
@@ -77,7 +77,7 @@ function createDataRequest(options) {
 // Alternative version using an external JSON definition
 function createExternalDataRequest(options) {
   return {
-    "$schema": "https://aitp.dev/v1/data/schema.json",
+    "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
     "request_data": {
       "id": generateUniqueId(),
       "title": options.title || "",
@@ -295,7 +295,7 @@ function DataRequestForm({ request, onSubmit }) {
       }));
       
       onSubmit({
-        "$schema": "https://aitp.dev/v1/data/schema.json",
+        "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
         "data": {
           "request_data_id": request.request_data.id,
           "fields": fields

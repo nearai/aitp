@@ -60,7 +60,7 @@ Agent: I've found the red shoes in size 9. They are $79.99 plus $5 shipping.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "quote": {
     "type": "Quote",
     "quote_id": "order-12345",
@@ -84,7 +84,7 @@ The client application handles the blockchain transaction and generates an autho
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "payment_authorization": {
     "quote_id": "order-12345",
     "result": "success",
@@ -106,7 +106,7 @@ The client application handles the blockchain transaction and generates an autho
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "payment_result": {
     "quote_id": "order-12345",
     "result": "success",
@@ -157,7 +157,7 @@ Agent: Our premium service is $29.99 per month. Would you like to proceed with p
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "quote": {
     "type": "Quote",
     "quote_id": "premium-sub-789",
@@ -179,7 +179,7 @@ Agent: Our premium service is $29.99 per month. Would you like to proceed with p
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "payment_authorization": {
     "quote_id": "premium-sub-789",
     "result": "failure",
@@ -202,7 +202,7 @@ Agent: Our premium service is $29.99 per month. Would you like to proceed with p
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "payment_result": {
     "quote_id": "premium-sub-789",
     "result": "failure",
@@ -246,7 +246,7 @@ Agent: I've added a medium pepperoni pizza ($12.99) and a 2-liter soda ($2.99) t
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "quote": {
     "type": "Quote",
     "quote_id": "pizza-order-456",
@@ -268,7 +268,7 @@ Agent: I've added a medium pepperoni pizza ($12.99) and a 2-liter soda ($2.99) t
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "payment_authorization": {
     "quote_id": "pizza-order-456",
     "result": "success",
@@ -290,7 +290,7 @@ Agent: I've added a medium pepperoni pizza ($12.99) and a 2-liter soda ($2.99) t
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "payment_result": {
     "quote_id": "pizza-order-456",
     "result": "success",
@@ -341,7 +341,7 @@ Agent: The "Advanced AI Techniques" course includes 12 video lectures, practical
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "quote": {
     "type": "Quote",
     "quote_id": "course-purchase-789",
@@ -363,7 +363,7 @@ Agent: The "Advanced AI Techniques" course includes 12 video lectures, practical
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "payment_authorization": {
     "quote_id": "course-purchase-789",
     "result": "success",
@@ -385,7 +385,7 @@ Agent: The "Advanced AI Techniques" course includes 12 video lectures, practical
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "payment_result": {
     "quote_id": "course-purchase-789",
     "result": "success",
@@ -441,7 +441,7 @@ Agent: Our annual subscription plan is $199.99, which saves you $39.89 compared 
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "quote": {
     "type": "Quote",
     "quote_id": "annual-sub-123",
@@ -463,7 +463,7 @@ Agent: Our annual subscription plan is $199.99, which saves you $39.89 compared 
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "payment_authorization": {
     "quote_id": "annual-sub-123",
     "result": "failure",
@@ -486,7 +486,7 @@ Agent: Our annual subscription plan is $199.99, which saves you $39.89 compared 
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "payment_result": {
     "quote_id": "annual-sub-123",
     "result": "failure",
@@ -520,7 +520,7 @@ User: Yes, please generate a new quote.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "quote": {
     "type": "Quote",
     "quote_id": "annual-sub-124",

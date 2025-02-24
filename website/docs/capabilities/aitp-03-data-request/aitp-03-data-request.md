@@ -20,34 +20,13 @@ flowchart LR
     style B fill:#a2d2ff,stroke:#0072b2
     style C fill:#d3f8e2,stroke:#388e3c
     style D fill:#ffc8c8,stroke:#d32f2f
-```# AITP-03: Data Request
-
-* Spec Status: Draft
-* Implementation Status: Live on NEAR AI
-
-> [!NOTE]
-> This documentation was auto-generated from the schema and examples by an AI model.
-
-## Overview
-
-```mermaid
-flowchart LR
-    A[Agent A] -->|1. Sends request_data| B[Agent B or User]
-    B -->|2. Fills form| C{Form Processing}
-    C -->|3. Validates data| D[Create data response]
-    D -->|4. Sends data| A
-    
-    style A fill:#f9d77e,stroke:#8b6914
-    style B fill:#a2d2ff,stroke:#0072b2
-    style C fill:#d3f8e2,stroke:#388e3c
-    style D fill:#ffc8c8,stroke:#d32f2f
 ```
 
 The Data Request capability enables agents to request structured form data from users or other agents, and to receive structured responses to those requests. This capability is useful when an agent needs to collect specific information in a structured format, such as contact details, shipping addresses, preferences, or any other type of form data.
 
 ## Schema
 
-Schema URL: `https://aitp.dev/v1/data/schema.json`
+Schema URL: `https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json`
 
 The Data Request capability defines two primary message types:
 1. `request_data` - Sent by an agent to request form data
@@ -103,7 +82,7 @@ An agent sends a `request_data` message when it needs to collect structured info
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
   "request_data": {
     "id": "unique-form-id",
     "title": "Form title",
@@ -132,7 +111,7 @@ Alternatively, the form can reference an external JSON specification via URL:
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
   "request_data": {
     "id": "unique-form-id",
     "title": "Form title",
@@ -165,7 +144,7 @@ A client sends a `data` message in response to a `request_data`, providing the r
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
   "data": {
     "request_data_id": "id-from-the-request",
     "fields": [
@@ -187,7 +166,7 @@ A client sends a `data` message in response to a `request_data`, providing the r
 Request:
 ```json
 {
-  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
   "request_data": {
     "id": "5aabab1d-c053-49fc-bdd1-f432c89a1664",
     "title": "Your Favorites",
@@ -224,7 +203,7 @@ Request:
 Response:
 ```json
 {
-  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
   "data": {
     "request_data_id": "5aabab1d-c053-49fc-bdd1-f432c89a1664",
     "fields": [
@@ -253,7 +232,7 @@ Response:
 Request:
 ```json
 {
-  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
   "request_data": {
     "id": "c00d9f0c-89a7-4a74-8c57-0b9aa16be348",
     "title": "Shipping Info (International)",

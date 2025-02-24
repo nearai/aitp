@@ -29,7 +29,7 @@ The Payments capability enables agents to request and process payments securely.
 
 ## Schema
 
-Schema URL: `https://aitp.dev/v1/payments/schema.json`
+Schema URL: `https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json`
 
 The Payments capability defines three primary message types:
 1. `quote` - Sent by an agent to request payment
@@ -96,7 +96,7 @@ A quote is sent by an agent (typically a service or merchant) to request payment
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "quote": {
     "type": "Quote",
     "quote_id": "unique-quote-id",
@@ -132,7 +132,7 @@ A payment authorization is sent by the payer to approve the payment requested in
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "payment_authorization": {
     "quote_id": "unique-quote-id",
     "result": "success",
@@ -170,7 +170,7 @@ A payment result is sent by the payee to confirm the processing of a payment.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "payment_result": {
     "quote_id": "unique-quote-id",
     "result": "success",
@@ -212,7 +212,7 @@ The following example demonstrates a complete payment flow:
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "quote": {
     "type": "Quote",
     "quote_id": "quote_123",
@@ -234,7 +234,7 @@ The following example demonstrates a complete payment flow:
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "payment_authorization": {
     "quote_id": "quote_123",
     "result": "success",
@@ -256,7 +256,7 @@ The following example demonstrates a complete payment flow:
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/payments/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
   "payment_result": {
     "quote_id": "quote_123",
     "result": "success",

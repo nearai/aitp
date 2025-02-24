@@ -10,7 +10,7 @@ This documentation was auto-generated from the schema and examples by an AI mode
 ## Schema URL
 
 ```
-https://aitp.dev/v1/decisions/schema.json
+https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json
 ```
 
 ## Schema Overview
@@ -261,7 +261,7 @@ The schema is structured as an "anyOf" with two possible object types.
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `$schema` | string | Yes | URI reference to the schema: `https://aitp.dev/v1/decisions/schema.json` |
+| `$schema` | string | Yes | URI reference to the schema: `https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json` |
 | `request_decision` | object | Yes | Container for the decision request |
 | `request_decision.id` | string | Yes | Unique identifier for this decision request |
 | `request_decision.title` | string | No | Title for the decision UI |
@@ -293,7 +293,7 @@ The schema is structured as an "anyOf" with two possible object types.
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `$schema` | string | Yes | URI reference to the schema: `https://aitp.dev/v1/decisions/schema.json` |
+| `$schema` | string | Yes | URI reference to the schema: `https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json` |
 | `decision` | object | Yes | Container for the decision response |
 | `decision.request_decision_id` | string | No | Reference to the ID of the request being responded to |
 | `decision.options` | array | Yes | Array of selected options |

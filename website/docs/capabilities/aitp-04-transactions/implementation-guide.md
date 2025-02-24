@@ -83,7 +83,7 @@ function createQuote(options) {
   const expirationTime = new Date(currentTime.getTime() + 3600000);
   
   return {
-    "$schema": "https://aitp.dev/v1/payments/schema.json",
+    "$schema": "https://schema.aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
     "quote": {
       "type": "Quote",
       "quote_id": generateUniqueId(), // Use UUID or similar
@@ -187,7 +187,7 @@ function createPaymentResult(quoteId, result, orderDetails, errorMessage = null)
   }
   
   return {
-    "$schema": "https://aitp.dev/v1/payments/schema.json",
+    "$schema": "https://schema.aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
     "payment_result": {
       "quote_id": quoteId,
       "result": result,
@@ -282,7 +282,7 @@ function PaymentQuote({ quote, onApprove, onDecline }) {
       if (result.success) {
         // Create payment authorization
         const authorization = {
-          "$schema": "https://aitp.dev/v1/payments/schema.json",
+          "$schema": "https://schema.aitp.dev/capabilities/aitp-04-transactions/v1.0.0/schema.json",
           "payment_authorization": {
             "quote_id": quote.quote.quote_id,
             "result": "success",

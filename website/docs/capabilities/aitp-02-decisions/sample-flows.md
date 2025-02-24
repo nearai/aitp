@@ -52,7 +52,7 @@ User: I'm looking for noise-cancelling headphones under $300.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "request_decision": {
     "id": "bd9b613c-6fa5-4797-ba91-547f0903da9f",
     "title": "Recommended Headphones",
@@ -138,7 +138,7 @@ User: I'm looking for noise-cancelling headphones under $300.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "decision": {
     "request_decision_id": "bd9b613c-6fa5-4797-ba91-547f0903da9f",
     "options": [
@@ -175,7 +175,7 @@ User: I want to set up a new cloud server for my application.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "request_decision": {
     "id": "server-type-selection",
     "title": "Server Type",
@@ -206,7 +206,7 @@ User: I want to set up a new cloud server for my application.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "decision": {
     "request_decision_id": "server-type-selection",
     "options": [
@@ -223,7 +223,7 @@ User: I want to set up a new cloud server for my application.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "request_decision": {
     "id": "performance-tier",
     "title": "Performance Tier",
@@ -254,7 +254,7 @@ User: I want to set up a new cloud server for my application.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "decision": {
     "request_decision_id": "performance-tier",
     "options": [
@@ -271,7 +271,7 @@ User: I want to set up a new cloud server for my application.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "request_decision": {
     "id": "additional-features",
     "title": "Additional Features",
@@ -302,7 +302,7 @@ User: I want to set up a new cloud server for my application.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "decision": {
     "request_decision_id": "additional-features",
     "options": [
@@ -323,7 +323,7 @@ User: I want to set up a new cloud server for my application.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "request_decision": {
     "id": "final-confirmation",
     "title": "Review and Confirm",
@@ -347,7 +347,7 @@ User: I want to set up a new cloud server for my application.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "decision": {
     "request_decision_id": "final-confirmation",
     "options": [
@@ -380,7 +380,7 @@ User: I'm looking for a new fiction book to read. Can you recommend something?
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "request_decision": {
     "id": "book-genres",
     "title": "Book Genres",
@@ -421,7 +421,7 @@ User: I'm looking for a new fiction book to read. Can you recommend something?
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "decision": {
     "request_decision_id": "book-genres",
     "options": [
@@ -442,7 +442,7 @@ User: I'm looking for a new fiction book to read. Can you recommend something?
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "request_decision": {
     "id": "reading-preferences",
     "title": "Reading Preferences",
@@ -473,7 +473,7 @@ User: I'm looking for a new fiction book to read. Can you recommend something?
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "decision": {
     "request_decision_id": "reading-preferences",
     "options": [
@@ -490,7 +490,7 @@ User: I'm looking for a new fiction book to read. Can you recommend something?
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "request_decision": {
     "id": "book-recommendations",
     "title": "Recommended Books",
@@ -533,7 +533,7 @@ User: I'm looking for a new fiction book to read. Can you recommend something?
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "decision": {
     "request_decision_id": "book-recommendations",
     "options": [

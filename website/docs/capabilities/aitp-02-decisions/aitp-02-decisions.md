@@ -28,7 +28,7 @@ The Decisions capability enables agents to request structured choices from users
 
 ## Schema
 
-Schema URL: `https://aitp.dev/v1/decisions/schema.json`
+Schema URL: `https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json`
 
 The Decisions capability defines two primary message types:
 1. `request_decision` - Sent by an agent to request a decision
@@ -123,7 +123,7 @@ An agent sends a `request_decision` message when it needs the recipient to make 
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "request_decision": {
     "id": "unique-decision-id",
     "title": "Optional title for the decision",
@@ -193,7 +193,7 @@ A client sends a `decision` message in response to a `request_decision`, indicat
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "decision": {
     "request_decision_id": "id-from-the-request",
     "options": [
@@ -215,7 +215,7 @@ A client sends a `decision` message in response to a `request_decision`, indicat
 Request:
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "request_decision": {
     "id": "7c42b9d6-107d-4f5f-8f23-f9014c6efdae",
     "description": "Select your favorite number:",
@@ -231,7 +231,7 @@ Request:
 Response:
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "decision": {
     "request_decision_id": "7c42b9d6-107d-4f5f-8f23-f9014c6efdae",
     "options": [
@@ -246,7 +246,7 @@ Response:
 Request:
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "request_decision": {
     "id": "27ed3deb-39cb-4968-90dc-9cb456a470f2",
     "title": "Please confirm",
@@ -266,7 +266,7 @@ Request:
 Request:
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "request_decision": {
     "id": "50a53841-09ee-4b57-b5ec-561fe505f532",
     "title": "Your Favorite Colors",
@@ -299,7 +299,7 @@ Request:
 Response with multiple selections:
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "decision": {
     "request_decision_id": "50a53841-09ee-4b57-b5ec-561fe505f532",
     "options": [
@@ -315,7 +315,7 @@ Response with multiple selections:
 Request:
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "request_decision": {
     "id": "bd9b613c-6fa5-4797-ba91-547f0903da9f",
     "title": "Recommended Products",
@@ -354,7 +354,7 @@ Request:
 Response for product selection:
 ```json
 {
-  "$schema": "https://aitp.dev/v1/decisions/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
   "decision": {
     "request_decision_id": "bd9b613c-6fa5-4797-ba91-547f0903da9f",
     "options": [

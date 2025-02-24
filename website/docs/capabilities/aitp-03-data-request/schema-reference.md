@@ -10,7 +10,7 @@ This documentation was auto-generated from the schema and examples by an AI mode
 ## Schema URL
 
 ```
-https://aitp.dev/v1/data/schema.json
+https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json
 ```
 
 ## Schema Overview
@@ -228,7 +228,7 @@ The schema is structured as an "anyOf" with two possible object types.
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `$schema` | string | Yes | URI reference to the schema: `https://aitp.dev/v1/data/schema.json` |
+| `$schema` | string | Yes | URI reference to the schema: `https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json` |
 | `request_data` | object | Yes | Container for the data request |
 | `request_data.id` | string | Yes | Unique identifier for this form request |
 | `request_data.title` | string | No | Title for the form UI |
@@ -250,7 +250,7 @@ The schema is structured as an "anyOf" with two possible object types.
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `$schema` | string | Yes | URI reference to the schema: `https://aitp.dev/v1/data/schema.json` |
+| `$schema` | string | Yes | URI reference to the schema: `https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json` |
 | `data` | object | Yes | Container for the response data |
 | `data.request_data_id` | string | No | Reference to the ID of the request being responded to |
 | `data.fields` | array | Yes | Array of field values |
@@ -313,7 +313,7 @@ Form fields should be validated according to these rules:
 The schema URL includes a version number that follows semver:
 
 ```
-https://aitp.dev/v1/data/schema.json
+https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json
 ```
 
 Future versions will maintain backward compatibility within the same major version.

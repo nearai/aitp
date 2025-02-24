@@ -40,7 +40,7 @@ Use the Decisions capability when your agent needs to:
 // Example JavaScript for generating a request_decision message
 function createRequestDecision(options) {
   return {
-    "$schema": "https://aitp.dev/v1/decisions/schema.json",
+    "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
     "request_decision": {
       "id": generateUniqueId(), // Use UUID or similar
       "title": options.title || "",
@@ -173,7 +173,7 @@ function RadioDecision({ request, onSubmit }) {
   const handleSubmit = () => {
     if (selected) {
       onSubmit({
-        "$schema": "https://aitp.dev/v1/decisions/schema.json",
+        "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
         "decision": {
           "request_decision_id": request.request_decision.id,
           "options": [{ "id": selected }]
@@ -235,7 +235,7 @@ function CheckboxDecision({ request, onSubmit }) {
     
     if (selectedOptions.length > 0) {
       onSubmit({
-        "$schema": "https://aitp.dev/v1/decisions/schema.json",
+        "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
         "decision": {
           "request_decision_id": request.request_decision.id,
           "options": selectedOptions
@@ -323,7 +323,7 @@ function ProductsDecision({ request, onSubmit }) {
     
     if (selectedOptions.length > 0) {
       onSubmit({
-        "$schema": "https://aitp.dev/v1/decisions/schema.json",
+        "$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json",
         "decision": {
           "request_decision_id": request.request_decision.id,
           "options": selectedOptions

@@ -49,7 +49,7 @@ User: I'd like to set up my profile.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
   "request_data": {
     "id": "profile-setup",
     "title": "Profile Information",
@@ -98,7 +98,7 @@ User: I'd like to set up my profile.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
   "data": {
     "request_data_id": "profile-setup",
     "fields": [
@@ -147,7 +147,7 @@ User: I'd like to checkout and complete my purchase.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
   "request_data": {
     "id": "shipping-info",
     "title": "Shipping Information",
@@ -232,7 +232,7 @@ The client fetches the form from the URL, which contains:
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
   "data": {
     "request_data_id": "shipping-info",
     "fields": [
@@ -310,7 +310,7 @@ User: I'd like to set my preferences for product recommendations.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
   "request_data": {
     "id": "user-preferences",
     "title": "Your Preferences",
@@ -362,7 +362,7 @@ User: I'd like to set my preferences for product recommendations.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
   "data": {
     "request_data_id": "user-preferences",
     "fields": [
@@ -440,7 +440,7 @@ User: I'd like to register for the conference.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
   "request_data": {
     "id": "registration-step1",
     "title": "Personal Information",
@@ -484,7 +484,7 @@ User: I'd like to register for the conference.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
   "data": {
     "request_data_id": "registration-step1",
     "fields": [
@@ -517,7 +517,7 @@ User: I'd like to register for the conference.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
   "request_data": {
     "id": "registration-step2",
     "title": "Conference Details",
@@ -557,7 +557,7 @@ User: I'd like to register for the conference.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
   "data": {
     "request_data_id": "registration-step2",
     "fields": [
@@ -585,7 +585,7 @@ User: I'd like to register for the conference.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
   "request_data": {
     "id": "registration-step3",
     "title": "Payment Information",
@@ -638,7 +638,7 @@ User: I'd like to register for the conference.
 
 ```json
 {
-  "$schema": "https://aitp.dev/v1/data/schema.json",
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
   "data": {
     "request_data_id": "registration-step3",
     "fields": [
