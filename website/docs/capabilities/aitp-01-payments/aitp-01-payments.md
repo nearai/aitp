@@ -10,7 +10,7 @@ AITP-01 has a `schema.json` file, but the implementation is still being refined.
 
 ## Overview
 
-AITP-01 Payments provides a purpose-built payment protocol for user-to-agent and agent-to-agent transactions. Unlike traditional payment systems that rely on credit cards or direct blockchain transactions, AITP-01 is designed specifically for the agent ecosystem, supporting complex payment flows, metered services, and fair compensation for all participating agents.
+AITP-01 Payments provides a purpose-built payment protocol for user-to-agent and agent-to-agent transactions. Unlike traditional payment systems that rely on credit cards or direct blockchain transactions, AITP-01 is designed specifically for the agent ecosystem, supporting complex payment flows, metered services, and fair compensation for all participating parties.
 
 ## Why Crypto-Based Payments for Agents?
 

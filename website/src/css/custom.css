@@ -263,6 +263,10 @@ li > ul {
   height: 2px;
 }
 
+.menu__list li {
+  color: var(--ifm-menu-color);
+}
+
 table {
   display: inline-table;
   min-width: 100%;
