@@ -99,6 +99,10 @@ An agent sends a `request_data` message when it needs to collect structured info
           "type": "text|number|email|textarea|select|combobox|tel",
           "options": ["Option 1", "Option 2"],
           "required": true|false,
+          "encryption": {
+            "algorithm": "ECIES-secp256k1-AES-256-GCM",
+            "publicKey": "0288383a472de32cd643c6e4d6c33a99763ae551913b3a5d128964a80520e9f92d"
+          },
           "autocomplete": "autocomplete hint"
         },
         // More fields...
@@ -155,6 +159,32 @@ A client sends a `data` message in response to a `request_data`, providing the r
         "value": "User-provided value"
       },
       // More field values...
+    ]
+  }
+}
+```
+
+#### Encrypted Field Values
+
+For sensitive data, values can be encrypted using ECIES with the secp256k1 curve:
+
+```json
+{
+  "$schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
+  "data": {
+    "request_data_id": "id-from-the-request",
+    "fields": [
+      {
+        "id": "credit_card",
+        "label": "Credit Card Number",
+        "value": "4b0db0674d3607e9631cd136a4fb4d29f1f36d006fe6be0879432c300c9829b0",
+        "encryption": {
+          "algorithm": "ECIES-secp256k1-AES-256-GCM",
+          "publicKey": "0288383a472de32cd643c6e4d6c33a99763ae551913b3a5d128964a80520e9f92d",
+          "ephemeralPublicKey": "03814f3a3e1103b5271aff36f706b48ff1ee40e28c57b33abb95a9d8a83976d0c3",
+          "mac": "3dfc1605ecad92fb8e7be93f9cc80d414c31d6889680dd75b4392ab6f2edb8a9"
+        }
+      }
     ]
   }
 }

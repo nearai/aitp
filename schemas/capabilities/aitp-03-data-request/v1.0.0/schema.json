@@ -27,6 +27,34 @@
                   },
                   "value": {
                     "type": "string"
+                  },
+                  "encryption": {
+                    "type": "object",
+                    "properties": {
+                      "algorithm": {
+                        "type": "string",
+                        "enum": ["ECIES-secp256k1-AES-256-GCM"],
+                        "default": "ECIES-secp256k1-AES-256-GCM"
+                      },
+                      "publicKey": {
+                        "type": "string",
+                        "description": "Hex-encoded public key used for encryption"
+                      },
+                      "ephemeralPublicKey": {
+                        "type": "string",
+                        "description": "Hex-encoded ephemeral public key used during encryption"
+                      },
+                      "mac": {
+                        "type": "string",
+                        "description": "Hex-encoded MAC/tag for authentication"
+                      },
+                      "iv": {
+                        "type": "string",
+                        "description": "Hex-encoded initialization vector/nonce"
+                      }
+                    },
+                    "required": ["algorithm", "ephemeralPublicKey", "mac", "iv"],
+                    "additionalProperties": false
                   }
                 },
                 "required": ["id"],
@@ -96,6 +124,22 @@
                           "tel"
                         ],
                         "default": "text"
+                      },
+                      "encryption": {
+                        "type": "object",
+                        "properties": {
+                          "algorithm": {
+                            "type": "string",
+                            "enum": ["ECIES-secp256k1-AES-256-GCM"],
+                            "default": "ECIES-secp256k1-AES-256-GCM"
+                          },
+                          "publicKey": {
+                            "type": "string",
+                            "description": "Hex-encoded public key used for encryption"
+                          }
+                        },
+                        "required": ["algorithm", "publicKey"],
+                        "additionalProperties": false
                       },
                       "options": {
                         "type": "array",

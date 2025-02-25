@@ -115,6 +115,141 @@ function handleDataResponse(dataResponse) {
 }
 ```
 
+## Encryption with ECIES-secp256k1
+
+For sensitive data, AITP supports field-level encryption using ECIES (Elliptic Curve Integrated Encryption Scheme) with the secp256k1 curve, the same cryptographic curve used in Bitcoin and many other cryptocurrencies.
+
+### Security Considerations
+
+When using encryption:
+- Use a fresh ephemeral key pair for each field encryption
+- Never reuse ephemeral keys across different fields or messages
+- Always verify the MAC before trusting decrypted data
+- Validate public keys before using them for encryption
+
+### TypeScript Implementation Example (using eciesjs)
+
+The AITP protocol specifies a standard format for encrypted data using ECIES with secp256k1. This ensures interoperability between different implementations.
+
+```typescript
+import { PrivateKey, encrypt, decrypt } from 'eciesjs';
+
+// Function to encrypt a field value
+function encryptFieldValue(value: string, recipientPublicKeyHex: string): any {
+  // Convert value to buffer
+  const valueBuffer = Buffer.from(value, 'utf8');
+  
+  // Encrypt the value using ECIES
+  const encryptedData = encrypt(recipientPublicKeyHex, valueBuffer);
+  
+  // In eciesjs, the format is:
+  // [ ephemeral public key (65 bytes) | nonce (16 bytes) | tag/MAC (16 bytes) | encrypted data ]
+  const ephemeralPublicKey = encryptedData.slice(0, 65).toString('hex');
+  const nonce = encryptedData.slice(65, 65 + 16).toString('hex');
+  const tag = encryptedData.slice(65 + 16, 65 + 16 + 16).toString('hex');
+  const ciphertext = encryptedData.slice(65 + 16 + 16).toString('hex');
+  
+  // Return encrypted field in AITP format
+  return {
+    value: ciphertext,
+    encryption: {
+      algorithm: 'ECIES-secp256k1-AES-256-GCM',
+      publicKey: recipientPublicKeyHex,
+      ephemeralPublicKey: ephemeralPublicKey,
+      mac: tag,
+      iv: nonce
+    }
+  };
+}
+
+// Function to decrypt a field value
+function decryptFieldValue(encryptedField: any, privateKeyHex: string): string {
+  const { value, encryption } = encryptedField;
+  
+  // The AITP format separates the components, but eciesjs expects:
+  // [ ephemeral public key | nonce | tag/MAC | encrypted data ]
+  const { ephemeralPublicKey, mac, iv } = encryption;
+  
+  // Reconstruct the eciesjs format
+  const encryptedBuffer = Buffer.concat([
+    Buffer.from(ephemeralPublicKey, 'hex'),
+    Buffer.from(iv, 'hex'),
+    Buffer.from(mac, 'hex'),
+    Buffer.from(value, 'hex')
+  ]);
+  
+  // Decrypt using eciesjs
+  const decryptedBuffer = decrypt(privateKeyHex, encryptedBuffer);
+  
+  // Return as string
+  return decryptedBuffer.toString('utf8');
+}
+
+// Example usage
+function exampleEncryptDecrypt() {
+  // Generate a keypair for the agent
+  const agentPrivateKey = new PrivateKey();
+  const agentPublicKeyHex = agentPrivateKey.publicKey.toHex();
+  const agentPrivateKeyHex = agentPrivateKey.toHex();
+  
+  // Create a data request with encryption enabled
+  const dataRequest = {
+    $schema: "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
+    request_data: {
+      id: "payment-info-request",
+      title: "Payment Information",
+      description: "Please provide your payment details to complete your order",
+      form: {
+        fields: [
+          {
+            id: "credit_card",
+            label: "Credit Card Number",
+            type: "text",
+            required: true,
+            encryption: {
+              algorithm: "ECIES-secp256k1-AES-256-GCM",
+              publicKey: agentPublicKeyHex
+            }
+          }
+        ]
+      }
+    }
+  };
+  
+  console.log("Data Request:", JSON.stringify(dataRequest, null, 2));
+  
+  // Client encrypts the sensitive data
+  const creditCardNumber = "4111111111111111";
+  const encryptedField = encryptFieldValue(creditCardNumber, agentPublicKeyHex);
+  
+  // Create a response with the encrypted field
+  const dataResponse = {
+    $schema: "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json",
+    data: {
+      request_data_id: "payment-info-request",
+      fields: [
+        {
+          id: "credit_card",
+          label: "Credit Card Number",
+          ...encryptedField
+        }
+      ]
+    }
+  };
+  
+  console.log("Encrypted Response:", JSON.stringify(dataResponse, null, 2));
+  
+  // Agent decrypts the data
+  const decryptedValue = decryptFieldValue(
+    dataResponse.data.fields[0],
+    agentPrivateKeyHex
+  );
+  
+  console.log("Decrypted Credit Card:", decryptedValue);
+  console.assert(decryptedValue === creditCardNumber, "Decryption failed!");
+}
+```
+
 ## Implementation for UI Developers
 
 ### Rendering Form Fields

@@ -148,6 +148,34 @@ The schema is structured as an "anyOf" with two possible object types.
               },
               "value": {
                 "type": "string"
+              },
+              "encrypted": {
+                "type": "boolean",
+                "default": false
+              },
+              "encryption": {
+                "type": "object",
+                "properties": {
+                  "algorithm": {
+                    "type": "string",
+                    "enum": ["ECIES-secp256k1-AES-256-GCM"],
+                    "default": "ECIES-secp256k1-AES-256-GCM"
+                  },
+                  "publicKey": {
+                    "type": "string",
+                    "description": "Hex-encoded public key used for encryption"
+                  },
+                  "ephemeralPublicKey": {
+                    "type": "string",
+                    "description": "Hex-encoded ephemeral public key used during encryption"
+                  },
+                  "mac": {
+                    "type": "string",
+                    "description": "Hex-encoded MAC for authentication"
+                  }
+                },
+                "required": ["algorithm", "ephemeralPublicKey", "mac"],
+                "additionalProperties": false
               }
             },
             "required": ["id"],
@@ -185,6 +213,9 @@ The schema is structured as an "anyOf" with two possible object types.
 | `request_data.form.fields[].description` | string | No | Descriptive text or help text for this field |
 | `request_data.form.fields[].default_value` | string | No | Default value for this field |
 | `request_data.form.fields[].type` | string | No | Field input type (defaults to "text") |
+| `request_data.form.fields[].encryption` | object | No | Container for encryption details if this field requires encryption |
+| `request_data.form.fields[].encryption.algorithm` | string | Yes* | Encryption algorithm to use, currently only "ECIES-secp256k1-AES-256-GCM" |
+| `request_data.form.fields[].encryption.publicKey` | string | Yes* | Hex-encoded public key to use for encryption |
 | `request_data.form.fields[].options` | array | No | Array of options for select/combobox fields |
 | `request_data.form.fields[].required` | boolean | No | Whether this field is required (defaults to false) |
 | `request_data.form.fields[].autocomplete` | string | No | HTML autocomplete attribute value |
@@ -200,6 +231,12 @@ The schema is structured as an "anyOf" with two possible object types.
 | `data.fields[].id` | string | Yes | ID of the field (should match ID in the request) |
 | `data.fields[].label` | string | No | Label of the field (for human readability) |
 | `data.fields[].value` | string | No | Value provided for this field |
+| `data.fields[].encryption` | object | No | Container for encryption details when the value is encrypted |
+| `data.fields[].encryption.algorithm` | string | Yes* | Encryption algorithm used, currently only "ECIES-secp256k1-AES-256-GCM" |
+| `data.fields[].encryption.publicKey` | string | No | Hex-encoded public key used for encryption |
+| `data.fields[].encryption.ephemeralPublicKey` | string | Yes* | Hex-encoded ephemeral public key used during encryption |
+| `data.fields[].encryption.mac` | string | Yes* | Hex-encoded MAC/tag for authentication |
+| `data.fields[].encryption.iv` | string | Yes* | Hex-encoded initialization vector/nonce for AES-GCM |
 
 ## Field Types
 
@@ -250,6 +287,37 @@ Form fields should be validated according to these rules:
 3. Fields with type `number` should contain numeric values
 4. Fields with type `tel` should contain a valid phone number format
 5. Fields with type `select` should have a value from the provided options
+
+## Encryption with ECIES-secp256k1
+
+For sensitive data, AITP supports field-level encryption using ECIES (Elliptic Curve Integrated Encryption Scheme) with the secp256k1 curve, the same cryptographic curve used in Bitcoin and many other cryptocurrencies.
+
+### Encryption Workflow
+
+1. An agent sends a data request to a user or another agent, specifying:
+   - Which fields require encryption by including an `encryption` object
+   - The agent's public key in the field's `encryption.publicKey`
+
+2. When responding with sensitive information, the data provider:
+   - Encrypts the required fields using ECIES-secp256k1 with the provided public key
+   - Includes the encryption metadata in the response for each encrypted field
+
+3. When the requesting agent receives the encrypted data, they:
+   - Identify encrypted fields by the presence of the `encryption` object
+   - Use their private key and the provided encryption metadata to decrypt the values
+   - Process the decrypted information as needed
+
+### How ECIES-secp256k1 Works
+
+1. The data provider (the one encrypting the value) generates an ephemeral key pair
+2. The provider derives a shared secret using ECDH with the recipient's public key
+3. A symmetric key is derived from the shared secret
+4. The value is encrypted with this symmetric key
+5. The resulting ciphertext, ephemeral public key, and MAC are included in the response
+
+### Implementation Details
+
+For a complete implementation guide with code examples, see the [Implementation Guide](implementation-guide.md).
 
 ## Schema Versioning
 
