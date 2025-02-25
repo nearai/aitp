@@ -1,0 +1,440 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "quote": {
+          "type": "object",
+          "properties": {
+            "quote_id": {
+              "type": "string",
+              "description": "Unique identifier for this payment request"
+            },
+            "merchant_id": {
+              "type": "string",
+              "description": "Identifier for the recipient of the payment"
+            },
+            "description": {
+              "type": "string",
+              "description": "Human-readable description of what is being paid for"
+            },
+            "expiration": {
+              "type": "string",
+              "format": "date-time",
+              "description": "When this quote expires"
+            },
+            "next_recipient": {
+              "type": "string",
+              "description": "The next agent in the chain that should receive this quote"
+            },
+            "payment_options": {
+              "type": "array",
+              "description": "Available payment options",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "string",
+                    "pattern": "^\\d+(\\.\\d+)?$",
+                    "description": "Amount to be paid, as a string to prevent floating point imprecision"
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "Currency code (e.g., 'USD')"
+                  },
+                  "payment_methods": {
+                    "type": "array",
+                    "description": "Available methods to pay this amount",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": ["near_payment_channel"],
+                          "description": "Type of payment method"
+                        },
+                        "token": {
+                          "type": "string",
+                          "description": "Token contract address"
+                        },
+                        "recipient": {
+                          "type": "string",
+                          "description": "Recipient account or address"
+                        }
+                      },
+                      "required": ["type", "token", "recipient"],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": ["currency", "payment_methods"],
+                "additionalProperties": false
+              }
+            },
+            "revenue_share": {
+              "type": "object",
+              "description": "Configuration for affiliate revenue sharing",
+              "properties": {
+                "affiliate_share_bps": {
+                  "type": "integer",
+                  "description": "Percentage in basis points (1/100 of a percent) allocated to affiliates"
+                },
+                "affiliates": {
+                  "type": "array",
+                  "description": "List of affiliates that should receive a share",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "Identifier for the affiliate"
+                      },
+                      "role": {
+                        "type": "string",
+                        "enum": ["personal_assistant", "discovery", "service", "other"],
+                        "description": "Role of this affiliate in the transaction"
+                      },
+                      "weight": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "description": "Relative weight for revenue distribution"
+                      }
+                    },
+                    "required": ["id", "role"],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": ["affiliate_share_bps"],
+              "additionalProperties": false
+            },
+            "merchant_signature": {
+              "type": "string",
+              "description": "Cryptographic signature by the merchant"
+            }
+          },
+          "required": ["quote_id", "merchant_id", "description", "payment_options", "merchant_signature"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "quote"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "wrapped_quote": {
+          "type": "object",
+          "properties": {
+            "original_quote": {
+              "$ref": "#/anyOf/0/properties/quote"
+            },
+            "wrappers": {
+              "type": "array",
+              "description": "Chain of agents that have wrapped this quote",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "affiliate_id": {
+                    "type": "string",
+                    "description": "Identifier for this affiliate"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": ["personal_assistant", "discovery", "service", "other"],
+                    "description": "Role of this affiliate in the transaction"
+                  },
+                  "added_affiliates": {
+                    "type": "array",
+                    "description": "Additional affiliates added by this wrapper",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Identifier for the affiliate"
+                        },
+                        "role": {
+                          "type": "string",
+                          "enum": ["personal_assistant", "discovery", "service", "other"],
+                          "description": "Role of this affiliate"
+                        },
+                        "weight": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "description": "Relative weight for revenue distribution"
+                        }
+                      },
+                      "required": ["id", "role"],
+                      "additionalProperties": false
+                    }
+                  },
+                  "next_recipient": {
+                    "type": "string",
+                    "description": "The next agent in the chain that should receive this quote"
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "When this wrapper was added"
+                  },
+                  "signature": {
+                    "type": "string",
+                    "description": "Cryptographic signature by this wrapper"
+                  }
+                },
+                "required": ["affiliate_id", "role", "next_recipient", "timestamp", "signature"],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": ["original_quote", "wrappers"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "wrapped_quote"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "payment": {
+          "type": "object",
+          "properties": {
+            "quote_id": {
+              "type": "string",
+              "description": "Reference to the quote being paid"
+            },
+            "payment_method": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["near_payment_channel"],
+                  "description": "Type of payment method used"
+                },
+                "token": {
+                  "type": "string",
+                  "description": "Token contract address"
+                },
+                "channel_id": {
+                  "type": "string",
+                  "description": "Identifier for the payment channel"
+                },
+                "amount": {
+                  "type": "string",
+                  "pattern": "^\\d+(\\.\\d+)?$",
+                  "description": "Amount paid, as a string to prevent floating point imprecision"
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "Currency code (e.g., 'USD')"
+                }
+              },
+              "required": ["type", "token", "channel_id", "currency"],
+              "additionalProperties": false
+            },
+            "payer_id": {
+              "type": "string",
+              "description": "Identifier for the payer"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "description": "When the payment was made"
+            },
+            "payer_signature": {
+              "type": "string",
+              "description": "Cryptographic signature by the payer"
+            }
+          },
+          "required": ["quote_id", "payment_method", "payer_id", "timestamp", "payer_signature"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "payment"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "payment_confirmation": {
+          "type": "object",
+          "properties": {
+            "quote_id": {
+              "type": "string",
+              "description": "Reference to the quote that was paid"
+            },
+            "payment_id": {
+              "type": "string",
+              "description": "Unique identifier for this payment"
+            },
+            "result": {
+              "type": "string",
+              "enum": ["success", "failure", "pending"],
+              "description": "Result of the payment processing"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "description": "When the payment was processed"
+            },
+            "message": {
+              "type": "string",
+              "description": "Human-readable message about the payment"
+            },
+            "details": {
+              "type": "array",
+              "description": "Additional details about the transaction",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string",
+                    "description": "Label for this detail"
+                  },
+                  "value": {
+                    "description": "Value for this detail",
+                    "oneOf": [
+                      { "type": "string" },
+                      { "type": "number" }
+                    ]
+                  },
+                  "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Optional URL with more information"
+                  }
+                },
+                "required": ["label", "value"],
+                "additionalProperties": false
+              }
+            },
+            "merchant_signature": {
+              "type": "string",
+              "description": "Cryptographic signature by the merchant"
+            }
+          },
+          "required": ["quote_id", "payment_id", "result", "timestamp", "merchant_signature"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "payment_confirmation"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "top_up_request": {
+          "type": "object",
+          "properties": {
+            "channel_id": {
+              "type": "string",
+              "description": "Identifier for the payment channel to top up"
+            },
+            "amount": {
+              "type": "string",
+              "pattern": "^\\d+(\\.\\d+)?$",
+              "description": "Amount to add to the channel, as a string to prevent floating point imprecision"
+            },
+            "currency": {
+              "type": "string",
+              "description": "Currency code (e.g., 'USD')"
+            },
+            "reason": {
+              "type": "string",
+              "description": "Reason for requesting more funds"
+            },
+            "merchant_id": {
+              "type": "string",
+              "description": "Identifier for the merchant requesting the top-up"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "description": "When the top-up was requested"
+            },
+            "merchant_signature": {
+              "type": "string",
+              "description": "Cryptographic signature by the merchant"
+            }
+          },
+          "required": ["channel_id", "currency", "merchant_id", "timestamp", "merchant_signature"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "top_up_request"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "top_up_response": {
+          "type": "object",
+          "properties": {
+            "channel_id": {
+              "type": "string",
+              "description": "Identifier for the payment channel that was topped up"
+            },
+            "amount": {
+              "type": "string",
+              "pattern": "^\\d+(\\.\\d+)?$",
+              "description": "Amount added to the channel, as a string to prevent floating point imprecision"
+            },
+            "currency": {
+              "type": "string",
+              "description": "Currency code (e.g., 'USD')"
+            },
+            "new_balance": {
+              "type": "string",
+              "pattern": "^\\d+(\\.\\d+)?$",
+              "description": "New balance in the channel, as a string to prevent floating point imprecision"
+            },
+            "payer_id": {
+              "type": "string",
+              "description": "Identifier for the payer"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "description": "When the top-up was processed"
+            },
+            "payer_signature": {
+              "type": "string",
+              "description": "Cryptographic signature by the payer"
+            }
+          },
+          "required": ["channel_id", "amount", "currency", "payer_id", "timestamp", "payer_signature"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "top_up_response"],
+      "additionalProperties": false
+    }
+  ]
+}

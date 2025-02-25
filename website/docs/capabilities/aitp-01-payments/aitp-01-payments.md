@@ -1,11 +1,11 @@
 # AITP-01: Payments
 
-* **Version**: 0.1.0
+* **Version**: 1.0.0
 * **Spec Status**: Ideation
 * **Implementation Status**: In Development
 
 :::warning Ideation Phase
-AITP-01 does not yet have a published `schema.json` file as we work through important implementation details.
+AITP-01 has a `schema.json` file, but the implementation is still being refined. The schema may evolve based on feedback and practical implementation experience. See the [Schema Reference](./schema-reference.md) for details on the current schema.
 :::
 
 ## Overview

@@ -2,7 +2,7 @@
 
 * **Version**: 1.0.0
 * **Spec Status**: Draft
-* **Implementation Status**: In Development
+* **Implementation Status**: Planned
 
 :::note AI-Generated Documentation
 This documentation was generated with the assistance of AI and may need further review and refinement.
