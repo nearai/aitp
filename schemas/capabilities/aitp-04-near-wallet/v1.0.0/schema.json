@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "request_account": {
+          "type": "object",
+          "properties": {
+            "request_id": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            }
+          },
+          "required": ["request_id"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "request_account"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "account_response": {
+          "type": "object",
+          "properties": {
+            "request_id": {
+              "type": "string"
+            },
+            "accounts": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": ["request_id", "accounts"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "account_response"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "request_transaction": {
+          "type": "object",
+          "properties": {
+            "request_id": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "transaction": {
+              "type": "object",
+              "properties": {
+                "receiver_id": {
+                  "type": "string"
+                },
+                "actions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": ["CreateAccount", "DeployContract", "FunctionCall", "Transfer", "Stake", "AddKey", "DeleteKey", "DeleteAccount"]
+                      },
+                      "params": {
+                        "type": "object"
+                      }
+                    },
+                    "required": ["type", "params"],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": ["receiver_id", "actions"],
+              "additionalProperties": false
+            }
+          },
+          "required": ["request_id", "transaction"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "request_transaction"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "transaction_response": {
+          "type": "object",
+          "properties": {
+            "request_id": {
+              "type": "string"
+            },
+            "transaction_hash": {
+              "type": "string"
+            }
+          },
+          "required": ["request_id", "transaction_hash"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "transaction_response"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "request_message_signing": {
+          "type": "object",
+          "properties": {
+            "request_id": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "message": {
+              "type": "object",
+              "properties": {
+                "nonce": {
+                  "type": "string",
+                  "format": "base64"
+                },
+                "recipient": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": ["nonce", "recipient", "message"],
+              "additionalProperties": false
+            },
+            "state": {
+              "type": "string"
+            }
+          },
+          "required": ["request_id", "message"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "request_message_signing"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "message_signing_response": {
+          "type": "object",
+          "properties": {
+            "request_id": {
+              "type": "string"
+            },
+            "account_id": {
+              "type": "string"
+            },
+            "public_key": {
+              "type": "string"
+            },
+            "signature": {
+              "type": "string"
+            }
+          },
+          "required": ["request_id", "account_id", "public_key", "signature"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "message_signing_response"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "token_notification": {
+          "type": "object",
+          "properties": {
+            "notification_id": {
+              "type": "string"
+            },
+            "token_type": {
+              "type": "string",
+              "enum": ["nep141"]
+            },
+            "token_contract": {
+              "type": "string"
+            }
+          },
+          "required": ["notification_id", "token_type", "token_contract"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "token_notification"],
+      "additionalProperties": false
+    }
+  ]
+}
