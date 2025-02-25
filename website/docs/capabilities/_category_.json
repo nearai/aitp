@@ -1,0 +1,14 @@
+{
+  "position": 4,
+  "label": "Capabilities",
+  "collapsible": true,
+  "collapsed": false,
+  "customProps": {
+    "plannedCapabilities": [
+      "AITP-06: Solana Wallet",
+      "AITP-07: Health Checks",
+      "AITP-08: Human In The Loop",
+      "AITP-09: Fiat Payments"
+    ]
+  }
+}

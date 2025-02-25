@@ -1,0 +1,385 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "request_address": {
+          "type": "object",
+          "properties": {
+            "request_id": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "chain_id": {
+              "type": "integer"
+            }
+          },
+          "required": ["request_id"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "request_address"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "address_response": {
+          "type": "object",
+          "properties": {
+            "request_id": {
+              "type": "string"
+            },
+            "addresses": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^0x[a-fA-F0-9]{40}$"
+              }
+            }
+          },
+          "required": ["request_id", "addresses"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "address_response"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "request_transaction": {
+          "type": "object",
+          "properties": {
+            "request_id": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "chain_id": {
+              "type": "integer"
+            },
+            "transaction": {
+              "type": "object",
+              "properties": {
+                "to": {
+                  "type": "string",
+                  "pattern": "^0x[a-fA-F0-9]{40}$"
+                },
+                "from": {
+                  "type": "string",
+                  "pattern": "^0x[a-fA-F0-9]{40}$"
+                },
+                "data": {
+                  "type": "string",
+                  "pattern": "^0x[a-fA-F0-9]*$"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^0x[a-fA-F0-9]+$"
+                },
+                "gas": {
+                  "type": "string",
+                  "pattern": "^0x[a-fA-F0-9]+$"
+                },
+                "gasPrice": {
+                  "type": "string",
+                  "pattern": "^0x[a-fA-F0-9]+$"
+                },
+                "maxFeePerGas": {
+                  "type": "string",
+                  "pattern": "^0x[a-fA-F0-9]+$"
+                },
+                "maxPriorityFeePerGas": {
+                  "type": "string",
+                  "pattern": "^0x[a-fA-F0-9]+$"
+                },
+                "nonce": {
+                  "type": "string",
+                  "pattern": "^0x[a-fA-F0-9]+$"
+                },
+                "accessList": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "address": {
+                        "type": "string",
+                        "pattern": "^0x[a-fA-F0-9]{40}$"
+                      },
+                      "storageKeys": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "pattern": "^0x[a-fA-F0-9]{64}$"
+                        }
+                      }
+                    },
+                    "required": ["address", "storageKeys"],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": ["to"],
+              "additionalProperties": false
+            }
+          },
+          "required": ["request_id", "transaction"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "request_transaction"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "transaction_response": {
+          "type": "object",
+          "properties": {
+            "request_id": {
+              "type": "string"
+            },
+            "transaction_hash": {
+              "type": "string",
+              "pattern": "^0x[a-fA-F0-9]{64}$"
+            }
+          },
+          "required": ["request_id", "transaction_hash"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "transaction_response"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "request_message_signing": {
+          "type": "object",
+          "properties": {
+            "request_id": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string",
+              "pattern": "^0x[a-fA-F0-9]{40}$"
+            },
+            "signing_type": {
+              "type": "string",
+              "enum": ["personal_sign", "typed_data"]
+            },
+            "message": {
+              "type": "string"
+            },
+            "typed_data": {
+              "type": "object",
+              "properties": {
+                "types": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["name", "type"],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "primaryType": {
+                  "type": "string"
+                },
+                "domain": {
+                  "type": "object"
+                },
+                "message": {
+                  "type": "object"
+                }
+              },
+              "required": ["types", "primaryType", "domain", "message"],
+              "additionalProperties": false
+            }
+          },
+          "required": ["request_id", "signing_type"],
+          "oneOf": [
+            {
+              "properties": {
+                "signing_type": {
+                  "enum": ["personal_sign"]
+                }
+              },
+              "required": ["message"]
+            },
+            {
+              "properties": {
+                "signing_type": {
+                  "enum": ["typed_data"]
+                }
+              },
+              "required": ["typed_data"]
+            }
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "request_message_signing"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "message_signing_response": {
+          "type": "object",
+          "properties": {
+            "request_id": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string",
+              "pattern": "^0x[a-fA-F0-9]{40}$"
+            },
+            "signature": {
+              "type": "string",
+              "pattern": "^0x[a-fA-F0-9]+$"
+            }
+          },
+          "required": ["request_id", "address", "signature"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "message_signing_response"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "chain_notification": {
+          "type": "object",
+          "properties": {
+            "notification_id": {
+              "type": "string"
+            },
+            "chain_id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "rpc_url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "native_currency": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "symbol": {
+                  "type": "string"
+                },
+                "decimals": {
+                  "type": "integer"
+                }
+              },
+              "required": ["name", "symbol", "decimals"],
+              "additionalProperties": false
+            }
+          },
+          "required": ["notification_id", "chain_id"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "chain_notification"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "format": "uri"
+        },
+        "token_notification": {
+          "type": "object",
+          "properties": {
+            "notification_id": {
+              "type": "string"
+            },
+            "chain_id": {
+              "type": "integer"
+            },
+            "token_type": {
+              "type": "string",
+              "enum": ["erc20"]
+            },
+            "token_contract": {
+              "type": "string",
+              "pattern": "^0x[a-fA-F0-9]{40}$"
+            },
+            "name": {
+              "type": "string"
+            },
+            "symbol": {
+              "type": "string"
+            },
+            "decimals": {
+              "type": "integer"
+            },
+            "icon_url": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "required": ["notification_id", "chain_id", "token_type", "token_contract", "name", "symbol", "decimals"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["$schema", "token_notification"],
+      "additionalProperties": false
+    }
+  ]
+}
