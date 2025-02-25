@@ -49,6 +49,72 @@ sequenceDiagram
     PA->>H: "Your tickets are booked!"
 ```
 
+## Agent Interaction Patterns
+
+AITP supports various interaction patterns between agents, each with distinct characteristics and use cases:
+
+### Direct Interaction
+```mermaid
+graph LR
+    U[User] <--> PA[Personal Assistant]
+    PA <--> SA[Service Agent]
+```
+The most common pattern where your personal assistant connects directly to service agents for specific tasks.
+
+### Discovery Pattern
+```mermaid
+graph LR
+    U[User] <--> PA[Personal Assistant]
+    PA <--> DA[Discovery Agent]
+    DA --> SA1[Service Agent 1]
+    DA --> SA2[Service Agent 2]
+    DA --> SA3[Service Agent 3]
+    PA --> SA2
+```
+Your assistant uses a specialized discovery agent to find the most appropriate service agent for your needs.
+
+
+### Intent Resolution Pattern
+
+```mermaid
+graph LR
+    PA[Personal Assistant]
+    PA -->|1: Submit intent| IA[Intent Agent]
+    
+    IA -->|2: Broadcast| SA1[Solver Agent 1]
+    IA -->|2: Broadcast| SA2[Solver Agent 2]
+    IA -->|2: Broadcast| SA3[Solver Agent 3]
+    
+    SA1 -->|3: Bid| IA
+    SA2 -->|3: Bid| IA
+    SA3 -->|3: Bid| IA
+    
+    IA -->|4: Select best bid| SA2
+    SA2 -->|5: Provide service| PA
+    
+    style SA2 fill:#90be6d,stroke:#43aa8b,stroke-width:2px
+    style SA1 fill:#f8f9fa,stroke:#6c757d,stroke-width:1px
+    style SA3 fill:#f8f9fa,stroke:#6c757d,stroke-width:1px
+```
+
+The Intent Resolution Pattern enables competitive marketplaces where:
+- Your assistant submits an intent to an Intent Agent (e.g., "I need a flight to Miami")
+- The Intent Agent broadcasts this to qualified Solver Agents
+- Multiple Solver Agents respond with bids (price, features, timeline)
+- The Intent Agent selects the best option based on reputation, price, and fit
+- The winning Solver Agent delivers the service directly to your assistant
+
+This pattern creates efficiency through competition while maintaining a simple interface for your assistant, who only needs to express an intent rather than manage multiple service relationships.
+
+## AITP Adoption Timeline
+
+| Year     | Phase                | Key Developments                                                                                                                                                                 |
+|----------|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **2024** | Current Web          | <ul><li>Users interact with websites directly</li><li>AI assistants use tools and APIs</li></ul>                                                                                 |
+| **2025** | AITP Early Adoption  | <ul><li>Personal assistants integrate AITP</li><li>First service agents appear</li><li>Core capabilities standardized</li><li>Browser automation agents bridge the gap</li></ul> |
+| **2026** | AITP Growth          | <ul><li>Agent-to-agent commerce becomes common</li><li>Discovery agents mature</li><li>Cross-chain payment capabilities mature</li></ul>                                         |
+| **2027** | Agent-First Internet | <ul><li>Most businesses offer agent interfaces</li><li>Agent ecosystems replace app ecosystems</li><li>Seamless interactions across domains</li></ul>                            |
+
 ## The Agent Ecosystem
 
 Your AI assistant shouldn’t need to learn how to use every online service directly.  Instead, it can talk to other AI agents that already know how to use those services effectively.  This creates a network of specialized agents, each bringing unique capabilities and domain knowledge.
