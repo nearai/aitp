@@ -69,7 +69,7 @@ See [examples](examples) for a number of different examples how AITP can be used
 While these frameworks and AITP all involve agent communication, AITP specifically addresses interactions across trust boundaries, like a user's agent talking to a business's agent.
 
 There's lots more on this subject on the [Vision](vision) page.
-s
+
 ## How do I get involved?
 
 * **Join our Telegram community**: https://t.me/nearaialpha
@@ -78,12 +78,6 @@ s
 * **Contribute to the protocol**: open an issue, pull request, or discussion on the [AITP repo](https://github.com/nearai/aitp).
 
 If you're using AI development aids, the latest specification has been packaged up into [aitp-repomix.txt](https://nightly.link/nearai/aitp/workflows/repomix/main/aitp-repomix.zip), perfect for adding to your AI's context so it knows how to use AITP.
-
-## Open questions
-
-- Authentication of agents
-- Agent identifiers
-- Local agent interacting with agents on a hub
 
 ## Glossary
 

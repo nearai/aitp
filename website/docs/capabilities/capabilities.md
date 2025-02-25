@@ -112,29 +112,29 @@ This is particularly important for multi-agent systems where each agent has diff
 
 ## Capability List
 
-| Capability ID                                                | Schema                                                                    | Description                                                                          | Spec Status | Implementation Status |
-|--------------------------------------------------------------|---------------------------------------------------------------------------|--------------------------------------------------------------------------------------|-------------|-----------------------|
-| [AITP-01: Payments](capabilities/aitp-01-payments)           | [v1.0.0](pathname:///capabilities/aitp-01-payments/v1.0.0/schema.json)    | Agent-native payment protocol for user-to-agent and agent-to-agent payments          | Ideation    | In Development        |
-| [AITP-02: Decisions](capabilities/aitp-02-decisions)         | [v1.0.0](pathname:///capabilities/aitp-02-decisions/v1.0.0/schema.json)   | Requesting decisions or actions from an agent or to be displayed in a user interface | Draft       | Live on NEAR AI       |
-| [AITP-03: Data Request](capabilities/aitp-03-data-request)   | [v1.0.0](pathname:///capabilities/aitp-03-data-request/v1.0.0/schema.json) | Requesting and responding with structured data like passwords and addresses          | Draft       | Live on NEAR AI       |
-| [AITP-04: NEAR Wallet](capabilities/aitp-04-near-wallet)     | [v1.0.0](pathname:///capabilities/aitp-04-near-wallet/v1.0.0/schema.json) | Interaction with NEAR blockchain accounts for transaction and message signing        | Draft       | In Development        |
-| [AITP-05: EVM Wallet](capabilities/aitp-05-evm-wallet)       | [v1.0.0](pathname:///capabilities/aitp-05-evm-wallet/v1.0.0/schema.json)  | Interaction with Ethereum and EVM-compatible blockchain wallets                      | Draft       | Planned               |
-| [AITP-06: Solana Wallet](capabilities/aitp-06-solana-wallet) |                                                                           | Interaction with Solana blockchain wallets (placeholder)                             | Planned     | Planned               |
-
-Future capabilities could include:
-
-* Operational concerns like healthchecks
-* Legacy forms of payment, like credit/debit cards or invoices
+| Capability ID                                              | Schema                                                                     | Description                                                                             | Spec Status | Implementation Status |
+|------------------------------------------------------------|----------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|-------------|-----------------------|
+| [AITP-01: Payments](capabilities/aitp-01-payments)         | [v1.0.0](pathname:///capabilities/aitp-01-payments/v1.0.0/schema.json)     | Agent-native payment protocol for user-to-agent and agent-to-agent payments             | Ideation    | In Development        |
+| [AITP-02: Decisions](capabilities/aitp-02-decisions)       | [v1.0.0](pathname:///capabilities/aitp-02-decisions/v1.0.0/schema.json)    | Requesting decisions or actions from an agent or to be displayed in a user interface    | Draft       | Live on NEAR AI       |
+| [AITP-03: Data Request](capabilities/aitp-03-data-request) | [v1.0.0](pathname:///capabilities/aitp-03-data-request/v1.0.0/schema.json) | Requesting and responding with structured data like passwords and addresses             | Draft       | Live on NEAR AI       |
+| [AITP-04: NEAR Wallet](capabilities/aitp-04-near-wallet)   | [v1.0.0](pathname:///capabilities/aitp-04-near-wallet/v1.0.0/schema.json)  | Interaction with NEAR blockchain accounts for transaction and message signing           | Draft       | In Development        |
+| [AITP-05: EVM Wallet](capabilities/aitp-05-evm-wallet)     | [v1.0.0](pathname:///capabilities/aitp-05-evm-wallet/v1.0.0/schema.json)   | Interaction with Ethereum and EVM-compatible blockchain wallets                         | Draft       | Planned               |
+| AITP-06: Solana Wallet                                     |                                                                            | Interaction with Solana blockchain wallets                                              | Planned     | Planned               |
+| AITP-07: Health Checks                                     |                                                                            | Standardized checks for liveness and status of another agent                            | Planned     | Planned               |
+| AITP-08: Human In The Loop                                 |                                                                            | Hardware- or app-signed attestations of information disclosure or approval from a human | Planned     | Planned               |
+| AITP-09: Fiat Payments                                     |                                                                            | Support for legacy/fiat payment methods                                                 | Planned     | Planned               |
 
 ## Developing New Capabilities
 
 When considering developing a new AITP capability, follow these guidelines:
 
 ### When to Create a New Capability
-- The interaction pattern is common across multiple domains (see below)
 - It requires structured data that can't be easily communicated in natural language
 - It would benefit from standardization across different implementations
-- It crosses trust boundaries between agents or systems
+- It crosses trust boundaries between agents or systems 
+- The interaction pattern is common across multiple domains
+
+Capabilities in this official spec should be common across multiple domains, but for more specific functionality (e.g. within an industry), the protocol is extensible and permissionless so you can define your own capability schema, host it anywhere, and agree on its use among participants.
 
 ### When to Extend an Existing Capability
 - The new functionality fits within the scope of an existing capability
@@ -142,5 +142,3 @@ When considering developing a new AITP capability, follow these guidelines:
 - Backward compatibility can be maintained
 
 The community will review proposals based on general applicability, schema quality, and implementation feasibility.
-
-Capabilities in this official spec should be common across multiple domains, but for more specific functionality (e.g. within an industry), the protocol is extensible so you can define a schema, host it anywhere, and agree on its use among participants.
