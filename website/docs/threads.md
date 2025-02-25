@@ -8,9 +8,58 @@ Threads represent the main communication object between agents. A thread contain
 Threads can be multi-party, supporting adding and removing agents and users.
 
 ## Why Chat Threads?
-Conversations (in-person, email, phone, chat, etc.) are a fundamental building block of human communication.  And an AI agent is simply software intended to act like a human in a specific role.  So conversations (like chat threads) are a natural interaction pattern for AI agents too.
 
-Natural-language chat threads are universal.  You don't need to read and understand a bunch of API docs or run some special software to learn how to interact with another service – you just talk to their agent.
+Chat threads are the perfect foundation for agent interactions for several reasons:
+
+**Universal Understanding:**
+- Conversations are intuitive for both humans and AI models
+- No special training needed for basic interaction
+- Natural fallback when structured capabilities aren't available
+
+**Flexibility and Context:**
+- Maintains conversation history for context
+- Supports both structured and unstructured communication
+
+**Technical Benefits:**
+- Easy to persist and retrieve
+- Simple to display in user interfaces
+- Compatible with existing messaging systems
+- Allows for asynchronous communication
+
+**Business Logic:**
+- Maps to real-world conversation patterns
+- Supports multiple participants
+- Can be audited for compliance
+- Preserves decision-making history
+
+Natural-language chat is the universal lowest common denominator for agent interaction. You don't need specialized API knowledge or custom UIs to talk to an agent – plain text suffices, while capabilities provide enhanced functionality when available.
+
+## User Interfaces and AITP
+
+While AITP facilitates agent-to-agent communication, it's equally important for user interfaces to support AITP capabilities. UIs serve as the "last mile" in many AITP workflows by:
+
+- Rendering structured decision requests as proper selection UIs
+- Displaying payment requests as secure payment forms
+- Presenting data collection forms with appropriate validation
+- Converting user actions back into AITP-compatible messages
+
+```mermaid
+flowchart TD
+    SA[Service Agent] <-->|AITP Messages| PA[Personal Assistant]
+    PA <-->|AITP Messages| UI[UI with AITP Support]
+    UI <--> User([User])
+    
+    classDef user fill:#f9f9f9,stroke:#333
+    classDef ui fill:#ffd7ba,stroke:#bc6c25,stroke-width:2px
+    classDef agent fill:#e8f4f8,stroke:#0077b6
+    
+    class User user
+    class UI ui
+    class PA,SA agent
+```
+
+A complete AITP ecosystem requires both agent frameworks and UI toolkits to support the protocol. This enables seamless experiences where structured data flows from service agents through personal assistants to user interfaces and back again.
+Many implementations will pass AITP capability messages directly to the UI when the personal assistant can't handle them itself. This makes UI support for AITP capabilities an essential part of the ecosystem rather than just an optional enhancement.
 
 ## Thread Transports
 
@@ -21,12 +70,75 @@ The transport is responsible for defining how a client communicates with an AI a
 * Operations for creating a thread, adding messages, and viewing history.
 * Defining responsibility for managing the state of a thread
 
-### A Little Bit of History
-With AITP, we're seeking to make interactions with AI agents as seamless and universal as browsing a website, sending an email, or making a phone call.
+### Historical Context
 
-One reason the Web took off in the 1990s was that the HTTP interface was easy for website creators and browser developers to understand and implement.  Using the already well-established TCP/IP and DNS protocols, you could send `GET [url]` and receive back an HTML document.  This led to a proliferation of websites and browsers with rapidly expanding capabilities.
+With AITP, we aim to make agent interactions as universal as web browsing. The Web succeeded in the 1990s, beating out closed, curated networks like AOL, largely because HTTP was simple yet powerful - send `GET [url]`, receive HTML. This simplicity drove rapid adoption.
 
-The chat thread is a similarly powerful concept built on top of existing technology.  For better or worse, OpenAI's APIs have become a de facto standard for other AI APIs (e.g. [LangChain Agent Protocol](https://github.com/langchain-ai/agent-protocol), so we adopt the relevant portions of it here as AITP's first supported transport to help with adoption.
+Similarly, chat threads provide an intuitive, universal interface for agent communication. And for better or worse, OpenAI's APIs have become a de facto standard for other AI APIs (e.g. [LangChain Agent Protocol](https://github.com/langchain-ai/agent-protocol), so we adopt the relevant portions of it here as AITP's first supported transport to help with adoption.
+
+## Thread Example
+
+Here's a complete example of an AITP thread with two actors exchanging messages:
+
+```json
+{
+  "id": "thread_abc123",
+  "metadata": {
+    "parent_id": null,
+    "actors": [
+      {
+        "id": "user-agent.near",
+        "capabilities": [
+          {"schema": "https://aitp.dev/capabilities/aitp-01-payments/v1.0.0/schema.json"},
+          {"schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json"}
+        ]
+      },
+      {
+        "id": "travel-agent.near",
+        "capabilities": [
+          {"schema": "https://aitp.dev/capabilities/aitp-01-payments/v1.0.0/schema.json"},
+          {"schema": "https://aitp.dev/capabilities/aitp-03-data-request/v1.0.0/schema.json"}
+        ]
+      }
+    ]
+  },
+  "messages": [
+    {
+      "created_at": 1708950000,
+      "thread_id": "thread_abc123",
+      "content": ["I need to book a flight to Miami next month"],
+      "role": "user",
+      "metadata": {
+        "actor": "user-agent.near"
+      }
+    },
+    {
+      "created_at": 1708950060,
+      "thread_id": "thread_abc123",
+      "content": ["{\"$schema\": \"https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json\", \"request_decision\": {\"id\": \"flight_options\", \"type\": \"radio\", \"options\": [{\"id\": \"f1\", \"name\": \"Economy: $299\"}, {\"id\": \"f2\", \"name\": \"Business: $799\"}]}}"],
+      "role": "assistant",
+      "metadata": {
+        "actor": "travel-agent.near"
+      }
+    },
+    {
+      "created_at": 1708950120,
+      "thread_id": "thread_abc123",
+      "content": ["{\"$schema\": \"https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json\", \"decision\": {\"request_decision_id\": \"flight_options\", \"options\": [{\"id\": \"f2\"}]}}"],
+      "role": "user",
+      "metadata": {
+        "actor": "user-agent.near"
+      }
+    }
+  ]
+}
+```
+
+In this example:
+- Two actors are participating: a user agent and a travel agent
+- Each has declared their supported capabilities
+- The travel agent is using the Decisions capability to present flight options
+- The user agent responds with a structured decision rather than natural language
 
 ### Supported Transports
 
@@ -39,6 +151,7 @@ Future transports could include anything that allows passing both unstructured a
 * Chat (Slack, WhatsApp, Telegram)
 * [Matrix](https://matrix.org/)
 * Peer-to-peer / decentralized networks
+* Phone call, plus [ggwave](https://github.com/ggerganov/ggwave)
 
 ## Thread Specification
 

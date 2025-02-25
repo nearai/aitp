@@ -18,11 +18,31 @@ AITP-compatible [agents](https://app.near.ai/agents) to inform how the protocol 
 
 ## Introduction
 
-AITP enables AI agents to communicate securely across trust boundaries while providing extensible mechanisms for structured interactions, e.g. payments, sensitive data sharing, user interfaces and more.
+AITP enables AI agents to communicate securely across trust boundaries while providing extensible mechanisms for structured interactions.
+
+**Imagine this scenario:** You ask your AI assistant to book a flight to Miami. Instead of your assistant needing to navigate airline websites, it can directly communicate with airline booking agents using a standardized protocol. Your assistant and the airline agent exchange structured data about flight options, passenger details, and payment information—all using the same protocol regardless of which airline you choose.
+
+**Key Benefits of AITP:**
+- **Universal Communication**: Any AITP-compatible agents can interact, regardless of who built them
+- **Structured Data Exchange**: Beyond just text, agents can share UI elements, forms, and payment requests
+- **Trust Boundary Crossing**: Secure interaction between agents representing different entities
+- **Extensible Capabilities**: New interaction types can be added through the capability system
 
 We envision a future in which most online interactions are conducted by AI agents representing people, businesses, and government entities, communicating with users and with each other. These agents will combine the scale and cost benefits of current online services with the flexibility and personalization of human interactions. Just as HTTP and HTML enable any web browser to visit any website, AITP provides a standard for agent-to-agent and user-to-agent communication, regardless of where those agents run or how they're built.
 
 For a deeper exploration of the problems AITP aims to solve and our vision for the future of agent interactions, see the [Vision](vision) page.
+
+## Key Concepts at a Glance
+
+| Concept            | Definition                                                   | Purpose                                                                                                                           |
+|--------------------|--------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| **Thread**         | A conversation between two or more agents or users           | Provides the structure for message exchange and maintaining conversation history                                                  |
+| **Capability**     | A standardized message format for specific interaction types | Enables structured data exchange for common operations like payments or form filling                                              |
+| **Transport**      | A mechanism for sending AITP messages between agents         | Defines how messages are transmitted, e.g., over HTTP or other protocols                                                          |
+| **Passthrough**    | Pattern where agents forward capability messages             | Enables flexible agent networks and specialization                                                                                |
+| **UI Integration** | Support for AITP in user interfaces                          | Provides human-friendly representations of structured data, payment approvals, and human-in-the-loop authorization and disclosure |
+
+These components work together: agents communicate via **Threads**, which are transmitted using a **Transport**, and exchange structured data using **Capabilities** when needed for specific operations.
 
 ## Protocol Overview
 
@@ -40,24 +60,21 @@ See [examples](examples) for a number of different examples how AITP can be used
 
 ## AITP vs...
 
-**...multi-agent orchestration frameworks like CrewAI, Autogen, and LangGraph:**
-While these frameworks and AITP both deal with agent-to-agent communication, the other frameworks are meant for agents with the same owner, working towards a shared goal.  AITP facilitates agent-to-agent interactions that cross a 'trust boundary', like a user's agent talking to a business's agent.
+| Protocol Type                                                | Purpose                           | When to Use                    | AITP Relationship                                                                              |
+|--------------------------------------------------------------|-----------------------------------|--------------------------------|------------------------------------------------------------------------------------------------|
+| **Multi-agent orchestration** (CrewAI, Autogen, LangGraph)   | Coordinate agents with same owner | Internal agent workflows       | Complementary - can use for internal orchestration while using AITP for external communication |
+| **Service metadata protocols** (MCP, Bitte, llms.txt)        | Help agents use existing APIs     | Accessing traditional services | Complementary - service agents may use MCP internally while offering AITP externally           |
+| **Browser use agents** (ChatGPT Operator, Proxy, Rabbit LAM) | Navigate existing websites        | Bridging to current web        | Transitional - useful until AITP adoption grows                                                |
 
-It is totally fine to use these other frameworks for internal agent-to-agent communication and use AITP for external communication, though you could do it all with AITP too.
-
-**...service metadata / API proxy / tool use   protocols like Anthropic's [Model Context Protocol](https://modelcontextprotocol.io/) (MCP), [Bitte Open Agents](https://docs.bitte.ai/agents), or [llms.txt](https://llmstxt.org/):**
-These solutions are about making it easier for AI agents to use existing non-agentic APIs and services.  This is worthwhile since AI agents are still relatively uncommon in the wild.  But as these services start deploying their own AI agents, AITP defines how you or your agent should communicate with them.
+While these frameworks and AITP all involve agent communication, AITP specifically addresses interactions across trust boundaries, like a user's agent talking to a business's agent.
 
 There's lots more on this subject on the [Vision](vision) page.
-
-**...browser use agents like [ChatGPT Operator](https://openai.com/index/introducing-operator/), [Proxy](https://convergence.ai/), and [Rabbit LAM](https://www.rabbit.tech/lam-playground):**
-Like the category above, browser use agents help 'bridge the gap' between AI agents and existing websites and services.  Browser use offers much more functionality than MCP at the expense of speed and accuracy.  We consider browser use agents to be a useful stopgap tool while we migrate to purpose-built agents communicating with AITP.
-
+s
 ## How do I get involved?
 
 * **Join our Telegram community**: https://t.me/nearaialpha
 * **Build more agents**: The more AITP-compatible agents there are, the more useful each agent will be.  Agents built on the [NEAR AI Hub](https://app.near.ai) support all AITP features.
-* **Build AITP support into more AI agent frameworks**: We want every AI agent framework and hosting provider to support AITP.
+* **Build AITP support into more AI agent frameworks and clients**: We want every AI agent framework, hosting provider, and chat UI to support AITP.
 * **Contribute to the protocol**: open an issue, pull request, or discussion on the [AITP repo](https://github.com/nearai/aitp).
 
 If you're using AI development aids, the latest specification has been packaged up into [aitp-repomix.txt](https://nightly.link/nearai/aitp/workflows/repomix/main/aitp-repomix.zip), perfect for adding to your AI's context so it knows how to use AITP.
@@ -67,3 +84,16 @@ If you're using AI development aids, the latest specification has been packaged 
 - Authentication of agents
 - Agent identifiers
 - Local agent interacting with agents on a hub
+
+## Glossary
+
+| Term | Definition |
+|------|------------|
+| **Agent** | A software entity that uses AI to mimic human-like reasoning for a specific purpose |
+| **Capability** | A standardized message format for a specific interaction type |
+| **Thread** | A conversation between two or more agents and/or humans |
+| **Transport** | A mechanism for transmitting AITP messages between agents |
+| **Personal Assistant** | An agent that represents a user and interacts with service agents on their behalf |
+| **Service Agent** | An agent that represents a business, service, or organization |
+| **Discovery Agent** | An agent that helps find and connect with appropriate service agents |
+| **Trust Boundary** | The separation between systems or agents with different security domains or owners |

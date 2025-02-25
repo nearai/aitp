@@ -2,8 +2,13 @@
 
 Capabilities are standards for specialized messages to enable structured interactions, e.g. for processing payments or sharing sensitive data. Agents or clients announce which capabilities they support when starting or joining a thread.  The other agents in the thread can then tailor their responses to make use of those capabilities.
 
-The core communication mechanism of AITP is a natural-language chat thread, and even without any Capabilities, agents could express everything in natural language.  But  
-a structured communication protocol allows systems of people and agents to “snap together”, following the maxim that easy things should be easy and hard things should be possible.
+While agents can communicate anything through natural language chat thread, capabilities provide standardized structured formats for common interactions. For example:
+
+- Instead of an agent saying "Here are your flight options: Option 1...", it can send a structured `decision` request that your UI can render as a proper selection interface
+- Instead of describing payment amounts in text, an agent can send a payment quote with exact amounts that can be programmatically verified and executed
+- Rather than asking for your shipping address in conversation, an agent can send a form request that your UI renders as a proper address entry form
+
+This structured approach reduces ambiguity, enables validation, and allows UIs to present information optimally.
 
 AITP Capabilities have several benefits over unstructured communication. For example, Clients, Tools and Agent code can operate directly on the structure, validating and correcting protocol outputs produced by an LLM. Additionally, API call outputs can be directly transformed into AITP messages, and expected messages can be routed programmatically, eliminating the need for LLM interpretation. All of these processes reduce variability, latency, and cost.
 
@@ -43,7 +48,6 @@ sequenceDiagram
     participant U as User Agent
     participant A as Service Agent
     
-    Note over U,A: Thread Creation
     U->>A: Create Thread
     Note right of U: Declares capabilities:<br>["https://aitp.dev/capabilities/aitp-01-payments/v1.0.0/schema.json",<br>"https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json"]
     A->>U: Thread Created
@@ -61,6 +65,26 @@ sequenceDiagram
 
 When starting or joining a thread, each agent or client needs to declare which capabilities and capability versions it supports.  Capability exchange is the responsibility of the Transport; it is not contained in the messages.  For instance, for the the AITP-T01 Thread API transport, capabilities are defined as an array of schema URLs passed into the `POST /v1/thread` endpoint.
 
+## Message Passthrough Pattern
+
+A powerful feature of AITP is the message passthrough pattern, where agents can forward capability messages they don't necessarily handle themselves. This "accept, reject, or pass along" pattern enables the creation of flexible agent networks.
+
+```mermaid
+flowchart LR
+    A[Agent A] -->|Message with Capability X| B[Agent B]
+    B -->|Accept & Process| B1[Handle internally and respond]
+    B -->|Reject| B2[Return error/unsupported]
+    B -->|Pass along| C[Agent C]
+```
+With this pattern:
+
+* Agents can declare support for capabilities they intend to pass to others
+* Personal assistants can forward messages to specialized agents
+* Service agents can relay requests through middleware
+* Discovery agents can collect and forward responses
+
+This is particularly important for multi-agent systems where each agent has different specializations. An agent might declare support for payment capabilities not because it handles payments directly, but because it maintains a thread with a payment processor agent.
+
 ## Capability List
 
 | Capability ID                                              | Schema                                                                     | Description                                                                          | Spec Status | Implementation Status |
@@ -74,3 +98,22 @@ When starting or joining a thread, each agent or client needs to declare which c
 Future capabilities could include:
 * Operational concerns like healthchecks
 * Legacy forms of payment, like credit/debit cards or invoices
+
+## Developing New Capabilities
+
+When considering developing a new AITP capability, follow these guidelines:
+
+### When to Create a New Capability
+- The interaction pattern is common across multiple domains (see below)
+- It requires structured data that can't be easily communicated in natural language
+- It would benefit from standardization across different implementations
+- It crosses trust boundaries between agents or systems
+
+### When to Extend an Existing Capability
+- The new functionality fits within the scope of an existing capability
+- Only minor additions are needed to support your use case
+- Backward compatibility can be maintained
+
+The community will review proposals based on general applicability, schema quality, and implementation feasibility.
+
+Capabilities in this official spec should be common across multiple domains, but for more specific functionality (e.g. within an industry), the protocol is extensible so you can define a schema, host it anywhere, and agree on its use among participants.
