@@ -1,8 +1,8 @@
 import type {
   NormalizedSidebarItem,
   SidebarItemsGenerator,
-  SidebarItemsGeneratorOption,
-  SidebarItemsGeneratorArgs
+  SidebarItemsGeneratorArgs,
+  SidebarItemsGeneratorOption
 } from '@docusaurus/plugin-content-docs/lib/sidebars/types';
 
 // Borrowed from https://github.com/facebook/docusaurus/issues/5689#issuecomment-2034815211
@@ -24,13 +24,17 @@ async function postProcess({item, ...args}: PostProcessArgs) {
     }
     // Add additional items
     if (item.customProps?.plannedCapabilities) {
-      item.customProps.plannedCapabilities.forEach(plannedCapability => {
-        item.items.push({
-          type: "html",
-          value: `${plannedCapability} (Planned)`,
-          defaultStyle: true
-        });
-      });
+      item.items.push(
+        {
+          type: "category",
+          label: "Planned",
+          items: item.customProps.plannedCapabilities.map(plannedCapability => ({
+            type: "html",
+            value: plannedCapability,
+            defaultStyle: true
+          }))
+        }
+      )
     }
   }
 }
