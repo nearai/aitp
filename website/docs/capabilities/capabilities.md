@@ -65,6 +65,26 @@ sequenceDiagram
 
 When starting or joining a thread, each agent or client needs to declare which capabilities and capability versions it supports.  Capability exchange is the responsibility of the Transport; it is not contained in the messages.  For instance, for the the AITP-T01 Thread API transport, capabilities are defined as an array of schema URLs passed into the `POST /v1/thread` endpoint.
 
+## Message Passthrough Pattern
+
+A powerful feature of AITP is the message passthrough pattern, where agents can forward capability messages they don't necessarily handle themselves. This "accept, reject, or pass along" pattern enables the creation of flexible agent networks.
+
+```mermaid
+flowchart LR
+    A[Agent A] -->|Message with Capability X| B[Agent B]
+    B -->|Accept & Process| B1[Handle internally and respond]
+    B -->|Reject| B2[Return error/unsupported]
+    B -->|Pass along| C[Agent C]
+```
+With this pattern:
+
+* Agents can declare support for capabilities they intend to pass to others
+* Personal assistants can forward messages to specialized agents
+* Service agents can relay requests through middleware
+* Discovery agents can collect and forward responses
+
+This is particularly important for multi-agent systems where each agent has different specializations. An agent might declare support for payment capabilities not because it handles payments directly, but because it maintains a thread with a payment processor agent.
+
 ## Capability List
 
 | Capability ID                                              | Schema                                                                     | Description                                                                          | Spec Status | Implementation Status |

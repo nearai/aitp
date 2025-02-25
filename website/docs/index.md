@@ -34,11 +34,13 @@ For a deeper exploration of the problems AITP aims to solve and our vision for t
 
 ## Key Concepts at a Glance
 
-| Concept        | Definition                                                   | Purpose                                                                              |
-|----------------|--------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| **Thread**     | A conversation between two or more agents or users           | Provides the structure for message exchange and maintaining conversation history     |
-| **Capability** | A standardized message format for specific interaction types | Enables structured data exchange for common operations like payments or form filling |
-| **Transport**  | A mechanism for sending AITP messages between agents         | Defines how messages are transmitted, e.g., over HTTP or other protocols             |
+| Concept            | Definition                                                   | Purpose                                                                                                                           |
+|--------------------|--------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| **Thread**         | A conversation between two or more agents or users           | Provides the structure for message exchange and maintaining conversation history                                                  |
+| **Capability**     | A standardized message format for specific interaction types | Enables structured data exchange for common operations like payments or form filling                                              |
+| **Transport**      | A mechanism for sending AITP messages between agents         | Defines how messages are transmitted, e.g., over HTTP or other protocols                                                          |
+| **Passthrough**    | Pattern where agents forward capability messages             | Enables flexible agent networks and specialization                                                                                |
+| **UI Integration** | Support for AITP in user interfaces                          | Provides human-friendly representations of structured data, payment approvals, and human-in-the-loop authorization and disclosure |
 
 These components work together: agents communicate via **Threads**, which are transmitted using a **Transport**, and exchange structured data using **Capabilities** when needed for specific operations.
 

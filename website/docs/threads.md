@@ -34,6 +34,33 @@ Chat threads are the perfect foundation for agent interactions for several reaso
 
 Natural-language chat is the universal lowest common denominator for agent interaction. You don't need specialized API knowledge or custom UIs to talk to an agent – plain text suffices, while capabilities provide enhanced functionality when available.
 
+## User Interfaces and AITP
+
+While AITP facilitates agent-to-agent communication, it's equally important for user interfaces to support AITP capabilities. UIs serve as the "last mile" in many AITP workflows by:
+
+- Rendering structured decision requests as proper selection UIs
+- Displaying payment requests as secure payment forms
+- Presenting data collection forms with appropriate validation
+- Converting user actions back into AITP-compatible messages
+
+```mermaid
+flowchart TD
+    SA[Service Agent] <-->|AITP Messages| PA[Personal Assistant]
+    PA <-->|AITP Messages| UI[UI with AITP Support]
+    UI <--> User([User])
+    
+    classDef user fill:#f9f9f9,stroke:#333
+    classDef ui fill:#ffd7ba,stroke:#bc6c25,stroke-width:2px
+    classDef agent fill:#e8f4f8,stroke:#0077b6
+    
+    class User user
+    class UI ui
+    class PA,SA agent
+```
+
+A complete AITP ecosystem requires both agent frameworks and UI toolkits to support the protocol. This enables seamless experiences where structured data flows from service agents through personal assistants to user interfaces and back again.
+Many implementations will pass AITP capability messages directly to the UI when the personal assistant can't handle them itself. This makes UI support for AITP capabilities an essential part of the ecosystem rather than just an optional enhancement.
+
 ## Thread Transports
 
 The transport is responsible for defining how a client communicates with an AI agent.  That client could be a UI or it could be another AI agent.  Each transport must handle:
