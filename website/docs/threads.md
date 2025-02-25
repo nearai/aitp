@@ -243,3 +243,15 @@ class Thread:
         # Users and Agents that are part of this thread.
         actors: list[Actor]
 ```
+
+## Authentication & Identity
+
+Many agent frameworks talk a lot about universal identifiers for agents, and authentication mechanisms for agents.  These concepts are intentionally absent from AITP spec.
+
+In AITP, agents have IDs that are only unique to the current thread.  Agents can choose to identify themselves consistently between threads, or not.  There's no reason to _enforce_ de-anonymization at the protocol level.  If agents want to prove a consistent identity between threads, they can do that by signing a message against a published public key – that might be useful future AITP capability.
+
+Agent identifiers have also been proposed as a means to address or locate an agent.  AITP doesn't define a central or decentralized directory of agents; each Transport defines how to find or connect to agents.  In the case of [AITP-T01 Threads API](transports/aitp-t01-threads-api.md), agents are identified by simple HTTPS endpoint URLs.  Just like with classic APIs, those URLs can be indexed by a search engine, or catalogued manually.
+
+Beyond agent identity, cryptographic proof of **human** involvement is a valuable concept for the AITP ecosystem. We're planning to release new AITP capabilities that cryptographically attest that a human has viewed critical information (like legal disclosures) or explicitly approved a decision. To prevent agent impersonation of humans, these attestations should originate from trusted hardware, such as the secure enclaves in mobile phones, computers, or dedicated biometric devices. This would create a reliable trust boundary between automated agent actions and genuine human-in-the-loop decisions, particularly important for high-value or high-risk transactions.
+
+Of course, feedback is welcome on these topics – please open a [discussion thread](https://github.com/nearai/aitp/discussions)!
