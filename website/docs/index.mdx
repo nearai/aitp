@@ -2,6 +2,7 @@
 sidebar_position: 1
 sidebar_label: Overview
 ---
+import CommsFlow from './comms-flow.png';
 
 # AITP: Agent Interaction & Transaction Protocol
 
@@ -32,18 +33,6 @@ We envision a future in which most online interactions are conducted by AI agent
 
 For a deeper exploration of the problems AITP aims to solve and our vision for the future of agent interactions, see the [Vision](vision) page.
 
-## Key Concepts at a Glance
-
-| Concept            | Definition                                                   | Purpose                                                                                                                           |
-|--------------------|--------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| **Thread**         | A conversation between two or more agents or users           | Provides the structure for message exchange and maintaining conversation history                                                  |
-| **Capability**     | A standardized message format for specific interaction types | Enables structured data exchange for common operations like payments or form filling                                              |
-| **Transport**      | A mechanism for sending AITP messages between agents         | Defines how messages are transmitted, e.g., over HTTP or other protocols                                                          |
-| **Passthrough**    | Pattern where agents forward capability messages             | Enables flexible agent networks and specialization                                                                                |
-| **UI Integration** | Support for AITP in user interfaces                          | Provides human-friendly representations of structured data, payment approvals, and human-in-the-loop authorization and disclosure |
-
-These components work together: agents communicate via **Threads**, which are transmitted using a **Transport**, and exchange structured data using **Capabilities** when needed for specific operations.
-
 ## Protocol Overview
 
 AITP consists of two pieces:
@@ -56,7 +45,7 @@ AITP consists of two pieces:
 	3. [Capability Exchange](capabilities#capability-exchange)
 	4. [Capability List](capabilities#capability-list)
 
-See [examples](examples) for a number of different examples how AITP can be used for various agents.
+These components work together: agents communicate via **Threads**, which are transmitted using a **Transport**, and exchange structured data using **Capabilities** when needed for specific operations.
 
 ## AITP vs...
 
@@ -67,6 +56,10 @@ See [examples](examples) for a number of different examples how AITP can be used
 | **Browser use agents** (ChatGPT Operator, Proxy, Rabbit LAM) | Navigate existing websites        | Bridging to current web        | Transitional - useful until AITP adoption grows                                                |
 
 While these frameworks and AITP all involve agent communication, AITP specifically addresses interactions across trust boundaries, like a user's agent talking to a business's agent.
+
+<div style={{ overflowX: 'auto', overflowY: 'hidden' }}>
+    <img src={CommsFlow} alt="Diagram of User, Chat Client, Personal Assistant, Service Agent, Service" style={{ maxWidth: 'none', display:'inline-block', height: 353,  }} />
+</div>
 
 There's lots more on this subject on the [Vision](vision) page.
 
@@ -81,13 +74,14 @@ If you're using AI development aids, the latest specification has been packaged 
 
 ## Glossary
 
-| Term | Definition |
-|------|------------|
-| **Agent** | A software entity that uses AI to mimic human-like reasoning for a specific purpose |
-| **Capability** | A standardized message format for a specific interaction type |
-| **Thread** | A conversation between two or more agents and/or humans |
-| **Transport** | A mechanism for transmitting AITP messages between agents |
-| **Personal Assistant** | An agent that represents a user and interacts with service agents on their behalf |
-| **Service Agent** | An agent that represents a business, service, or organization |
-| **Discovery Agent** | An agent that helps find and connect with appropriate service agents |
-| **Trust Boundary** | The separation between systems or agents with different security domains or owners |
+| Term                   | Definition                                                                          |
+|------------------------|-------------------------------------------------------------------------------------|
+| **Agent**              | A software entity that uses AI to mimic human-like reasoning for a specific purpose |
+| **Capability**         | A standardized message format for a specific interaction type                       |
+| **Thread**             | A conversation between two or more agents and/or humans                             |
+| **Transport**          | A mechanism for transmitting natural language or AITP messages between agents       |
+| **Personal Assistant** | An agent that represents a user and interacts with service agents on their behalf   |
+| **Service Agent**      | An agent that represents a business, service, or organization                       |
+| **Discovery Agent**    | An agent that helps find and connect with appropriate service agents                |
+| **Trust Boundary**     | The separation between systems or agents with different security domains or owners  |
+| **Passthrough**        | Pattern where agents forward AITP messages to other connected agents or users       |
