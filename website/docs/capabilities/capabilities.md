@@ -87,13 +87,14 @@ This is particularly important for multi-agent systems where each agent has diff
 
 ## Capability List
 
-| Capability ID                                              | Schema                                                                     | Description                                                                          | Spec Status | Implementation Status |
-|------------------------------------------------------------|----------------------------------------------------------------------------|--------------------------------------------------------------------------------------|-------------|-----------------------|
-| [AITP-01: Payments](capabilities/aitp-01-payments)         |                                                                            | Agent-native payment requests, authorizations, and post-processing                   | Ideation    | None                  |
-| [AITP-02: Decisions](capabilities/aitp-02-decisions)       | [v1.0.0](pathname:///capabilities/aitp-02-decisions/v1.0.0/schema.json)    | Requesting decisions or actions from an agent or to be displayed in a user interface | Draft       | Live on NEAR AI       |
-| [AITP-03: Data Request](capabilities/aitp-03-data-request) | [v1.0.0](pathname:///capabilities/aitp-03-data-request/v1.0.0/schema.json) | Supporting requesting and dealing with structured data like passwords and addresses  | Draft       | Live on NEAR AI       |
-| [AITP-04: Transactions](capabilities/aitp-04-transactions) | [v1.0.0](pathname:///capabilities/aitp-04-transactions/v1.0.0/schema.json) | P2P crypto transactions, using coins or tokens; less functionality than Payments     | Draft       | Live on NEAR AI       |
-| [AITP-05: Signatures](capabilities/aitp-05-signatures)     |                                                                            | Digital signatures for messages, authentication, and blockchain transactions         | Ideation    | None                  |
+| Capability ID                                                | Schema                                                                     | Description                                                                          | Spec Status | Implementation Status |
+|--------------------------------------------------------------|----------------------------------------------------------------------------|--------------------------------------------------------------------------------------|-------------|-----------------------|
+| [AITP-01: Payments](capabilities/aitp-01-payments)           |                                                                            | Agent-native payment protocol for user-to-agent and agent-to-agent payments          | Ideation    | In Development        |
+| [AITP-02: Decisions](capabilities/aitp-02-decisions)         | [v1.0.0](pathname:///capabilities/aitp-02-decisions/v1.0.0/schema.json)    | Requesting decisions or actions from an agent or to be displayed in a user interface | Draft       | Live on NEAR AI       |
+| [AITP-03: Data Request](capabilities/aitp-03-data-request)   | [v1.0.0](pathname:///capabilities/aitp-03-data-request/v1.0.0/schema.json) | Requesting and responding with structured data like passwords and addresses          | Draft       | Live on NEAR AI       |
+| [AITP-04: NEAR Wallet](capabilities/aitp-04-near-wallet)     | [v1.0.0](pathname:///capabilities/aitp-04-near-wallet/v1.0.0/schema.json)  | Interaction with NEAR blockchain accounts for transaction and message signing        | Draft       | In Development        |
+| [AITP-05: EVM Wallet](capabilities/aitp-05-evm-wallet)       | [v1.0.0](pathname:///capabilities/aitp-05-evm-wallet/v1.0.0/schema.json)   | Interaction with Ethereum and EVM-compatible blockchain wallets                      | Draft       | Planned               |
+| [AITP-06: Solana Wallet](capabilities/aitp-06-solana-wallet) |                                                                            | Interaction with Solana blockchain wallets (placeholder)                             | Planned     | Planned               |
 
 Future capabilities could include:
 * Operational concerns like healthchecks

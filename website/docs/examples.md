@@ -28,28 +28,28 @@ sequenceDiagram
 Overview
 
 ```json
-{ 
-    "agents": [
-        {"id": "root.near", "capabilities": [
-          {"$schema": "https://aitp.dev/v1/payments.schema.json"}, 
-          {"$schema": "https://aitp.dev/v1/requests.schema.json"}
-        ]},
-        {"id": "hub.near.ai/travel-agent/0.1.0", "capabilities": [
-          {"$schema": "https://aitp.dev/v1/payments.schema.json" }
-        ]}
-    ],
-    "messages": [
-        {"metadata": {"actor": "root.near"}, 
-          "content": ["plan me a trip to NY"],
-          "role":  "user"},
-        ...
-        {"metadata": {"actor": "hub.near.ai/travel-agent/0.1.0"}, 
-          "content": ["{\"$schema\": \"https://aitp.dev/v1/payments.schema.json\", ...request_payment, 1000 USD}"],
-          "role":  "assistant"},
-        {"metadata": {"actor": "root.near"}, 
-          "content": ["{\"$schema\": \"https://aitp.dev/v1/payments.schema.json\", ... decline payment}"], 
-          "role":  "user"}
-    ]
+{
+  "agents": [
+    {"id": "root.near", "capabilities": [
+      {"$schema": "https://aitp.dev/capabilities/aitp-01-payments/v0.1.0/schema.json"},
+      {"$schema": "https://aitp.dev/capabilities/aitp-02-decisions/v1.0.0/schema.json"}
+    ]},
+    {"id": "hub.near.ai/travel-agent/0.1.0", "capabilities": [
+      {"$schema": "https://aitp.dev/capabilities/aitp-01-payments/v0.1.0/schema.json" }
+    ]}
+  ],
+  "messages": [
+    {"metadata": {"actor": "root.near"},
+      "content": ["plan me a trip to NY"],
+      "role":  "user"},
+    ...
+    {"metadata": {"actor": "hub.near.ai/travel-agent/0.1.0"},
+      "content": ["{\"$schema\": \"https://aitp.dev/capabilities/aitp-01-payments/v0.1.0/schema.json\", \"quote\": {...}}"],
+      "role":  "assistant"},
+    {"metadata": {"actor": "root.near"},
+      "content": ["{\"$schema\": \"https://aitp.dev/capabilities/aitp-01-payments/v0.1.0/schema.json\", \"payment\": {...}}"],
+      "role":  "user"}
+  ]
 }
 ```
 
