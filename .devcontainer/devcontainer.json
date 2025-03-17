@@ -1,0 +1,81 @@
+{
+  "name": "aitp",
+  "dockerComposeFile": [
+    "../.docker/docker-compose-dev.yml"
+  ],
+  "service": "aitp_dev",
+  "shutdownAction": "stopCompose",
+  "workspaceFolder": "/workspace",
+  "userEnvProbe": "loginInteractiveShell",
+  "remoteUser": "user",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "files.eol": "\n",
+        "[rust]": {
+          "editor.defaultFormatter": "rust-lang.rust-analyzer",
+          "editor.formatOnSave": true
+        },
+        "remote.extensionKind": {
+          "ms-azuretools.vscode-docker": "workspace"
+        },
+        "editor.codeActionsOnSaveTimeout": 3000,
+        "mypy-type-checker.cwd": "${workspaceFolder}",
+        "python.defaultInterpreterPath": "${workspaceFolder}/packages/aitp-py/.venv/bin/python",
+        "python.languageServer": "Default",
+        "[python]": {
+          "editor.defaultFormatter": null,
+          "editor.formatOnSave": true,
+          "editor.codeActionsOnSave": {
+            "source.fixAll": "always"
+          }
+        },
+        "ruff.enable": true,
+        "ruff.organizeImports": true,
+        "ruff.fixAll": true,
+        "ruff.path": [
+          "${workspaceFolder}/packages/aitp-py/.venv/bin/ruff"
+        ],
+        "ruff.interpreter": [
+          "${workspaceFolder}/packages/aitp-py/.venv/bin/python"
+        ],
+        "eslint.validate": [
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact"
+        ],
+        "typescript.tsdk": "${workspaceFolder}/node_modules/typescript/lib",
+        "typescript.enablePromptUseWorkspaceTsdk": true,
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.formatOnSave": true,
+          "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "always",
+            "source.organizeImports": "always"
+          }
+        },
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "zsh"
+          }
+        }
+      },
+      "extensions": [
+        "davidanson.vscode-markdownlint",
+        "ms-azuretools.vscode-docker",
+        "shardulm94.trailing-spaces",
+        "bierner.emojisense",
+        "vscode-icons-team.vscode-icons",
+        "redhat.vscode-yaml",
+        "bajdzis.vscode-database",
+        "IBM.output-colorizer",
+        "ms-python.python",
+        "ms-python.mypy-type-checker",
+        "charliermarsh.ruff",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  }
+}
