@@ -14,9 +14,12 @@ pip install aitp
 git checkout main
 git pull
 git checkout -b release-aitp-py-vx.x.x
+# cz bump --files-only --increment patch
 ./scripts/publish.sh
 uv lock
-git add uv.lock
-git commit -m "chore: update uv.lock file for release"
+git add uv.lock CHANGELOG.md pyproject.toml README.md
+version=$(grep '^version =' pyproject.toml | cut -d '"' -f2)
+git commit -m "chore(release): bump version to $version"
+git tag "v$version"
 git push --tags
 ```
