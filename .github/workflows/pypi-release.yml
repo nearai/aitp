@@ -3,7 +3,7 @@ name: PyPI Release
 on:
   push:
     tags:
-      - v*
+      - aitp-py-v*
 
 jobs:
   release:
