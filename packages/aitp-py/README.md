@@ -22,6 +22,7 @@ git commit -m "chore(release): bump version to $version"
 git push
 
 # after merging the PR, create a tag and push it to run a release
-git tag "v$version"
-git push --tags
+version=$(grep '^version =' pyproject.toml | cut -d '"' -f2)
+git tag "aitp-py-v$version"
+git push origin aitp-py-v$version
 ```

@@ -45,9 +45,11 @@ jobs:
       run: ./scripts/type_check.sh
 
     - name: Build package
+      working-directory: packages/aitp-py
       run: uv build
 
     - name: Publish to PyPI
+      working-directory: packages/aitp-py
       env:
           UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
       run: uv publish
