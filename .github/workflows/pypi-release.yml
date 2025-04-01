@@ -10,24 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: AITP
     steps:
-    - name: Generate a token
-      id: generate-token
-      uses: actions/create-github-app-token@v1.11.0
-      with:
-        app-id: ${{ secrets.APP_ID }}
-        private-key: ${{ secrets.APP_PRIVATE_KEY }}
-
-    - name: Ensure NearAIBot status
-      run: |
-        echo "${{ steps.generate-token.outputs.token }}" | gh auth login --with-token
-        gh auth setup-git
-        gh auth status
-
-    - name: Set git config for commit identity
-      run: |
-        git config --global user.email "nearaibot[bot]@users.noreply.github.com"
-        git config --global user.name "nearaibot[bot]"
-
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
