@@ -1,0 +1,74 @@
+name: PyPI Release
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: AITP
+    steps:
+    - name: Generate a token
+      id: generate-token
+      uses: actions/create-github-app-token@v1.11.0
+      with:
+        app-id: ${{ secrets.APP_ID }}
+        private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+    - name: Ensure NearAIBot status
+      run: |
+        echo "${{ steps.generate-token.outputs.token }}" | gh auth login --with-token
+        gh auth setup-git
+        gh auth status
+
+    - name: Set git config for commit identity
+      run: |
+        git config --global user.email "nearaibot[bot]@users.noreply.github.com"
+        git config --global user.name "nearaibot[bot]"
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        token: ${{ steps.generate-token.outputs.token }}
+        fetch-depth: 0
+        persist-credentials: false
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install uv
+      run: pip install uv
+
+    - name: check lock file for inconsistencies
+      working-directory: packages/aitp-py
+      run: uv lock --check
+
+    - name: Install dependencies
+      working-directory: packages/aitp-py
+      run: uv sync
+
+    - name: Lint Check
+      working-directory: packages/aitp-py
+      run: ./scripts/lint_check.sh
+
+    - name: Format Check
+      working-directory: packages/aitp-py
+      run: ./scripts/format_check.sh
+
+    - name: Type Check
+      working-directory: packages/aitp-py
+      run: ./scripts/type_check.sh
+
+    - name: Build package
+      run: uv build
+
+    # - name: Publish to PyPI
+    #   env:
+    #       ## TODO: Change the secret name to only PIPI_TOKEN
+    #       UV_PUBLISH_TOKEN: ${{ secrets.POETRY_PYPI_TOKEN_PYPI }}
+    #   run: uv publish
+    #   if: ${{ github.event.inputs.publish-pypi == 'true' }}
