@@ -8,7 +8,7 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    environment: AITP
+    environment: PYPI
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
