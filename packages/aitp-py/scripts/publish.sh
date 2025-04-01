@@ -11,5 +11,5 @@ case $increment in
         exit 1
         ;;
 esac
-echo "Running: cz bump --increment $increment"
-cz bump --increment $increment
+echo "Running: cz bump --files-only --increment $increment"
+cz bump --files-only --increment $increment
