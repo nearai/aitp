@@ -23,6 +23,9 @@
         "mypy-type-checker.cwd": "${workspaceFolder}",
         "python.defaultInterpreterPath": "${workspaceFolder}/packages/aitp-py/.venv/bin/python",
         "python.languageServer": "Default",
+        "python.analysis.diagnosticSeverityOverrides": {
+            "reportInvalidTypeForm": "none"
+        },
         "[python]": {
           "editor.defaultFormatter": null,
           "editor.formatOnSave": true,

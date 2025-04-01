@@ -45,6 +45,8 @@ RUN npm install -g \
     @openapitools/openapi-generator-cli@${OPENAPI_GENERATOR_VERSION} \
     typescript \
     pnpm@latest-10
+# Give user access to glob node_modules
+RUN chown -R $USER: /usr/lib/node_modules
 
 # Change to non-privileged user
 USER $USER
