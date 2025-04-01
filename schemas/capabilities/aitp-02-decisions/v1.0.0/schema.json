@@ -1,0 +1,248 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "AI Decision Protocol",
+    "version": "1.0.0",
+    "description": "AI Decision Protocol Specification"
+  },
+  "paths": {},
+  "components": {
+    "schemas": {
+      "DecisionProtocol": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/Decision"
+          },
+          {
+            "$ref": "#/components/schemas/RequestDecision"
+          }
+        ]
+      },
+      "Decision": {
+        "type": "object",
+        "properties": {
+          "$schema": {
+            "type": "string",
+            "format": "uri"
+          },
+          "decision": {
+            "type": "object",
+            "properties": {
+              "request_decision_id": {
+                "type": "string"
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SelectedOption"
+                },
+                "minItems": 1
+              }
+            },
+            "required": ["options"],
+            "additionalProperties": true
+          }
+        },
+        "required": ["$schema", "decision"],
+        "additionalProperties": true
+      },
+      "SelectedOption": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          }
+        },
+        "required": ["id"],
+        "additionalProperties": false
+      },
+      "RequestDecision": {
+        "type": "object",
+        "properties": {
+          "$schema": {
+            "type": "string",
+            "format": "uri"
+          },
+          "request_decision": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": ["products", "checkbox", "radio", "confirmation"],
+                "default": "radio"
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DecisionOption"
+                },
+                "minItems": 1
+              }
+            },
+            "required": ["id", "options"],
+            "additionalProperties": true
+          }
+        },
+        "required": ["$schema", "request_decision"],
+        "additionalProperties": true
+      },
+      "DecisionOption": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "short_variant_name": {
+            "type": "string"
+          },
+          "image_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "description": {
+            "type": "string"
+          },
+          "quote": {
+            "$ref": "#/components/schemas/Quote"
+          },
+          "reviews_count": {
+            "type": "integer"
+          },
+          "five_star_rating": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "variants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DecisionOptionVariant"
+            }
+          }
+        },
+        "required": ["id"],
+        "additionalProperties": true
+      },
+      "Quote": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["Quote"]
+          },
+          "quote_id": {
+            "type": "string"
+          },
+          "payee_id": {
+            "type": "string"
+          },
+          "payment_plans": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentPlan"
+            }
+          },
+          "valid_until": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "type",
+          "quote_id",
+          "payee_id",
+          "payment_plans",
+          "valid_until"
+        ],
+        "additionalProperties": true
+      },
+      "PaymentPlan": {
+        "type": "object",
+        "properties": {
+          "plan_id": {
+            "type": "string"
+          },
+          "plan_type": {
+            "type": "string",
+            "enum": ["one-time"],
+            "default": "one-time"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string",
+            "enum": ["USD"]
+          }
+        },
+        "required": [
+          "plan_id",
+          "plan_type",
+          "amount",
+          "currency"
+        ],
+        "additionalProperties": true
+      },
+      "DecisionOptionVariant": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "short_variant_name": {
+            "type": "string"
+          },
+          "image_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "description": {
+            "type": "string"
+          },
+          "quote": {
+            "$ref": "#/components/schemas/Quote"
+          },
+          "reviews_count": {
+            "type": "integer"
+          },
+          "five_star_rating": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": ["id"],
+        "additionalProperties": true
+      }
+    }
+  }
+}

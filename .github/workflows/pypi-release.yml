@@ -1,0 +1,55 @@
+name: PyPI Release
+
+on:
+  push:
+    tags:
+      - aitp-py-v*
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: PYPI
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        persist-credentials: false
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install uv
+      run: pip install uv
+
+    - name: check lock file for inconsistencies
+      working-directory: packages/aitp-py
+      run: uv lock --check
+
+    - name: Install dependencies
+      working-directory: packages/aitp-py
+      run: uv sync
+
+    - name: Lint Check
+      working-directory: packages/aitp-py
+      run: ./scripts/lint_check.sh
+
+    - name: Format Check
+      working-directory: packages/aitp-py
+      run: ./scripts/format_check.sh
+
+    - name: Type Check
+      working-directory: packages/aitp-py
+      run: ./scripts/type_check.sh
+
+    - name: Build package
+      working-directory: packages/aitp-py
+      run: uv build
+
+    - name: Publish to PyPI
+      working-directory: packages/aitp-py
+      env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
+      run: uv publish

@@ -1,0 +1,9 @@
+services:
+  aitp_dev:
+    build:
+      context: ..
+      dockerfile: .docker/Dockerfile.dev
+    volumes:
+      - ..:/workspace:Z
+    network_mode: 'host'
+    entrypoint: sleep infinity
