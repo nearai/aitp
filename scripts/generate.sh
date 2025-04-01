@@ -12,12 +12,13 @@ else
   exit 1
 fi
 
+rm -rf /tmp/aitp/
 $OPENAPI_GENERATOR generate \
   -i ./schemas/capabilities/aitp-01-payments/v1.0.0/schema.json \
   -i ./schemas/capabilities/aitp-02-decisions/v1.0.0/schema.json \
   -g python-pydantic-v1 \
   -o /tmp/aitp/ \
-  --package-name aitp.stubs
+  --package-name 'aitp.stubs'
 
-rm -rf ./packages/aitp-py/stubs/
-cp -r /tmp/aitp/aitp/stubs/ ./packages/aitp-py/src/
+rm -rf ./packages/aitp-py/src/stubs/
+cp -r /tmp/aitp/aitp/ ./packages/aitp-py/src/
