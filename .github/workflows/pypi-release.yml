@@ -47,9 +47,7 @@ jobs:
     - name: Build package
       run: uv build
 
-    # - name: Publish to PyPI
-    #   env:
-    #       ## TODO: Change the secret name to only PIPI_TOKEN
-    #       UV_PUBLISH_TOKEN: ${{ secrets.POETRY_PYPI_TOKEN_PYPI }}
-    #   run: uv publish
-    #   if: ${{ github.event.inputs.publish-pypi == 'true' }}
+    - name: Publish to PyPI
+      env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
+      run: uv publish
