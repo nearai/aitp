@@ -14,8 +14,7 @@ pip install aitp
 git checkout main
 git pull
 git checkout -b release-aitp-py-vx.x.x
-# cz bump --files-only --increment patch
-./scripts/publish.sh
+cz bump --files-only --increment patch
 uv lock
 git add uv.lock CHANGELOG.md pyproject.toml README.md
 version=$(grep '^version =' pyproject.toml | cut -d '"' -f2)
