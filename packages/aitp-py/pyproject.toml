@@ -92,6 +92,7 @@ exclude = [
     ".mypy_cache",
     ".ruff_cache",
     "__pypackages__",
+    "stubs",
 ]
 
 [tool.commitizen]
