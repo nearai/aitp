@@ -19,6 +19,9 @@ uv lock
 git add uv.lock CHANGELOG.md pyproject.toml README.md
 version=$(grep '^version =' pyproject.toml | cut -d '"' -f2)
 git commit -m "chore(release): bump version to $version"
+git push
+
+# after merging the PR, create a tag and push it to run a release
 git tag "v$version"
 git push --tags
 ```
