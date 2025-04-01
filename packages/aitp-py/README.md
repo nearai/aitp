@@ -14,6 +14,11 @@ pip install aitp
 git checkout main
 git pull
 git checkout -b release-aitp-py-vx.x.x
-./scripts/publish.sh
+cz bump --files-only --increment patch
+uv lock
+git add uv.lock CHANGELOG.md pyproject.toml README.md
+version=$(grep '^version =' pyproject.toml | cut -d '"' -f2)
+git commit -m "chore(release): bump version to $version"
+git tag "v$version"
 git push --tags
 ```
